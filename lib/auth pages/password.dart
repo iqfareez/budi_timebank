@@ -2,7 +2,7 @@ import 'dart:async';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
+import '../components/constants.dart';
 // import 'package:testfyp/pages/signUpPage.dart';
 
 class PasswordPage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'serviceDetails.dart';
+import 'service_details.dart';
 
 class ServicePage extends StatefulWidget {
-  ServicePage({Key? key}) : super(key: key);
+  const ServicePage({Key? key}) : super(key: key);
 
   @override
   State<ServicePage> createState() => _ServicePageState();
@@ -15,16 +15,16 @@ class _ServicePageState extends State<ServicePage> {
     return Scaffold(
         appBar: AppBar(
           // backgroundColor: Color.fromARGB(255, 127, 17, 224),
-          title: Text('Service'),
+          title: const Text('Service'),
         ),
         body: isEmpty
-            ? Center(
+            ? const Center(
                 child: Text('No available service'),
               )
             : ListView(
                 children: [
                   Container(
-                    margin: EdgeInsets.all(15),
+                    margin: const EdgeInsets.all(15),
                     child: Card(
                       elevation: 5,
                       child: InkWell(
@@ -32,7 +32,7 @@ class _ServicePageState extends State<ServicePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ServiceDetails(),
+                                builder: (context) => const ServiceDetails(),
                               ));
                           // showDialog(
                           //     context: context,
@@ -102,7 +102,7 @@ class _ServicePageState extends State<ServicePage> {
                               flex: 4,
                               child: Container(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Column(
+                                child: const Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Help Me with some Python Programming',
@@ -123,12 +123,12 @@ class _ServicePageState extends State<ServicePage> {
                                 flex: 3,
                                 child: Container(
                                     decoration: BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 219, 216, 233),
+                                        color: const Color.fromARGB(
+                                            255, 219, 216, 233),
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text(
                                         '3\$ Time/hour',
                                         style: TextStyle(fontSize: 11),
@@ -138,7 +138,8 @@ class _ServicePageState extends State<ServicePage> {
                               flex: 1,
                               child: IconButton(
                                   onPressed: (() {}),
-                                  icon: Icon(Icons.favorite_border_outlined)),
+                                  icon: const Icon(
+                                      Icons.favorite_border_outlined)),
                             )
                           ],
                         ),
@@ -148,10 +149,10 @@ class _ServicePageState extends State<ServicePage> {
                 ],
               ),
         floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Color.fromARGB(255, 127, 17, 224),
+          backgroundColor: const Color.fromARGB(255, 127, 17, 224),
           onPressed: () {},
-          icon: Icon(Icons.search),
-          label: Text('Find Service'),
+          icon: const Icon(Icons.search),
+          label: const Text('Find Service'),
         ));
   }
 }

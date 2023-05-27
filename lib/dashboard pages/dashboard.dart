@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../custom widgets/customHeadline.dart';
-import '../custom widgets/customOngoingTask.dart';
+import '../custom widgets/custom_headline.dart';
+import '../custom widgets/custom_ongoing_task.dart';
 
 class DashBoard extends StatefulWidget {
-  DashBoard({Key? key}) : super(key: key);
+  const DashBoard({Key? key}) : super(key: key);
 
   @override
   State<DashBoard> createState() => _DashBoardState();
@@ -36,23 +36,23 @@ class _DashBoardState extends State<DashBoard> {
         // backgroundColor: Color.fromARGB(255, 127, 17, 224),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomHeadline('Your Service'),
+            const CustomHeadline('Your Service'),
             CustomOngoingTask(listService),
-            CustomHeadline('Your Request'),
+            const CustomHeadline('Your Request'),
             CustomOngoingTask(listRequest),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Card(
+            const Card(
                 elevation: 5,
                 color: Color.fromARGB(255, 219, 216, 233),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Text(
@@ -89,15 +89,15 @@ class _DashBoardState extends State<DashBoard> {
                         Expanded(
                           child: Card(
                             elevation: 5,
-                            color: Color.fromARGB(255, 234, 234, 234),
+                            color: const Color.fromARGB(255, 234, 234, 234),
                             child: InkWell(
                                 onTap: () {},
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
+                                    const Padding(
+                                      padding: EdgeInsets.all(5.0),
                                       child: Text('Find a service request',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)
@@ -107,14 +107,15 @@ class _DashBoardState extends State<DashBoard> {
                                           ),
                                     ),
                                     //SizedBox(height: 10),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                    const Padding(
+                                      padding: EdgeInsets.all(8.0),
                                       child:
                                           Text('Help others with your skills'),
                                     ),
                                     //SizedBox(height: 10),
                                     Ink.image(
-                                      image: AssetImage('asset/folder.png'),
+                                      image:
+                                          const AssetImage('asset/folder.png'),
                                       height: 40,
                                       width: 40,
                                     ),
@@ -131,10 +132,10 @@ class _DashBoardState extends State<DashBoard> {
                           flex: 1,
                           child: Card(
                             elevation: 5,
-                            color: Color.fromARGB(255, 234, 234, 234),
+                            color: const Color.fromARGB(255, 234, 234, 234),
                             child: InkWell(
                                 onTap: () {},
-                                child: Column(
+                                child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -159,10 +160,10 @@ class _DashBoardState extends State<DashBoard> {
                           flex: 1,
                           child: Card(
                             elevation: 5,
-                            color: Color.fromARGB(255, 234, 234, 234),
+                            color: const Color.fromARGB(255, 234, 234, 234),
                             child: InkWell(
                                 onTap: () {},
-                                child: Column(
+                                child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -189,7 +190,7 @@ class _DashBoardState extends State<DashBoard> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             )
           ],

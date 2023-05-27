@@ -2,11 +2,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
+import '../components/constants.dart';
 //import 'package:testfyp/pages/password.dart';
-import 'package:testfyp/auth%20pages/signUpPage.dart';
-
-import '../splash_page.dart';
+import 'sign_up_page.dart';
 
 class PasswordRecoveryPage extends StatefulWidget {
   const PasswordRecoveryPage({super.key});
@@ -17,7 +15,7 @@ class PasswordRecoveryPage extends StatefulWidget {
 
 class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
   bool _isLoading = false;
-  bool _redirecting = false;
+  final bool _redirecting = false;
   late final TextEditingController _emailController;
   late final StreamSubscription<AuthState> _authStateSubscription;
   //final session = supabase.auth.currentSession;

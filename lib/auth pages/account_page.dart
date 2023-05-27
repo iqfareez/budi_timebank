@@ -1,19 +1,17 @@
 //import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/avatar.dart';
-import 'package:testfyp/components/constants.dart';
+import '../components/avatar.dart';
+import '../components/constants.dart';
 //import 'package:testfyp/dashboard.dart';
-import 'package:testfyp/navigation.dart';
-import 'package:testfyp/splash_page.dart';
-
-import '../profile pages/profile.dart';
+import '../navigation.dart';
+import '../splash_page.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
   @override
-  _AccountPageState createState() => _AccountPageState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
 class _AccountPageState extends State<AccountPage> {
@@ -93,7 +91,8 @@ class _AccountPageState extends State<AccountPage> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => BottomBarNavigation()));
+                builder: (BuildContext context) =>
+                    const BottomBarNavigation()));
       }
     } on PostgrestException catch (error) {
       context.showErrorSnackBar(message: error.message);
@@ -108,7 +107,7 @@ class _AccountPageState extends State<AccountPage> {
   Future<void> _signOut() async {
     try {
       await supabase.auth.signOut();
-    } on AuthException catch (error) {
+    } on AuthException {
       context.showErrorSnackBar(message: 'error signing out');
     } catch (error) {
       context.showErrorSnackBar(message: 'Unable to signout');
@@ -214,9 +213,9 @@ class _AccountPageState extends State<AccountPage> {
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          BottomBarNavigation()));
+                          const BottomBarNavigation()));
             }),
-            child: Text('Go to DashBoard'),
+            child: const Text('Go to DashBoard'),
           ),
           TextButton(onPressed: _signOut, child: const Text('Sign Out')),
         ],

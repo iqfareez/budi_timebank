@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/navigation.dart';
-import 'package:testfyp/auth%20pages/account_page.dart';
-import 'package:testfyp/auth%20pages/loginPage.dart';
-import 'package:testfyp/auth%20pages/password.dart';
-import 'package:testfyp/auth%20pages/signUpPage.dart';
-import 'package:testfyp/splash_page.dart';
-import 'package:testfyp/profile%20pages/profile.dart';
+import 'navigation.dart';
+import 'auth%20pages/account_page.dart';
+import 'auth pages/login_page.dart';
+import 'auth%20pages/password.dart';
+import 'auth pages/sign_up_page.dart';
+import 'splash_page.dart';
+import 'profile%20pages/profile.dart';
 
 //adb shell am start -W -a android.intent.action.VIEW -d "io.supabase.flutterquickstart://login-callback/"
 
@@ -17,10 +17,12 @@ Future<void> main() async {
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjb3FiaWR3cnVpYWtweWtpZGxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjYzNDEzODYsImV4cCI6MTk4MTkxNzM4Nn0.ol5POkel6KTRNrDk7Z_yUvYhzJ7_SXbY7Yt94Wvzi-Q',
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
         '/login': (_) => const LoginPage(),
         '/account': (_) => const AccountPage(),
         '/navigation': (_) => const BottomBarNavigation(),
-        '/profile': (_) => ProfilePage(),
+        '/profile': (_) => const ProfilePage(),
         '/passwordReset': (_) => const PasswordPage(),
       },
     );

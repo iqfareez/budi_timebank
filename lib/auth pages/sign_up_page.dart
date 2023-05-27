@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
+import '../components/constants.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
@@ -40,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
       // if (session != null) {!
       //   context.showSnackBar(message: 'User Already Registered!!');
       // }
-      if (response.user!.identities!.length == 0) {
+      if (response.user!.identities!.isEmpty) {
         context.showSnackBar(message: 'User Already Registered!!');
         // _emailController.clear();
         // _passwordController.clear();

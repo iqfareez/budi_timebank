@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../custom widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom widgets/heading2.dart';
 
 class ServiceDetails extends StatefulWidget {
-  ServiceDetails({Key? key}) : super(key: key);
+  const ServiceDetails({Key? key}) : super(key: key);
 
   @override
   State<ServiceDetails> createState() => _ServiceDetailsState();
@@ -17,24 +17,24 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Color.fromARGB(255, 127, 17, 224),
-        title: Text('Service Details'),
+        title: const Text('Service Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: ListView(
           shrinkWrap: true,
           children: [
-            Heading2('Title'),
-            Text('This is the title'),
-            Heading2('Requestor'),
-            Text('John Smith'),
-            Heading2('Category'),
-            Text('Programming, Python, uhh'),
-            Heading2('Location'),
-            Text('IIUM'),
-            Heading2('Description'),
-            Text('This is just a test'),
-            SizedBox(
+            const Heading2('Title'),
+            const Text('This is the title'),
+            const Heading2('Requestor'),
+            const Text('John Smith'),
+            const Heading2('Category'),
+            const Text('Programming, Python, uhh'),
+            const Heading2('Location'),
+            const Text('IIUM'),
+            const Heading2('Description'),
+            const Text('This is just a test'),
+            const SizedBox(
               height: 15,
             ),
             Card(
@@ -42,7 +42,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CustomHeadline('Rate'),
@@ -52,7 +52,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                     TextFormField(
                       controller: rateServiceController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
                           hintText: 'Enter Title'),
                       validator: (value) {
@@ -75,12 +75,12 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                                   const SnackBar(
                                       content: Text('Processing Data')));
                             }),
-                            child: Text('Bid')),
+                            child: const Text('Bid')),
                         TextButton(
                             onPressed: (() {
                               Navigator.pop(context, 'Cancel');
                             }),
-                            child: Text('Cancel'))
+                            child: const Text('Cancel'))
                       ],
                     )
                   ],

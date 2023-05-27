@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
-import 'requestModel.dart';
-import 'package:http/http.dart' as http;
 
 class RequestForm extends StatefulWidget {
-  RequestForm({Key? key}) : super(key: key);
+  const RequestForm({Key? key}) : super(key: key);
 
   @override
   State<RequestForm> createState() => _RequestFormState();
@@ -64,7 +62,7 @@ class _RequestFormState extends State<RequestForm> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text('Request Form'),
+          title: const Text('Request Form'),
           // backgroundColor: Color.fromARGB(255, 127, 17, 224),
         ),
         body: Form(
@@ -76,13 +74,13 @@ class _RequestFormState extends State<RequestForm> {
                 // SizedBox(
                 //   height: 20,
                 // ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text('Title'),
                 ),
                 TextFormField(
                   controller: titleController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: 'Enter Title'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -95,8 +93,8 @@ class _RequestFormState extends State<RequestForm> {
                   // },
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text('Category'),
                 ),
                 TextFieldTags(
@@ -206,13 +204,13 @@ class _RequestFormState extends State<RequestForm> {
                     });
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text('Location'),
                 ),
                 TextFormField(
                   controller: locationController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter Location',
                       prefixIcon: Icon(Icons.map)),
@@ -223,13 +221,13 @@ class _RequestFormState extends State<RequestForm> {
                     return null;
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text('Description'),
                 ),
                 TextFormField(
                   controller: descriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter Description'),
                   validator: (value) {
@@ -239,8 +237,8 @@ class _RequestFormState extends State<RequestForm> {
                     return null;
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text('Rate'),
                 ),
                 Row(
@@ -249,7 +247,7 @@ class _RequestFormState extends State<RequestForm> {
                       child: TextFormField(
                         controller: rateController,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Enter Rate',
                             helperText: 'Make sure you have enough \$ to pay'),
@@ -265,8 +263,8 @@ class _RequestFormState extends State<RequestForm> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text('\$ time/hour'),
                     ),
                   ],

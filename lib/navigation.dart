@@ -1,9 +1,9 @@
 // import 'dart:async';
 import 'package:flutter/material.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/dashboard%20pages/dashboard.dart';
-import 'package:testfyp/profile%20pages/profile.dart';
+import 'components/constants.dart';
+import 'dashboard%20pages/dashboard.dart';
+import 'profile%20pages/profile.dart';
 import 'request pages/request.dart';
 import 'service pages/service.dart';
 
@@ -21,10 +21,10 @@ class _BottomBarNavigationState extends State<BottomBarNavigation> {
   //late final StreamSubscription<AuthState> _authStateSubscription;
 
   final List<Widget> _widgetOptions = [
-    DashBoard(),
-    RequestPage(),
-    ServicePage(),
-    ProfilePage()
+    const DashBoard(),
+    const RequestPage(),
+    const ServicePage(),
+    const ProfilePage()
   ];
 
   @override
@@ -64,11 +64,11 @@ class _BottomBarNavigationState extends State<BottomBarNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Color.fromARGB(255, 234, 234, 234),
-          selectedItemColor: Color.fromARGB(255, 203, 197, 234),
+          unselectedItemColor: const Color.fromARGB(255, 234, 234, 234),
+          selectedItemColor: const Color.fromARGB(255, 203, 197, 234),
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromARGB(255, 127, 17, 224),
-          items: <BottomNavigationBarItem>[
+          backgroundColor: const Color.fromARGB(255, 127, 17, 224),
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.request_page), label: 'Request'),

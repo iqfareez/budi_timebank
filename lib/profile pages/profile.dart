@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/avatar.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/auth%20pages/account_page.dart';
-import 'package:testfyp/splash_page.dart';
+import '../components/constants.dart';
+import '../auth%20pages/account_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -20,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late String _matric = '';
   late String _gender = '';
   late String _desc = '';
-  bool _redirecting = false;
+  final bool _redirecting = false;
   late final StreamSubscription<AuthState> _authStateSubscription;
 
   String _avatarUrl = 'asset/girl.png';
@@ -79,8 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isAvatarEqual() {
     if (_avatarUrl == 'asset/girl.png') {
       return true;
-    } else
+    } else {
       return false;
+    }
   }
 
   @override
@@ -104,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           )
         ],
-        title: Text('Profile Page'),
+        title: const Text('Profile Page'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -123,34 +121,34 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(20)),
                       height: 150,
                       width: 150,
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       child: isAvatarEqual()
                           ? Container(
-                              padding: EdgeInsets.all(7),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(7),
+                              decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 127, 17, 224),
                                   shape: BoxShape.circle),
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 backgroundColor: Colors.grey,
                               ),
                             )
                           : Container(
-                              padding: EdgeInsets.all(7),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(7),
+                              decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 127, 17, 224),
                                   shape: BoxShape.circle),
                               child: CircleAvatar(
                                 backgroundImage: NetworkImage(_avatarUrl),
                               ),
                             )),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 219, 216, 233),
+                          color: const Color.fromARGB(255, 219, 216, 233),
                           //border: Border.all(color: Colors.grey),
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
@@ -159,14 +157,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Text(
                             _username,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text('Matric Id: $_matric'),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Text('Gender: $_gender')
@@ -177,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Flexible(
@@ -185,15 +183,15 @@ class _ProfilePageState extends State<ProfilePage> {
               flex: 3,
               child: Container(
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 219, 216, 233),
+                    color: const Color.fromARGB(255, 219, 216, 233),
                     //border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(20)),
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
                       child: Text(
                         'Description',
                         style: TextStyle(
@@ -208,8 +206,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text('Skilled in',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)
                   //style: Theme.of(context).textTheme.headline1,
@@ -222,33 +220,33 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  children: [
+                  children: const [
                     Card(
                       elevation: 5,
+                      margin: EdgeInsets.all(5),
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Text('Cooking'),
                       ),
-                      margin: EdgeInsets.all(5),
                     ),
                     Card(
                       elevation: 5,
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Text('Programming with fast typing'),
                       ),
                     ),
                     Card(
                       elevation: 5,
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Text('This is another skill that you should'),
                       ),
                     ),
                     Card(
                       elevation: 5,
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Text('Kill me senpai'),
                       ),
                     ),
@@ -266,7 +264,7 @@ class _ProfilePageState extends State<ProfilePage> {
               flex: 1,
               child: Row(
                 children: [
-                  Flexible(
+                  const Flexible(
                     flex: 1,
                     child: Card(
                       elevation: 5,
@@ -274,7 +272,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(15.0),
+                            padding: EdgeInsets.all(15.0),
                             child: Text('Rating',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
@@ -293,9 +291,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Text(_website,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           ),
-                          Text('2')
+                          const Text('2')
                         ],
                       ),
                     ),

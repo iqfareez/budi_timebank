@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
+import 'constants.dart';
 
 class Avatar extends StatefulWidget {
   const Avatar({
@@ -14,7 +14,7 @@ class Avatar extends StatefulWidget {
   final void Function(String) onUpload;
 
   @override
-  _AvatarState createState() => _AvatarState();
+  State<Avatar> createState() => _AvatarState();
 }
 
 class _AvatarState extends State<Avatar> {
@@ -28,7 +28,7 @@ class _AvatarState extends State<Avatar> {
           Container(
             width: 150,
             height: 150,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 127, 17, 224),
                 shape: BoxShape.circle),
             child: const Center(
@@ -37,8 +37,8 @@ class _AvatarState extends State<Avatar> {
           )
         else
           Container(
-            padding: EdgeInsets.all(7),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(7),
+            decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 127, 17, 224),
                 shape: BoxShape.circle),
             child: ClipRRect(
