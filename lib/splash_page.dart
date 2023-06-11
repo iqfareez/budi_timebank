@@ -4,6 +4,7 @@
 //redirects the user accordingly.
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
@@ -52,7 +53,7 @@ class _SplashPageState extends State<SplashPage> {
 
     _redicrectCalled = true;
 
-    final session = supabase.auth.currentSession;
+    final session = FirebaseAuth.instance.currentUser;
     //print('The session is ' + session.toString());
     // _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
     //   //if (_redirecting) return;
@@ -63,6 +64,8 @@ class _SplashPageState extends State<SplashPage> {
     //     Navigator.of(context).pushReplacementNamed('/passwordReset');
     //   } else
     // });
+
+    print('session is ' + session.toString());
 
     if (session != null) {
       Navigator.of(context).pushReplacementNamed('/navigation');

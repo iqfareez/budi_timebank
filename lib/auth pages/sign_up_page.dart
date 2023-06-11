@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../components/constants.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -17,9 +16,9 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _passwordVisible = false;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  late final StreamSubscription<AuthState> _authStateSubscription;
+  // late final StreamSubscription<AuthState> _authStateSubscription;
 
-  Future<void> _signIn() async {
+  Future<void> _signUp() async {
     //final session = supabase.auth.currentSession;
     // final userId = supabase.auth.currentUser!.id; //map the user ID
     // final data = await supabase.from('profiles').select().eq('id', userId);
@@ -28,50 +27,41 @@ class _SignUpPageState extends State<SignUpPage> {
       _isLoading = true;
     });
     try {
-      final response = await supabase.auth.signUp(
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-        emailRedirectTo:
-            kIsWeb ? null : 'io.supabase.fluttercallback://SignUp-callback/',
       );
+
+      print(credential);
 
       // ERROR: Prompt the user to try again!
       // print(response.user!.identities!.length);
       // if (session != null) {!
       //   context.showSnackBar(message: 'User Already Registered!!');
       // }
-      if (response.user!.identities!.isEmpty) {
-        context.showSnackBar(message: 'User Already Registered!!');
-        // _emailController.clear();
-        // _passwordController.clear();
-      } else if (mounted) {
-        context.showSnackBar(message: 'Check your email for sign up link!');
-        // _emailController.clear();
-        // _passwordController.clear();
-      }
-    } on AuthException catch (error) {
-      context.showErrorSnackBar(message: error.message);
+      context.showSnackBar(message: 'User Already Registered!!');
+    } on FirebaseAuthException catch (error) {
+      context.showErrorSnackBar(message: error.message.toString());
     } catch (error) {
       context.showErrorSnackBar(message: 'Unexpected error occured');
     }
 
-    setState(() {
-      _isLoading = false;
-    });
+    setState(() => _isLoading = false);
   }
 
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
-      if (_redirecting) return;
-      final session = data.session;
-      if (session != null) {
-        _redirecting = true;
-        Navigator.of(context).pushReplacementNamed('/account');
-      }
-    });
+    // _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+    //   if (_redirecting) return;
+    //   final session = data.session;
+    //   if (session != null) {
+    //     _redirecting = true;
+    //     Navigator.of(context).pushReplacementNamed('/account');
+    //   }
+    // });
 
     super.initState();
   }
@@ -80,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _authStateSubscription.cancel();
+    // _authStateSubscription.cancel();
     super.dispose();
   }
 
@@ -126,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           const SizedBox(height: 18),
           ElevatedButton(
-            onPressed: _isLoading ? null : _signIn,
+            onPressed: _isLoading ? null : _signUp,
             child: Text(_isLoading ? 'Loading' : 'Sign Up'),
           ),
           // ElevatedButton(

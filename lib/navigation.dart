@@ -17,7 +17,7 @@ class BottomBarNavigation extends StatefulWidget {
 class _BottomBarNavigationState extends State<BottomBarNavigation> {
   int _selectedIndex = 0;
   //bool _redirecting = false;
-  final session = supabase.auth.currentSession;
+  // final session = supabase.auth.currentSession;
   //late final StreamSubscription<AuthState> _authStateSubscription;
 
   final List<Widget> _widgetOptions = [
