@@ -20,6 +20,6 @@ extension ShowSnackBar on BuildContext {
 
   void showErrorSnackBar({required String message}) {
     showSnackBar(
-        message: message, backgroundColor: Color.fromARGB(255, 244, 26, 10));
+        message: message, backgroundColor: const Color.fromARGB(255, 244, 26, 10));
   }
 }

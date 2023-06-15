@@ -5,7 +5,7 @@ class CustomHeadline extends StatelessWidget {
   final heading;
   final color;
 
-  CustomHeadline({required this.heading, this.color});
+  const CustomHeadline({super.key, required this.heading, this.color});
 
   @override
   Widget build(BuildContext context) {

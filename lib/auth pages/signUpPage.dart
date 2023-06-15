@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -7,7 +6,6 @@ import 'package:testfyp/bin/client_auth.dart';
 import 'package:testfyp/bin/common.dart';
 import 'package:testfyp/components/constants.dart';
 import 'package:testfyp/custom%20widgets/customHeadline.dart';
-import 'package:testfyp/custom%20widgets/heading2.dart';
 import 'package:testfyp/custom%20widgets/theme.dart';
 import 'package:testfyp/extension_string.dart';
 
@@ -174,21 +172,21 @@ class _SignUpPageState extends State<SignUpPage> {
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Text(
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
                 'We will send you an email for confirmation',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: const Text('Do not close this page when signing up'),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text('Do not close this page when signing up'),
             ),
-            Row(
+            const Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                  padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                   child: CustomHeadline(heading: 'Email'),
                 ),
                 CustomHeadline(
@@ -210,10 +208,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 return null;
               },
             ),
-            Row(
+            const Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                  padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                   child: CustomHeadline(heading: 'Password'),
                 ),
                 CustomHeadline(
@@ -226,7 +224,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _passwordController,
               obscureText: !_passwordVisible,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 hintText: 'Enter your password',
                 helperText: 'Password must have at least 6 characters',
                 suffixIcon: IconButton(
@@ -259,10 +257,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 thickness: 2,
                 indent: 15,
                 endIndent: 15),
-            Row(
+            const Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                  padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                   child: CustomHeadline(heading: 'Name'),
                 ),
                 CustomHeadline(
@@ -287,14 +285,14 @@ class _SignUpPageState extends State<SignUpPage> {
             //   controller: _genderController,
             //   decoration: const InputDecoration(hintText: 'Gender'),
             // ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                const Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                      padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                       child: CustomHeadline(heading: 'Gender'),
                     ),
                     CustomHeadline(
@@ -345,10 +343,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ],
             ),
-            Row(
+            const Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                  padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                   child: CustomHeadline(heading: 'Identification'),
                 ),
                 CustomHeadline(
@@ -379,7 +377,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   //padding: EdgeInsets.all(8),
                   width: MediaQuery.of(context).size.width / 3,
 
-                  margin: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(

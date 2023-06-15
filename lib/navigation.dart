@@ -1,5 +1,4 @@
 // import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:testfyp/components/constants.dart';
@@ -40,10 +39,10 @@ class _BottomBarNavigationState extends State<BottomBarNavigation> {
   final session = supabase.auth.currentSession;
 
   final List<Widget> _widgetOptions = [
-    DashBoard(),
-    RequestPage(),
-    ServicePage(),
-    ProfilePage(
+    const DashBoard(),
+    const RequestPage(),
+    const ServicePage(),
+    const ProfilePage(
       isMyProfile: true,
     )
   ];
@@ -88,19 +87,19 @@ class _BottomBarNavigationState extends State<BottomBarNavigation> {
           backgroundColor: Theme.of(context).primaryColor,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: const Icon(Icons.home),
                 label: 'Home',
                 backgroundColor: themeData2().primaryColor),
             BottomNavigationBarItem(
-                icon: Icon(Icons.handshake),
+                icon: const Icon(Icons.handshake),
                 label: 'Need Help',
                 backgroundColor: themeData1().primaryColor),
             BottomNavigationBarItem(
-                icon: Icon(Icons.emoji_people),
+                icon: const Icon(Icons.emoji_people),
                 label: 'Offer Help',
                 backgroundColor: themeData1().secondaryHeaderColor),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_box),
+                icon: const Icon(Icons.account_box),
                 label: 'Account',
                 backgroundColor: themeData2().primaryColor)
           ],

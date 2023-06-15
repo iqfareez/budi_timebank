@@ -19,15 +19,15 @@ class RequestDetails1 extends StatefulWidget {
   final String requestId;
   final bool isRequest;
   final String user;
-  RequestDetails1(
-      {required this.requestId, required this.isRequest, required this.user});
+  const RequestDetails1(
+      {super.key, required this.requestId, required this.isRequest, required this.user});
 
   @override
   State<RequestDetails1> createState() => _RequestDetails1State();
 }
 
 class _RequestDetails1State extends State<RequestDetails1> {
-  double _valueController = 0;
+  final double _valueController = 0;
   double _value1Controller = 0;
 
   final _commentController = TextEditingController();
@@ -298,7 +298,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
               title: const Text('Request Details'),
             ),
       body: isLoad
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(15.0),
               child: ListView(
@@ -311,20 +311,20 @@ class _RequestDetails1State extends State<RequestDetails1> {
                       child: Text(requestDetails.request.title
                           .toString()
                           .capitalize())),
-                  Divider(),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Flexible(
                         child: Card(
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             // side: BorderSide(
                             //   color: themeData1().secondaryHeaderColor,
                             //   width: 3,
                             // ),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
+                                BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -336,7 +336,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                   _userRequestor.user.name
                                       .toString()
                                       .titleCase(),
-                                  style: TextStyle(fontSize: 12),
+                                  style: const TextStyle(fontSize: 12),
                                 ),
                               ],
                             ),
@@ -344,13 +344,13 @@ class _RequestDetails1State extends State<RequestDetails1> {
                         ),
                       ),
                       Card(
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           // side: BorderSide(
                           //   color: themeData1().secondaryHeaderColor,
                           //   width: 3,
                           // ),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
+                              BorderRadius.all(Radius.circular(12)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -361,20 +361,20 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                 requestDetails.request.state
                                     .toString()
                                     .capitalize(),
-                                style: TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12),
                               ),
                             ],
                           ),
                         ),
                       ),
                       Card(
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           // side: BorderSide(
                           //   color: themeData1().secondaryHeaderColor,
                           //   width: 3,
                           // ),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
+                              BorderRadius.all(Radius.circular(12)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -384,7 +384,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                               Heading2('Rate'),
                               Text(
                                 '${requestDetails.request.rate} Time/hour',
-                                style: TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12),
                               ),
                             ],
                           ),
@@ -392,16 +392,16 @@ class _RequestDetails1State extends State<RequestDetails1> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   widget.isRequest
                       ? Card(
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             // side: BorderSide(
                             //   color: themeData1().secondaryHeaderColor,
                             //   width: 3,
                             // ),
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
+                                BorderRadius.all(Radius.circular(12)),
                           ),
                           elevation: 5,
                           child: Container(
@@ -413,7 +413,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                     ? Column(
                                         children: [
                                           Heading2('Applicants'),
-                                          Text('No Applicants'),
+                                          const Text('No Applicants'),
                                           const SizedBox(height: 5)
                                         ],
                                       )
@@ -427,7 +427,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Heading2('Applicants'),
-                                                Text(
+                                                const Text(
                                                     'Select your applicants: '),
                                                 ListView.builder(
                                                   shrinkWrap: true,
@@ -490,7 +490,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                 '${index + 1}) ${_listApplicants[index].user.name.toString().titleCase()}',
                                                               )),
                                                         ),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(width: 8),
                                                         IconButton(
                                                           onPressed: (() {
                                                             Navigator.push(
@@ -528,7 +528,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                       'Provider Selected')),
                                               isNull(requestDetails
                                                       .request.provider)
-                                                  ? Text('No provider selected')
+                                                  ? const Text('No provider selected')
                                                   : Padding(
                                                       padding: const EdgeInsets
                                                           .fromLTRB(3, 3, 3, 6),
@@ -587,7 +587,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                             },
                                                           ));
                                                 },
-                                                child: Text(
+                                                child: const Text(
                                                     'Update Request Details')),
                                           ],
                                         ),
@@ -597,7 +597,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                             ? isProviderRated()
                                                 ? Column(
                                                     children: [
-                                                      Text(
+                                                      const Text(
                                                           'You have rated the provider.'),
                                                       Text(
                                                           'Completed On: ${dateCompletedOn.day}-${dateCompletedOn.month}-${dateCompletedOn.year}'),
@@ -608,10 +608,10 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('Payment: '),
+                                                          const Text('Payment: '),
                                                           Text(
                                                             '${requestDetails.request.actualPayment.toStringAsFixed(2)} Time/hour',
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 color:
                                                                     Colors.red,
                                                                 fontSize: 14,
@@ -631,21 +631,21 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                 .push(
                                                                     MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  RateGivenPage(),
+                                                                  const RateGivenPage(),
                                                             ));
                                                           },
-                                                          child: Text(
+                                                          child: const Text(
                                                               'Go to rating page'))
                                                     ],
                                                   )
                                                 : Column(children: [
-                                                    Text(
+                                                    const Text(
                                                       'Rate the provider',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
-                                                    SizedBox(height: 15),
+                                                    const SizedBox(height: 15),
                                                     Center(
                                                       child: RatingBar.builder(
                                                         initialRating: 0,
@@ -665,15 +665,15 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                         },
                                                       ),
                                                     ),
-                                                    SizedBox(height: 15),
+                                                    const SizedBox(height: 15),
                                                     TextFormField(
                                                       controller:
                                                           _comment1Controller,
-                                                      decoration: InputDecoration(
+                                                      decoration: const InputDecoration(
                                                           hintText:
                                                               'Enter comment'),
                                                     ),
-                                                    SizedBox(height: 15),
+                                                    const SizedBox(height: 15),
                                                     ElevatedButton(
                                                         style: themeData2()
                                                             .elevatedButtonTheme
@@ -724,7 +724,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                         //   // print(_comment1Controller.text);
                                                         //   // print(id);
 
-                                                        child: Text(
+                                                        child: const Text(
                                                             'Rate Provider'))
                                                   ])
                                             : Column(
@@ -772,17 +772,17 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                               ],
                                                             ),
                                                           ),
-                                                      child: Text('Delete Job'))
+                                                      child: const Text('Delete Job'))
                                                 ],
                                               )
                                         : isOngoing()
                                             ? Column(
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     'The request has started, make sure to tap \n"Complete Request" when the provider has finished the request.',
                                                     textAlign: TextAlign.center,
                                                   ),
-                                                  Divider(),
+                                                  const Divider(),
                                                   ElevatedButton(
                                                       style: themeData2()
                                                           .elevatedButtonTheme
@@ -795,7 +795,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                 AlertDialog(
                                                               title: const Text(
                                                                   'Complete Request?'),
-                                                              content: Text(
+                                                              content: const Text(
                                                                   'Once the request is complete, transaction of Time/hour will be made.'),
                                                               actions: <Widget>[
                                                                 TextButton(
@@ -828,7 +828,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                       //           .request.id,
                                                       //       widget.user);
                                                       // },
-                                                      child: Text(
+                                                      child: const Text(
                                                           'Complete Request')),
                                                 ],
                                               )
@@ -894,7 +894,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                       //   // _completerequest(
                                                       //   //     widget.id, widget.user);
                                                       // },
-                                                      child: Text(
+                                                      child: const Text(
                                                           'Start Request')),
                                                 ],
                                               ),
@@ -926,8 +926,8 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                 ],
                                               ),
                                             ),
-                                        child: Text('Delete request'))
-                                    : Text('')
+                                        child: const Text('Delete request'))
+                                    : const Text('')
                                 // : isComplete()
                                 //     ? Padding(
                                 //         padding: const EdgeInsets.all(8.0),
@@ -980,10 +980,10 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text('Payment received: '),
+                                        const Text('Payment received: '),
                                         Text(
                                           '${requestDetails.request.actualPayment.toStringAsFixed(2)} Time/hour',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.green,
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold),
@@ -995,17 +995,17 @@ class _RequestDetails1State extends State<RequestDetails1> {
                               ),
                             )
                           : isAccepted()
-                              ? Card(
+                              ? const Card(
                                   shape: RoundedRectangleBorder(
                                     // side: BorderSide(
                                     //   color: themeData1().secondaryHeaderColor,
                                     //   width: 3,
                                     // ),
-                                    borderRadius: const BorderRadius.all(
+                                    borderRadius: BorderRadius.all(
                                         Radius.circular(12)),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
+                                    padding: EdgeInsets.all(15.0),
                                     child: Column(
                                       children: [
                                         CustomHeadline(
@@ -1018,17 +1018,17 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                   ),
                                 )
                               : isOngoing()
-                                  ? Card(
+                                  ? const Card(
                                       shape: RoundedRectangleBorder(
                                         // side: BorderSide(
                                         //   color: themeData1().secondaryHeaderColor,
                                         //   width: 3,
                                         // ),
-                                        borderRadius: const BorderRadius.all(
+                                        borderRadius: BorderRadius.all(
                                             Radius.circular(12)),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: EdgeInsets.all(8.0),
                                         child: Center(
                                             child: CustomHeadline(
                                                 heading:
@@ -1036,12 +1036,12 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                       ),
                                     )
                                   : Card(
-                                      shape: RoundedRectangleBorder(
+                                      shape: const RoundedRectangleBorder(
                                         // side: BorderSide(
                                         //   //color: themeData1().secondaryHeaderColor,
                                         //   width: 3,
                                         // ),
-                                        borderRadius: const BorderRadius.all(
+                                        borderRadius: BorderRadius.all(
                                             Radius.circular(12)),
                                       ),
                                       //sini oi the service
@@ -1095,11 +1095,11 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                             //   // print(widget.user);
 
                                                             // },
-                                                            child: Text(
+                                                            child: const Text(
                                                                 'Apply Request')),
                                                       ],
                                                     )
-                                                  : Center(
+                                                  : const Center(
                                                       child: Text(
                                                           'You have applied the request.\nContact the Requestor to accept you as Provider'),
                                                     )),
@@ -1108,29 +1108,29 @@ class _RequestDetails1State extends State<RequestDetails1> {
                   Container(
                       alignment: Alignment.center,
                       child: Heading2('Other Information')),
-                  Divider(),
+                  const Divider(),
                   Heading2('Date of the request'),
                   Text(
                       'Date: ${dateJob.day}-${dateJob.month}-${dateJob.year}\nTime: ${dateJob.hour.toString().padLeft(2, '0')}:${dateJob.minute.toString().padLeft(2, '0')}'),
                   //const SizedBox(height: 15),
-                  Divider(),
+                  const Divider(),
                   Heading2('Category'),
                   Text(requestDetails.request.category),
-                  Divider(),
+                  const Divider(),
                   Heading2('Description'),
                   Text(requestDetails.request.description
                       .toString()
                       .capitalize()),
-                  Divider(),
+                  const Divider(),
                   Heading2('Location'),
                   Text(
                       'Address: ${requestDetails.request.location.address.toString()}'),
                   Text('State: ${requestDetails.request.location.state}'),
                   Text('City: ${requestDetails.request.location.city}'),
-                  Divider(),
+                  const Divider(),
                   Heading2('Media'),
                   isNull(requestDetails.request.mediaAttachments)
-                      ? Text('No Attachment')
+                      ? const Text('No Attachment')
                       : SizedBox(
                           child: ListView.builder(
                             shrinkWrap: true,
@@ -1147,7 +1147,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                             },
                           ),
                         ),
-                  Divider(),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

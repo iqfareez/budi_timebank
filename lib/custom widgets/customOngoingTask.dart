@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomOngoingTask extends StatefulWidget {
   //const CustomOngoingTask({Key? key}) : super(key: key);
   List<dynamic> list;
-  CustomOngoingTask(this.list);
+  CustomOngoingTask(this.list, {super.key});
 
   @override
   State<CustomOngoingTask> createState() => _CustomOngoingTaskState();

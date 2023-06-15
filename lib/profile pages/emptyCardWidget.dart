@@ -17,8 +17,8 @@ class emptyCardContact extends StatelessWidget {
         ),
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
+      child: const Padding(
+        padding: EdgeInsets.all(10.0),
         child: Text(
           'No contact added',
           style: TextStyle(fontWeight: FontWeight.bold),

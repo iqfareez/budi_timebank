@@ -92,11 +92,11 @@ class PasswordPageState extends State<PasswordPage> {
             obscureText: !_passwordVisible,
             decoration: InputDecoration(
               labelText: 'Password',
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                 //fontSize: 35,
                 color: Color.fromARGB(255, 89, 175, 89),
               ),
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                   borderSide:
                       BorderSide(color: Color.fromARGB(255, 89, 175, 89))),
               suffixIcon: IconButton(

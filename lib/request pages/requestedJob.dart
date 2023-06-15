@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:testfyp/request%20pages/requestDetails1.dart';
 
-import '../bin/client_service_request.dart';
-import '../bin/common.dart';
 import '../components/constants.dart';
 import '../custom widgets/customCardServiceRequest.dart';
-import 'requestDetails.dart';
 
 class RequestedJob extends StatefulWidget {
-  RequestedJob({Key? key}) : super(key: key);
+  const RequestedJob({Key? key}) : super(key: key);
 
   @override
   State<RequestedJob> createState() => _RequestedJobState();
@@ -158,12 +155,12 @@ class _RequestedJobState extends State<RequestedJob> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
+                          const Text(
                             'When people offer their service to you, the job will be listed here. You can choose the applicants..',
                             textAlign: TextAlign.center,
                           ),
                           Container(
-                              margin: EdgeInsets.only(bottom: 0),
+                              margin: const EdgeInsets.only(bottom: 0),
                               alignment: Alignment.center,
                               child: Image.asset(
                                 'asset/Profiling-pana.png',
@@ -212,18 +209,18 @@ class _RequestedJobState extends State<RequestedJob> {
                           );
                         } else {
                           if (finalCount < 6) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                            return const Padding(
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Text('No more request...'),
                             );
                           }
                           if (finalCount < from) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                            return const Padding(
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Text('No more request...'),
                             );
                           } else {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
                         }
                       },

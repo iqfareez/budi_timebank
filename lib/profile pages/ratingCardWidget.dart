@@ -40,8 +40,8 @@ class _RatingCardWidgetState extends State<RatingCardWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
           //elevation: 5,
           color: widget.isProvider
@@ -51,11 +51,11 @@ class _RatingCardWidgetState extends State<RatingCardWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           color: Colors.white),
@@ -66,23 +66,23 @@ class _RatingCardWidgetState extends State<RatingCardWidget> {
                             : themeData1().primaryColor,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(
                       widget.title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ],
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 25, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 25, 0),
                   child: isEmpty(widget.userRating)
-                      ? Text('No Rating',
+                      ? const Text('No Rating',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.white))
                       : Text('${widget.userRating}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white)))
             ],

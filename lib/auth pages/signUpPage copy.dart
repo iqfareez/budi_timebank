@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
       // if (session != null) {!
       //   context.showSnackBar(message: 'User Already Registered!!');
       // }
-      if (response.user!.identities!.length == 0) {
+      if (response.user!.identities!.isEmpty) {
         context.showSnackBar(message: 'User Already Registered!!');
         // _emailController.clear();
         // _passwordController.clear();

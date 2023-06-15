@@ -24,7 +24,7 @@ class RatingDetails extends StatefulWidget {
   final updatedAt;
   final requestId;
 
-  RatingDetails({
+  const RatingDetails({super.key, 
     //required this.function,
     required this.isProvider,
     required this.ratingFor,
@@ -118,7 +118,7 @@ class _RatingDetailsState extends State<RatingDetails> {
         backgroundColor: widget.isProvider
             ? themeData1().primaryColor
             : themeData1().secondaryHeaderColor,
-        title: Text('Rating Details'),
+        title: const Text('Rating Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -148,12 +148,12 @@ class _RatingDetailsState extends State<RatingDetails> {
                                 children: [
                                   Icon(Icons.comment,
                                       color: themeData1().primaryColor),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Heading2('Comment'),
                                 ],
                               ),
                               widget.comment.toString().isEmpty
-                                  ? Text(
+                                  ? const Text(
                                       'No comment from provider',
                                       style: TextStyle(color: Colors.grey),
                                     )
@@ -234,11 +234,11 @@ class _RatingDetailsState extends State<RatingDetails> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Heading2(' Created On'),
                   Text(
                       ' Date: ${dateCreatedOn.day}-${dateCreatedOn.month}-${dateCreatedOn.year}\n\tTime: ${dateCreatedOn.hour}:${dateCreatedOn.minute}'),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   // Heading2(' Updated On'),
                   // Text(
                   //     ' Date: ${dateUpdatedOn.day}-${dateUpdatedOn.month}-${dateUpdatedOn.year}\n\tTime: ${dateUpdatedOn.hour}:${dateUpdatedOn.minute}'),
@@ -255,7 +255,7 @@ class _RatingDetailsState extends State<RatingDetails> {
                     child: Text(' ${requestName.request.title}'),
                   ),
 
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   widget.isProvider
                       ? TextButton(
                           style: TextButton.styleFrom(
@@ -284,8 +284,8 @@ class _RatingDetailsState extends State<RatingDetails> {
                           // onPressed: () {
                           //   _deleteRating(widget.requestId, widget.ratingFor);
                           // },
-                          child: Text('Delete Rating'))
-                      : Text('')
+                          child: const Text('Delete Rating'))
+                      : const Text('')
                 ],
               ),
       ),

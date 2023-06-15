@@ -89,7 +89,7 @@ class _UpdatePageState extends State<UpdatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Update Request'),
+          title: const Text('Update Request'),
           backgroundColor: themeData1().primaryColor),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -141,13 +141,13 @@ class _UpdatePageState extends State<UpdatePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: CustomHeadline(heading: 'Update Title'),
                     ),
                     TextFormField(
                       controller: _titleController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Enter Title'),
                       // validator: (value) {
@@ -162,7 +162,7 @@ class _UpdatePageState extends State<UpdatePage> {
                       //   reqList[0]['Title'] = value;
                       // },
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ElevatedButton(
                         style: themeData2().elevatedButtonTheme.style,
                         onPressed: (() {
@@ -174,7 +174,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                 '{"title": "${_titleController.text.toString()}"}');
                           }
                         }),
-                        child: Text('Update Title'))
+                        child: const Text('Update Title'))
                   ],
                 );
               } else if (_elementController.text == listElement[1]) {
@@ -183,7 +183,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      CustomHeadline(heading: 'Pick category'),
+                      const CustomHeadline(heading: 'Pick category'),
                       Container(
                         alignment: Alignment.center,
                         //padding: EdgeInsets.all(8),
@@ -229,7 +229,7 @@ class _UpdatePageState extends State<UpdatePage> {
                             updateJob(
                                 '{"category": "${_categoryController.text.toString()}"}');
                           }),
-                          child: Text('Update Category'))
+                          child: const Text('Update Category'))
                     ],
                   ),
                 );
@@ -238,13 +238,13 @@ class _UpdatePageState extends State<UpdatePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: CustomHeadline(heading: 'Update Description'),
                     ),
                     TextFormField(
                       controller: _descriptionController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Enter Description'),
 
@@ -252,7 +252,7 @@ class _UpdatePageState extends State<UpdatePage> {
                       //   reqList[0]['Title'] = value;
                       // },
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ElevatedButton(
                         style: themeData1().elevatedButtonTheme.style,
                         onPressed: (() {
@@ -264,17 +264,17 @@ class _UpdatePageState extends State<UpdatePage> {
                                 '{"description": "${_descriptionController.text.toString()}"}');
                           }
                         }),
-                        child: Text('Update Description'))
+                        child: const Text('Update Description'))
                   ],
                 );
               } else if (_elementController.text == listElement[3]) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     TextFormField(
                       controller: _locationController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           // helperText:
                           //     'Latitude and longitude of the location will be\nautomatically added',
@@ -286,7 +286,7 @@ class _UpdatePageState extends State<UpdatePage> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     CSCPicker(
                       // showCities: true,
 
@@ -339,7 +339,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                 '{"location":{"address": "${_locationController.text.toString()}", "city" : "${_cityController.text.toString()}", "state": "${_stateController.text.toString()}"}}');
                           }
                         }),
-                        child: Text('Update Location'))
+                        child: const Text('Update Location'))
                   ],
                 );
               } else {
@@ -361,7 +361,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                   _dateTime.hour,
                                   _dateTime.minute,
                                   _dateTime.second),
-                              maxTime: _dateTime.add(Duration(days: 365)),
+                              maxTime: _dateTime.add(const Duration(days: 365)),
                               onChanged: (date) {
                             //print('change $date');
                           }, onConfirm: (date) {
@@ -373,14 +373,14 @@ class _UpdatePageState extends State<UpdatePage> {
                               currentTime: DateTime.now(),
                               locale: LocaleType.en);
                         },
-                        child: Text(
+                        child: const Text(
                           'Pick date & time',
                           //style: TextStyle(color: Colors.blue),
                         )),
                     TextFormField(
                       enabled: false,
                       controller: _dateControllerDisplay,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           errorStyle: TextStyle(
                             color: Colors.red, // or any other color
                           ),
@@ -398,7 +398,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                 '{"date": "${_dateController.text.toString()}"}');
                           }
                         }),
-                        child: Text('Update Date & Time'))
+                        child: const Text('Update Date & Time'))
                   ],
                 );
               }

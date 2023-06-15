@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../bin/client_service_request.dart';
-import '../bin/common.dart';
 import '../components/constants.dart';
 import '../custom widgets/customCardServiceRequest.dart';
-import '../request pages/requestDetails.dart';
 import '../request pages/requestDetails1.dart';
 
 class YourServices extends StatefulWidget {
-  YourServices({Key? key}) : super(key: key);
+  const YourServices({Key? key}) : super(key: key);
 
   @override
   State<YourServices> createState() => _YourServicesState();
@@ -40,7 +37,6 @@ class _YourServicesState extends State<YourServices> {
           fetch();
           // from += 5;
           // to += 5;
-
         }
       },
     );
@@ -154,12 +150,12 @@ class _YourServicesState extends State<YourServices> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
+                          const Text(
                             'What to help other people?\ntry to apply job in the next tab. At the moment, you have no ongoing services... ',
                             textAlign: TextAlign.center,
                           ),
                           Container(
-                              margin: EdgeInsets.only(bottom: 0),
+                              margin: const EdgeInsets.only(bottom: 0),
                               alignment: Alignment.center,
                               child: Image.asset(
                                 'asset/help.png',
@@ -208,8 +204,8 @@ class _YourServicesState extends State<YourServices> {
                           );
                         } else {
                           if (finalCount < 6) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                            return const Padding(
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Text('No more request...'),
                             );
                           }

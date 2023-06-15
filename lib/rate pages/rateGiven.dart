@@ -4,7 +4,6 @@ import 'package:testfyp/rate%20pages/customCardRating.dart';
 
 import '../bin/common.dart';
 import '../components/constants.dart';
-import '../custom widgets/customCardServiceRequest.dart';
 import 'ratingDetails.dart';
 
 class RateGivenPage extends StatefulWidget {
@@ -64,7 +63,7 @@ class _RateGivenPageState extends State<RateGivenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Given Rating')),
+      appBar: AppBar(title: const Text('Given Rating')),
       body: isLoad
           ? const Center(child: CircularProgressIndicator())
           : _isEmpty
@@ -144,6 +143,5 @@ class _RateGivenPageState extends State<RateGivenPage> {
       //   label: Text('Add Request'),
       // )
     );
-    ;
   }
 }

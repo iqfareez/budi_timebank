@@ -4,7 +4,7 @@ import 'package:testfyp/request%20pages/requestedJob.dart';
 import 'package:testfyp/request%20pages/yourRequest.dart';
 
 class RequestPage extends StatefulWidget {
-  RequestPage({Key? key}) : super(key: key);
+  const RequestPage({Key? key}) : super(key: key);
 
   @override
   State<RequestPage> createState() => _RequestPageState();
@@ -20,14 +20,14 @@ class _RequestPageState extends State<RequestPage> {
           //backgroundColor: Color.fromARGB(255, 245, 167, 44),
           bottom: TabBar(
               indicatorColor: Theme.of(context).secondaryHeaderColor,
-              tabs: [
+              tabs: const [
                 Tab(text: '\t\t\tYour\nRequest'),
                 Tab(text: 'Applied\nRequest'),
                 Tab(text: 'Completed\n\t\t Request')
               ]),
           title: const Text('Need help from other people?'),
         ),
-        body: TabBarView(
+        body: const TabBarView(
             children: [YourRequest(), RequestedJob(), CompletedRequest()]),
       ),
     );

@@ -64,7 +64,7 @@ class _RateReceivedPageState extends State<RateReceivedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Received Rating'),
+          title: const Text('Received Rating'),
           backgroundColor: themeData1().secondaryHeaderColor),
       body: isLoad
           ? const Center(child: CircularProgressIndicator())
@@ -145,6 +145,5 @@ class _RateReceivedPageState extends State<RateReceivedPage> {
       //   label: Text('Add Request'),
       // )
     );
-    ;
   }
 }

@@ -18,45 +18,45 @@ class CustomDrawer extends StatelessWidget {
             child: Text('Drawer Header'),
           ),
           ListTile(
-            title: Text('Homepage'),
+            title: const Text('Homepage'),
             onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => DashBoard()));
+                      builder: (BuildContext context) => const DashBoard()));
               //Navigator.pop(context); //close sidebar after user click it
             },
           ),
           ListTile(
-            title: Text('Your Services'),
+            title: const Text('Your Services'),
             onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => ServicePage()));
+                      builder: (BuildContext context) => const ServicePage()));
               //Navigator.pop(context);
             },
           ),
           ListTile(
-            title: Text('Your Requests'),
+            title: const Text('Your Requests'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: Text('Find a request'),
+            title: const Text('Find a request'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: Text('Profile'),
+            title: const Text('Profile'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: Text('Settings'),
+            title: const Text('Settings'),
             onTap: () {
               Navigator.pop(context);
             },

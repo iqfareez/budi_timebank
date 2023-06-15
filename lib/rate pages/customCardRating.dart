@@ -4,9 +4,7 @@ import 'package:testfyp/bin/client_user.dart';
 import 'package:testfyp/bin/common.dart';
 import 'package:testfyp/extension_string.dart';
 
-import '../components/constants.dart';
 import '../custom widgets/theme.dart';
-import '../service pages/serviceDetails.dart';
 
 class CustomCardRating extends StatefulWidget {
   final requestor;
@@ -69,7 +67,7 @@ class _CustomCardRatingState extends State<CustomCardRating> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
       child: isLoading
           ? const Card()
           : Card(
@@ -86,22 +84,22 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           widget.title.toString().isEmpty
-                              ? Text('No comment from the requestor',
+                              ? const Text('No comment from the requestor',
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14))
-                              : Text('${widget.title.toString().capitalize()}',
-                                  style: TextStyle(
+                              : Text(widget.title.toString().capitalize(),
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14)
                                   //     Theme.of(context).textTheme.headline1,
                                   ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
                               "Author: ${_userRequestor.user.name.toString().titleCase()}",
-                              style: TextStyle(fontSize: 12)),
+                              style: const TextStyle(fontSize: 12)),
                         ],
                       ),
                     ),
@@ -109,7 +107,7 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                   Flexible(
                       flex: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -125,12 +123,12 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                                     ? Text(
                                         'Provider\n${_userProvider.user.name.toString().titleCase()}',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 12),
+                                        style: const TextStyle(fontSize: 12),
                                       )
                                     : Text(
                                         'Requestor\n${_userProvider.user.name.toString().titleCase()}',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 12),
+                                        style: const TextStyle(fontSize: 12),
                                       ))),
                       )),
                   Flexible(

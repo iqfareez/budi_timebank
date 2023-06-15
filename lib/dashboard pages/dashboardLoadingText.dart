@@ -11,27 +11,27 @@ class DashboardLoadingText extends StatelessWidget {
       child: Column(
         children: [
           isRequest
-              ? Row(
+              ? const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [Text('Total Request: '), Text('...')],
                 )
-              : Row(
+              : const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [Text('Total Service: '), Text('...')],
                 ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text('Pending: '), Text('...')],
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text('Accepted: '), Text('...')],
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text('Ongoing: '), Text('...')],
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text('Completed: '), Text('...')],
           ),

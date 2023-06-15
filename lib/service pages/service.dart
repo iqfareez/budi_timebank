@@ -5,7 +5,7 @@ import 'package:testfyp/service%20pages/yourServices.dart';
 import 'package:badges/badges.dart';
 
 class ServicePage extends StatefulWidget {
-  ServicePage({Key? key}) : super(key: key);
+  const ServicePage({Key? key}) : super(key: key);
 
   @override
   State<ServicePage> createState() => _ServicePageState();
@@ -20,7 +20,7 @@ class _ServicePageState extends State<ServicePage> {
             appBar: AppBar(
               backgroundColor: Theme.of(context).secondaryHeaderColor,
               bottom:
-                  TabBar(indicatorColor: Theme.of(context).primaryColor, tabs: [
+                  TabBar(indicatorColor: Theme.of(context).primaryColor, tabs: const [
                 Badge(
                     showBadge: false,
                     badgeContent: Text('!'),
@@ -33,7 +33,7 @@ class _ServicePageState extends State<ServicePage> {
               // backgroundColor: Color.fromARGB(255, 127, 17, 224),
               title: const Text('Want to help other people?'),
             ),
-            body: TabBarView(
+            body: const TabBarView(
               children: [
                 AvailableServices(),
                 YourServices(),

@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                 // labelStyle: TextStyle(
                 //   color: Color.fromARGB(255, 127, 17, 224),
                 // ),
-                border: UnderlineInputBorder(),
+                border: const UnderlineInputBorder(),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: themeData1().primaryColor),
                 ),
@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: _passwordController,
               obscureText: !_passwordVisible,
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: const UnderlineInputBorder(),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: themeData1().primaryColor),
                 ),
@@ -200,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: _isLoading ? null : _logIn,
               child: Text(
                 _isLoading ? 'Loading' : 'Login',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             ElevatedButton(

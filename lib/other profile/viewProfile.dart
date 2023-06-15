@@ -85,20 +85,20 @@ class _ViewProfileState extends State<ViewProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile Summary'),
+        title: const Text('Profile Summary'),
         //backgroundColor: themeData2().primaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: isLoad
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -120,28 +120,28 @@ class _ViewProfileState extends State<ViewProfile> {
                                 heading: profile.user.profile.name
                                     .toString()
                                     .titleCase()),
-                            SizedBox(height: 8),
-                            Text('Gender',
+                            const SizedBox(height: 8),
+                            const Text('Gender',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             Text(
-                                '${profile.user.profile.gender.toString().capitalize()}',
-                                style: TextStyle(fontSize: 12)),
+                                profile.user.profile.gender.toString().capitalize(),
+                                style: const TextStyle(fontSize: 12)),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  CustomHeadline(heading: ' Ratings'),
+                  const CustomHeadline(heading: ' Ratings'),
                   RatingCardDetails1(
                       isProvider: true,
                       userRating: profile.user.rating.asProvider),
                   // RatingCardDetails1(
                   //     isProvider: false,
                   //     userRating: profile.user.rating.asRequestor),
-                  CustomHeadline(heading: ' Skill List'),
+                  const CustomHeadline(heading: ' Skill List'),
                   isEmpty(skills)
-                      ? Text('No skills entered')
+                      ? const Text('No skills entered')
                       : SizedBox(
                           height: 50,
                           child: ListView.builder(
@@ -162,7 +162,7 @@ class _ViewProfileState extends State<ViewProfile> {
                               );
                             },
                           )),
-                  CustomHeadline(heading: ' Contact List'),
+                  const CustomHeadline(heading: ' Contact List'),
                   Row(
                     children: [
                       ContactWidget(
@@ -173,7 +173,7 @@ class _ViewProfileState extends State<ViewProfile> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(email)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: email)
                     ],
                   ),
@@ -187,7 +187,7 @@ class _ViewProfileState extends State<ViewProfile> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(phone)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: phone)
                     ],
                   ),
@@ -201,7 +201,7 @@ class _ViewProfileState extends State<ViewProfile> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(twitter)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: twitter)
                     ],
                   ),
@@ -215,7 +215,7 @@ class _ViewProfileState extends State<ViewProfile> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(whatsapp)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: whatsapp)
                     ],
                   ),

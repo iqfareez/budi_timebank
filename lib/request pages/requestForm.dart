@@ -1,5 +1,4 @@
 import 'package:csc_picker/csc_picker.dart';
-import 'package:csc_picker/model/select_status_model.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:grpc/grpc.dart';
@@ -7,7 +6,6 @@ import 'package:testfyp/bin/client_service_request.dart';
 import 'package:testfyp/components/constants.dart';
 import 'package:testfyp/custom%20widgets/customHeadline.dart';
 import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import '../bin/common.dart';
@@ -16,7 +14,7 @@ import '../bin/common.dart';
 //https://levelup.gitconnected.com/how-to-add-google-maps-in-a-flutter-app-and-get-the-current-location-of-the-user-dynamically-2172f0be53f6
 
 class RequestForm extends StatefulWidget {
-  RequestForm({Key? key}) : super(key: key);
+  const RequestForm({Key? key}) : super(key: key);
 
   @override
   State<RequestForm> createState() => _RequestFormState();
@@ -215,7 +213,7 @@ class _RequestFormState extends State<RequestForm> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text('Request Form'),
+          title: const Text('Request Form'),
           // backgroundColor: Color.fromARGB(255, 127, 17, 224),
         ),
         body: isLoad
@@ -228,10 +226,10 @@ class _RequestFormState extends State<RequestForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                              padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                               child: CustomHeadline(heading: 'Title'),
                             ),
                             CustomHeadline(
@@ -242,7 +240,7 @@ class _RequestFormState extends State<RequestForm> {
                         ),
                         TextFormField(
                           controller: _titleController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Enter Title'),
                           validator: (value) {
@@ -257,10 +255,10 @@ class _RequestFormState extends State<RequestForm> {
                           //   reqList[0]['Title'] = value;
                           // },
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                              padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                               child: CustomHeadline(heading: 'Desription'),
                             ),
                             CustomHeadline(
@@ -271,7 +269,7 @@ class _RequestFormState extends State<RequestForm> {
                         ),
                         TextFormField(
                           controller: _descriptionController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Enter description of the job',
                             //prefixIcon: Icon(Icons.map)
@@ -283,10 +281,10 @@ class _RequestFormState extends State<RequestForm> {
                             return null;
                           },
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                              padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                               child: CustomHeadline(heading: 'Date & Time'),
                             ),
                             CustomHeadline(
@@ -309,7 +307,7 @@ class _RequestFormState extends State<RequestForm> {
                                       _dateTime.hour,
                                       _dateTime.minute,
                                       _dateTime.second),
-                                  maxTime: _dateTime.add(Duration(days: 365)),
+                                  maxTime: _dateTime.add(const Duration(days: 365)),
                                   onChanged: (date) {
                                 //print('change $date');
                               }, onConfirm: (date) {
@@ -321,15 +319,15 @@ class _RequestFormState extends State<RequestForm> {
                                   currentTime: DateTime.now(),
                                   locale: LocaleType.en);
                             },
-                            child: Text(
+                            child: const Text(
                               'Pick date & time',
                               //style: TextStyle(color: Colors.blue),
                             )),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         TextFormField(
                           enabled: false,
                           controller: _dateControllerDisplay,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               errorStyle: TextStyle(
                                 color: Colors.red, // or any other color
                               ),
@@ -345,10 +343,10 @@ class _RequestFormState extends State<RequestForm> {
                             return null;
                           },
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                              padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                               child: CustomHeadline(heading: 'Category'),
                             ),
                             CustomHeadline(
@@ -396,10 +394,10 @@ class _RequestFormState extends State<RequestForm> {
                             },
                           ),
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                              padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                               child: CustomHeadline(heading: 'Location'),
                             ),
                             CustomHeadline(
@@ -408,14 +406,14 @@ class _RequestFormState extends State<RequestForm> {
                             )
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                               'Enter address of the job or get current location'),
                         ),
                         TextFormField(
                           controller: _locationController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               // helperText:
                               //     'Latitude and longitude of the location will be\nautomatically added',
@@ -428,7 +426,7 @@ class _RequestFormState extends State<RequestForm> {
                           },
                         ),
 
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         isLocationFetched
                             ? CSCPicker(
@@ -529,12 +527,12 @@ class _RequestFormState extends State<RequestForm> {
                                     GetAddressFromLatLong(position);
                                   },
                                   child: isLoad
-                                      ? Text('Loading...')
-                                      : Text('Get current location')),
+                                      ? const Text('Loading...')
+                                      : const Text('Get current location')),
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         // Padding(
                         //   padding: const EdgeInsets.all(8.0),
                         //   child: CustomHeadline(heading: 'Country & State & City'),
@@ -689,10 +687,10 @@ class _RequestFormState extends State<RequestForm> {
                         //             );
                         //           },
                         //         )),
-                        Row(
+                        const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                              padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                               child: CustomHeadline(heading: 'Time Limit'),
                             ),
                             CustomHeadline(
@@ -704,7 +702,7 @@ class _RequestFormState extends State<RequestForm> {
                         TextFormField(
                           controller: _timeLimitController,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               helperText: 'Time required to finish the request',
                               hintText: 'Enter time limit (hours)'),
@@ -718,10 +716,10 @@ class _RequestFormState extends State<RequestForm> {
                           //   reqList[0]['Title'] = value;
                           // },
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                              padding: EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                               child: CustomHeadline(heading: 'Rate'),
                             ),
                             CustomHeadline(
@@ -736,7 +734,7 @@ class _RequestFormState extends State<RequestForm> {
                               child: TextFormField(
                                 controller: _rateController,
                                 keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: 'Enter Rate',
                                     helperText:
@@ -767,13 +765,13 @@ class _RequestFormState extends State<RequestForm> {
                             //     // },
                             //   ),
                             // ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: Text('\$ Time/hour'),
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         ElevatedButton(
                             onPressed: () async {
                               final user = supabase.auth.currentUser!.id;

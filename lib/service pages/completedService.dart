@@ -4,7 +4,7 @@ import '../custom widgets/customCardServiceRequest.dart';
 import '../request pages/requestDetails1.dart';
 
 class CompletedServices extends StatefulWidget {
-  CompletedServices({Key? key}) : super(key: key);
+  const CompletedServices({Key? key}) : super(key: key);
 
   @override
   State<CompletedServices> createState() => _CompletedServicesState();
@@ -163,12 +163,12 @@ class _CompletedServicesState extends State<CompletedServices> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
+                          const Text(
                             'When you service/help is completed, the job will be listed here. No completed job yet...',
                             textAlign: TextAlign.center,
                           ),
                           Container(
-                              margin: EdgeInsets.only(bottom: 0),
+                              margin: const EdgeInsets.only(bottom: 0),
                               alignment: Alignment.center,
                               child: Image.asset(
                                 'asset/completed_job.png',
@@ -219,8 +219,8 @@ class _CompletedServicesState extends State<CompletedServices> {
                           );
                         } else {
                           if (finalCount < 6) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                            return const Padding(
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Text('No more request...'),
                             );
                           }

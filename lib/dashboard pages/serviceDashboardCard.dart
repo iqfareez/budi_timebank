@@ -7,7 +7,7 @@ import 'dashboardLoadingText.dart';
 
 class ServiceDashboardCard extends StatefulWidget {
   final isRequest;
-  ServiceDashboardCard({super.key, this.isRequest});
+  const ServiceDashboardCard({super.key, this.isRequest});
 
   @override
   State<ServiceDashboardCard> createState() => _ServiceDashboardCardState();
@@ -64,7 +64,7 @@ class _ServiceDashboardCardState extends State<ServiceDashboardCard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Total Request: '),
+                              const Text('Total Request: '),
                               Text(
                                   '${_summaryList.pending.asRequestor + _summaryList.accepted.asRequestor + _summaryList.ongoing.asRequestor + _summaryList.completed.asRequestor}')
                             ],
@@ -72,28 +72,28 @@ class _ServiceDashboardCardState extends State<ServiceDashboardCard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Pending: '),
+                              const Text('Pending: '),
                               Text('${_summaryList.pending.asRequestor}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Accepted: '),
+                              const Text('Accepted: '),
                               Text('${_summaryList.accepted.asRequestor}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Ongoing: '),
+                              const Text('Ongoing: '),
                               Text('${_summaryList.ongoing.asRequestor}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Completed: '),
+                              const Text('Completed: '),
                               Text('${_summaryList.completed.asRequestor}')
                             ],
                           ),
@@ -107,7 +107,7 @@ class _ServiceDashboardCardState extends State<ServiceDashboardCard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Total Service: '),
+                              const Text('Total Service: '),
                               Text(
                                   '${_summaryList.pending.asProvider + _summaryList.accepted.asProvider + _summaryList.ongoing.asProvider + _summaryList.completed.asProvider}')
                             ],
@@ -115,28 +115,28 @@ class _ServiceDashboardCardState extends State<ServiceDashboardCard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Pending: '),
+                              const Text('Pending: '),
                               Text('${_summaryList.pending.asProvider}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Accepted: '),
+                              const Text('Accepted: '),
                               Text('${_summaryList.accepted.asProvider}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Ongoing: '),
+                              const Text('Ongoing: '),
                               Text('${_summaryList.ongoing.asProvider}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Completed: '),
+                              const Text('Completed: '),
                               Text('${_summaryList.completed.asProvider}')
                             ],
                           ),

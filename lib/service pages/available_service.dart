@@ -6,7 +6,7 @@ import '../components/constants.dart';
 import '../custom widgets/customCardServiceRequest.dart';
 
 class AvailableServices extends StatefulWidget {
-  AvailableServices({Key? key}) : super(key: key);
+  const AvailableServices({Key? key}) : super(key: key);
 
   @override
   State<AvailableServices> createState() => _AvailableServicesState();
@@ -270,7 +270,7 @@ class _AvailableServicesState extends State<AvailableServices> {
   }
 
   bool isEmpty() {
-    if (listFiltered.length == 0) {
+    if (listFiltered.isEmpty) {
       _isEmpty = true;
       return _isEmpty;
     } else {
@@ -331,7 +331,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                                       horizontal: 10),
                                               child: Text(
                                                 e,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15),
@@ -349,7 +349,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                       },
                                     ),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
                                   Expanded(
                                     child: ListView.builder(
                                       // physics: const AlwaysScrollableScrollPhysics(),
@@ -388,7 +388,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                                           horizontal: 10),
                                                       child: Text(
                                                         e,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -437,7 +437,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                                           horizontal: 10),
                                                       child: Text(
                                                         e,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -463,7 +463,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                 ],
                               ),
                             ),
-                            Text(
+                            const Text(
                               'All available jobs based on category will be listed here...\nSo far there are no available job...',
                               textAlign: TextAlign.center,
                             ),
@@ -477,8 +477,9 @@ class _AvailableServicesState extends State<AvailableServices> {
                                 //       image: AssetImage('asset/available_job.png'),
                                 //       fit: BoxFit.fitWidth),
                                 // ),
-                                margin: EdgeInsets.only(bottom: 0),
+                                margin: const EdgeInsets.only(bottom: 0),
                                 child: FittedBox(
+                                  fit: BoxFit.fitWidth,
                                   child: Image.asset(
                                     'asset/available_job.png',
                                     height:
@@ -486,7 +487,6 @@ class _AvailableServicesState extends State<AvailableServices> {
                                     // width: double.infinity,
                                     // repeat: ImageRepeat.repeatX,
                                   ),
-                                  fit: BoxFit.fitWidth,
                                 )),
                           ],
                         ),
@@ -536,7 +536,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                             horizontal: 10),
                                         child: Text(
                                           e,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
@@ -553,7 +553,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                 },
                               ),
                             ),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             Expanded(
                               child: ListView.builder(
                                 // physics: const AlwaysScrollableScrollPhysics(),
@@ -589,7 +589,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                                         horizontal: 10),
                                                 child: Text(
                                                   e,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -637,7 +637,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                                         horizontal: 10),
                                                 child: Text(
                                                   e,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -708,14 +708,14 @@ class _AvailableServicesState extends State<AvailableServices> {
                                 );
                               } else {
                                 if (finalCount < 6) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(left: 15.0),
+                                  return const Padding(
+                                    padding: EdgeInsets.only(left: 15.0),
                                     child: Text('No more request...'),
                                   );
                                 }
                                 if (finalCount < from) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(left: 15.0),
+                                  return const Padding(
+                                    padding: EdgeInsets.only(left: 15.0),
                                     child: Text('No more request...'),
                                   );
                                 } else {
@@ -736,8 +736,8 @@ class _AvailableServicesState extends State<AvailableServices> {
                 context: context, delegate: CustomSearchDelegate(data, user));
             //print(listFiltered);
           },
-          icon: Icon(Icons.search),
-          label: Text('Find Job'),
+          icon: const Icon(Icons.search),
+          label: const Text('Find Job'),
         ));
   }
 }

@@ -8,7 +8,7 @@ class ClientAuth {
 
   ClientAuth(ClientChannel channel) {
     stub = AuthClient(channel,
-        options: CallOptions(timeout: Duration(seconds: 30)));
+        options: CallOptions(timeout: const Duration(seconds: 30)));
   }
 
   Future<SignUp_Response> signUpUser(

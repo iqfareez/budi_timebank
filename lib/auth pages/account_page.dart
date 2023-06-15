@@ -231,7 +231,7 @@ class _AccountPageState extends State<AccountPage> {
   Future<void> _signOut() async {
     try {
       await supabase.auth.signOut();
-    } on AuthException catch (error) {
+    } on AuthException {
       context.showErrorSnackBar(message: 'error signing out');
     } catch (error) {
       context.showErrorSnackBar(message: 'Unable to signout');
@@ -264,7 +264,7 @@ class _AccountPageState extends State<AccountPage> {
         backgroundColor: themeData2().primaryColor,
       ),
       body: _loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Form(
               key: _formKey,
               child: ListView(
@@ -276,13 +276,13 @@ class _AccountPageState extends State<AccountPage> {
                   //   imageUrl: _avatarUrl,
                   //   onUpload: _onUpload,
                   // ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: CustomHeadline(heading: 'Name'),
                   ),
                   TextFormField(
                     controller: _usernameController,
-                    decoration: InputDecoration(border: OutlineInputBorder()),
+                    decoration: const InputDecoration(border: OutlineInputBorder()),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter name...';
@@ -290,18 +290,18 @@ class _AccountPageState extends State<AccountPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: CustomHeadline(heading: 'Gender'),
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width / 3,
                         //padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                        margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
@@ -340,8 +340,8 @@ class _AccountPageState extends State<AccountPage> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 8),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 0, 8, 8),
                     child: CustomHeadline(heading: 'Identification'),
                   ),
                   Row(
@@ -364,7 +364,7 @@ class _AccountPageState extends State<AccountPage> {
                       Container(
                         //padding: EdgeInsets.all(8),
                         width: MediaQuery.of(context).size.width / 3,
-                        margin: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                        margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
@@ -410,14 +410,14 @@ class _AccountPageState extends State<AccountPage> {
                       thickness: 2,
                       indent: 15,
                       endIndent: 15),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: CustomHeadline(heading: 'Skill'),
                   ),
                   TextFormField(
                     controller: _skillController,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         hintText: 'Add Skills',
                         //labelText: 'Skill',
                         //suffixIconColor: themeData2().primaryColor,
@@ -426,7 +426,7 @@ class _AccountPageState extends State<AccountPage> {
                             foregroundColor: themeData2().primaryColor,
                           ),
                           onPressed: () {
-                            if (_skillController.text.length == 0) {
+                            if (_skillController.text.isEmpty) {
                               context.showErrorSnackBar(
                                   message: 'You have not entered any skill..');
                             } else {
@@ -443,14 +443,14 @@ class _AccountPageState extends State<AccountPage> {
                           child: const Icon(Icons.add),
                         )),
                   ),
-                  SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const SizedBox(height: 8),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text('Your Skills: '),
                   ),
                   _isSkillsEmpty(skills)
-                      ? Padding(
-                          padding: const EdgeInsets.all(8.0),
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text('You have not entered any skill'),
                         )
                       : SizedBox(
@@ -469,7 +469,7 @@ class _AccountPageState extends State<AccountPage> {
                                       Text(skills[index]
                                           .toString()
                                           .capitalize()),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       IconButton(
@@ -477,7 +477,7 @@ class _AccountPageState extends State<AccountPage> {
                                             _deleteSkill(
                                                 skills[index].toString());
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.remove_circle_outline,
                                             color: Colors.red,
                                           ))
@@ -494,8 +494,8 @@ class _AccountPageState extends State<AccountPage> {
                       thickness: 2,
                       indent: 15,
                       endIndent: 15),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: CustomHeadline(heading: 'Contacts'),
                   ),
                   Row(
@@ -503,7 +503,7 @@ class _AccountPageState extends State<AccountPage> {
                       Expanded(
                         child: TextFormField(
                           controller: _contactController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Add Contacts',
                             //labelText: 'Contact',
@@ -521,7 +521,7 @@ class _AccountPageState extends State<AccountPage> {
                           foregroundColor: themeData2().primaryColor,
                         ),
                         onPressed: () {
-                          if (_contactController.text.length == 0) {
+                          if (_contactController.text.isEmpty) {
                             context.showErrorSnackBar(
                                 message: 'You have not entered any contact..');
                           } else {
@@ -536,7 +536,7 @@ class _AccountPageState extends State<AccountPage> {
                             }
                           }
                         },
-                        child: Icon(Icons.add),
+                        child: const Icon(Icons.add),
                       ),
                       Container(
                         //padding: EdgeInsets.all(8),
@@ -582,12 +582,12 @@ class _AccountPageState extends State<AccountPage> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text('Your Contacts: '),
                   ),
                   _isContactsEmpty(contacts)
-                      ? Text('You have not entered any contacts...')
+                      ? const Text('You have not entered any contacts...')
                       : SizedBox(
                           height: 180,
                           child: ListView.builder(
@@ -616,7 +616,7 @@ class _AccountPageState extends State<AccountPage> {
                                               .toString()),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       IconButton(
@@ -625,7 +625,7 @@ class _AccountPageState extends State<AccountPage> {
                                                     ['address']
                                                 .toString());
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.remove_circle_outline,
                                             color: Colors.red,
                                           ))
@@ -635,7 +635,7 @@ class _AccountPageState extends State<AccountPage> {
                               );
                             },
                           )),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     // style: ElevatedButton.styleFrom(
                     //   foregroundColor: Colors.white,

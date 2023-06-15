@@ -26,8 +26,8 @@ class ServiceDetails extends StatefulWidget {
   final completed;
   final media;
 
-  ServiceDetails(
-      { //required this.function,
+  const ServiceDetails(
+      {super.key,  //required this.function,
       required this.user,
       required this.id,
       required this.requestor,
@@ -91,7 +91,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Color.fromARGB(255, 127, 17, 224),
-        title: Text('Job Details'),
+        title: const Text('Job Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -106,11 +106,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             Text(widget.description.toString().capitalize()),
             Heading2('Applicants'),
             isNull(widget.applicants)
-                ? Text('No Applicants')
+                ? const Text('No Applicants')
                 : Text(widget.applicants.toString()),
             Heading2('Media'),
             isNull(widget.media)
-                ? Text('No Attachment')
+                ? const Text('No Attachment')
                 : Text(widget.media.toString()),
             Heading2('Location'),
             Text(widget.locationName.toString().titleCase()),
@@ -126,15 +126,15 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             Text(widget.updated),
             Heading2('Completed On'),
             isNull(widget.completed)
-                ? Text('Not Completed')
+                ? const Text('Not Completed')
                 : Text(widget.completed),
             Heading2('Provider'),
             isNull(widget.provider)
-                ? Text('No provider yet')
+                ? const Text('No provider yet')
                 : Text(widget.provider.toString().titleCase()),
             // Heading2('Category'),
             // Text('Programming, Python, uhh'),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ElevatedButton(
                 onPressed: () {
                   // print(widget.id);
@@ -143,7 +143,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   context.showSnackBar(message: 'Job requested!!');
                   Navigator.of(context).pop();
                 },
-                child: Text('Request Job')),
+                child: const Text('Request Job')),
             isComplete(widget.state.toString())
                 ? Card(
                     elevation: 5,
@@ -151,12 +151,12 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'Rate The requestor',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Center(
                             child: RatingBar.builder(
                               initialRating: 0,
@@ -173,7 +173,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                           TextFormField(
                             controller: _commentController,
                             decoration:
-                                InputDecoration(hintText: 'Enter comment'),
+                                const InputDecoration(hintText: 'Enter comment'),
                           ),
                           ElevatedButton(
                               onPressed: () {
@@ -193,14 +193,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                                 //applyJob(id, user);
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Rate Provider')),
+                              child: const Text('Rate Provider')),
                         ],
                       ),
                     ),
                   )
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Center(
+                : const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(
                         child: Text('Complete the job to rate the provider')),
                   )
           ],

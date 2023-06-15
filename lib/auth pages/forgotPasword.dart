@@ -18,7 +18,7 @@ class PasswordRecoveryPage extends StatefulWidget {
 
 class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
   bool _isLoading = false;
-  bool _redirecting = false;
+  final bool _redirecting = false;
   late final TextEditingController _emailController;
   late final StreamSubscription<AuthState> _authStateSubscription;
   //final session = supabase.auth.currentSession;

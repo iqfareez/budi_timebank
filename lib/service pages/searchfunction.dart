@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../custom widgets/customCardServiceRequest.dart';
-import '../request pages/requestDetails.dart';
 import '../request pages/requestDetails1.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
@@ -39,7 +38,7 @@ class CustomSearchDelegate extends SearchDelegate {
           onPressed: () {
             query = '';
           },
-          icon: Icon(Icons.clear))
+          icon: const Icon(Icons.clear))
     ];
   }
 
@@ -49,7 +48,7 @@ class CustomSearchDelegate extends SearchDelegate {
         onPressed: () {
           close(context, null);
         },
-        icon: Icon(Icons.arrow_back));
+        icon: const Icon(Icons.arrow_back));
   }
 
   @override

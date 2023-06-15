@@ -28,7 +28,7 @@ class _AvatarState extends State<Avatar> {
           Container(
             width: 150,
             height: 150,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 127, 17, 224),
                 shape: BoxShape.circle),
             child: const Center(
@@ -37,8 +37,8 @@ class _AvatarState extends State<Avatar> {
           )
         else
           Container(
-            padding: EdgeInsets.all(7),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(7),
+            decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 127, 17, 224),
                 shape: BoxShape.circle),
             child: ClipRRect(

@@ -21,7 +21,7 @@ class PersistentBottomNavigationBar extends StatefulWidget {
 
 class _PersistentBottomNavigationBarState
     extends State<PersistentBottomNavigationBar> {
-  PersistentTabController _controller =
+  final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
   int _selectedIndex = 0;
@@ -38,10 +38,10 @@ class _PersistentBottomNavigationBarState
 
   List<Widget> _buildScreens() {
     return [
-      DashBoard(),
-      RequestPage(),
-      ServicePage(),
-      ProfilePage(
+      const DashBoard(),
+      const RequestPage(),
+      const ServicePage(),
+      const ProfilePage(
         isMyProfile: true,
       )
     ];
@@ -50,7 +50,7 @@ class _PersistentBottomNavigationBarState
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(
+        icon: const Icon(
           CupertinoIcons.home,
           // color: Colors.white,
         ),
@@ -62,21 +62,21 @@ class _PersistentBottomNavigationBarState
         inactiveColorPrimary: CupertinoColors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.handshake),
+        icon: const Icon(Icons.handshake),
         title: ("Need Help?"),
         activeColorSecondary: themeData1().primaryColor,
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.emoji_people),
+        icon: const Icon(Icons.emoji_people),
         title: ("Offer Help?"),
         activeColorSecondary: CupertinoColors.white,
         activeColorPrimary: themeData1().secondaryHeaderColor,
         inactiveColorPrimary: CupertinoColors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.account_box),
+        icon: const Icon(Icons.account_box),
         title: ("Settings"),
         activeColorSecondary: CupertinoColors.white,
         activeColorPrimary: themeData1().secondaryHeaderColor,
@@ -122,12 +122,12 @@ class _PersistentBottomNavigationBarState
 
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
+      itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
+      screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,

@@ -85,7 +85,7 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
       child: isLoading
           ? const Card()
           : Card(
@@ -109,15 +109,15 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.work_outline_rounded),
-                                      SizedBox(width: 5),
+                                      const Icon(Icons.work_outline_rounded),
+                                      const SizedBox(width: 5),
                                       Flexible(
                                         child: Text(
                                             widget.title
                                                 .toString()
                                                 .capitalize(),
                                             //overflow: TextOverflow.fade,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14)
                                             //     Theme.of(context).textTheme.headline1,
@@ -140,8 +140,8 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      '${widget.state.toString()}',
-                                      style: TextStyle(
+                                      widget.state.toString(),
+                                      style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold),
@@ -150,25 +150,25 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                             ),
                           ],
                         ),
-                        Divider(),
+                        const Divider(),
                         //SizedBox(height: 10),
                         Text(_userCurrent.user.name.toString().titleCase(),
-                            style: TextStyle(fontSize: 12)),
-                        SizedBox(height: 10),
+                            style: const TextStyle(fontSize: 12)),
+                        const SizedBox(height: 10),
                         Text('${widget.location}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 6),
+                        const SizedBox(height: 6),
                         Text(
                           '${widget.rate} \$Time/hour',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text('${dateJob.day}-${dateJob.month}-${dateJob.year}',
-                            style: TextStyle(fontSize: 12)),
+                            style: const TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),

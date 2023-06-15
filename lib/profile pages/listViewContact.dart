@@ -37,8 +37,8 @@ class _CustomListviewContactState extends State<CustomListviewContact> {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Text(
-                    '${widget.contactList[index].toString()}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    widget.contactList[index].toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

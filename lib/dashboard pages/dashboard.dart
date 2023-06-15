@@ -6,16 +6,14 @@ import 'package:testfyp/custom%20widgets/theme.dart';
 import 'package:testfyp/dashboard%20pages/serviceDashboardCard.dart';
 import 'package:testfyp/navigation.dart';
 import 'package:testfyp/rate%20pages/rateGiven.dart';
-import 'package:testfyp/request%20pages/request.dart';
 import 'package:testfyp/transactions%20pages/transaction.dart';
 import '../components/constants.dart';
 import '../custom widgets/customHeadline.dart';
 import '../rate pages/rateReceived.dart';
-import '../service pages/service.dart';
 
 class DashBoard extends StatefulWidget {
   final onTapped;
-  DashBoard({Key? key, this.onTapped}) : super(key: key);
+  const DashBoard({Key? key, this.onTapped}) : super(key: key);
 
   @override
   State<DashBoard> createState() => _DashBoardState();
@@ -76,9 +74,8 @@ class _DashBoardState extends State<DashBoard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
                         //elevation: 5,
                         color: themeData1().primaryColor,
@@ -86,11 +83,11 @@ class _DashBoardState extends State<DashBoard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
                                         color: Colors.white),
@@ -99,8 +96,8 @@ class _DashBoardState extends State<DashBoard> {
                                       color: themeData1().primaryColor,
                                     ),
                                   ),
-                                  SizedBox(width: 5),
-                                  Text(
+                                  const SizedBox(width: 5),
+                                  const Text(
                                     'Time Balance',
                                     style: TextStyle(
                                         fontSize: 12,
@@ -111,10 +108,10 @@ class _DashBoardState extends State<DashBoard> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: Text(
                                   'Time/hour: ${(data.total - data.reserved).toStringAsFixed(2)}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white)),
@@ -143,7 +140,8 @@ class _DashBoardState extends State<DashBoard> {
                                 CupertinoPageRoute(
                                   //fullscreenDialog: true,
                                   builder: (BuildContext context) =>
-                                      BottomBarNavigation(valueListenable: 1),
+                                      const BottomBarNavigation(
+                                          valueListenable: 1),
                                 ),
                               );
 
@@ -165,7 +163,7 @@ class _DashBoardState extends State<DashBoard> {
                               //       PageTransitionAnimation.cupertino,
                               // );
                             },
-                            child: Column(
+                            child: const Column(
                               children: [
                                 CustomHeadline(heading: 'Your Request'),
                                 ServiceDashboardCard(isRequest: true)
@@ -191,7 +189,8 @@ class _DashBoardState extends State<DashBoard> {
                                 CupertinoPageRoute(
                                   //fullscreenDialog: true,
                                   builder: (BuildContext context) =>
-                                      BottomBarNavigation(valueListenable: 2),
+                                      const BottomBarNavigation(
+                                          valueListenable: 2),
                                 ),
                                 // MaterialPageRoute(
                                 //   builder: (context) => BottomBarNavigation(
@@ -199,7 +198,7 @@ class _DashBoardState extends State<DashBoard> {
                                 //       ))
                               );
                             },
-                            child: Column(
+                            child: const Column(
                               children: [
                                 CustomHeadline(heading: 'Your Service'),
                                 ServiceDashboardCard(isRequest: false)
@@ -210,12 +209,12 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   //CustomDivider(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
                     child: CustomHeadline(heading: 'Services'),
                   ),
                   Expanded(
@@ -232,9 +231,9 @@ class _DashBoardState extends State<DashBoard> {
                                 Expanded(
                                   child: Card(
                                     //elevation: 5,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12)),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
                                     ),
                                     color: themeData1().primaryColor,
                                     child: InkWell(
@@ -244,12 +243,12 @@ class _DashBoardState extends State<DashBoard> {
                                                   builder: (context) =>
                                                       TransactionPage()));
                                         },
-                                        child: Column(
+                                        child: const Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: const [
+                                          children: [
                                             Icon(Icons.receipt_long,
                                                 color: Colors.white),
                                             Padding(
@@ -311,7 +310,7 @@ class _DashBoardState extends State<DashBoard> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RateGivenPage()));
+                                                    const RateGivenPage()));
                                       },
                                       child: Column(
                                         mainAxisAlignment:
@@ -355,9 +354,9 @@ class _DashBoardState extends State<DashBoard> {
                                 flex: 1,
                                 child: Card(
                                   //elevatio n: 5,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(12)),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
                                   ),
                                   color: themeData1().secondaryHeaderColor,
                                   child: InkWell(
@@ -365,14 +364,14 @@ class _DashBoardState extends State<DashBoard> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RateReceivedPage()));
+                                                    const RateReceivedPage()));
                                       },
-                                      child: Column(
+                                      child: const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           Icon(
                                             Icons.thumbs_up_down,
                                             color: Colors.white,

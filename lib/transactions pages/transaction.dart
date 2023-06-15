@@ -7,11 +7,10 @@ import '../bin/client_service_request.dart';
 import '../bin/client_user.dart';
 import '../bin/common.dart';
 import '../components/constants.dart';
-import '../custom widgets/customCardServiceRequest.dart';
 // import 'requestDetails.dart';
 
 class TransactionPage extends StatefulWidget {
-  TransactionPage({Key? key}) : super(key: key);
+  const TransactionPage({Key? key}) : super(key: key);
 
   @override
   State<TransactionPage> createState() => _TransactionPageState();
@@ -103,16 +102,16 @@ class _TransactionPageState extends State<TransactionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Transaction Page'),
+          title: const Text('Transaction Page'),
           backgroundColor: themeData1().primaryColor),
       body: isLoad
           ? const Center(child: CircularProgressIndicator())
           : listFiltered.data.isEmpty
               ? RefreshIndicator(
                   onRefresh: getinstance,
-                  child: Center(
+                  child: const Center(
                     child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
+                      physics: AlwaysScrollableScrollPhysics(),
                       child: Text(
                         'No Transactions done',
                         textAlign: TextAlign.center,
@@ -157,9 +156,9 @@ class _TransactionPageState extends State<TransactionPage> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.work_outline_rounded,
+                                          const Icon(Icons.work_outline_rounded,
                                               size: 25),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -167,7 +166,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                               Text(
                                                 listRequestName[index]
                                                     .toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -182,11 +181,11 @@ class _TransactionPageState extends State<TransactionPage> {
                                                   // ),
                                                   Text(
                                                     listFrom[index].toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 11,
                                                     ),
                                                   ),
-                                                  Icon(
+                                                  const Icon(
                                                     Icons
                                                         .arrow_right_alt_rounded,
                                                     size: 17,
@@ -199,7 +198,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                                   // ),
                                                   Text(
                                                     listTo[index].toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 11,
                                                     ),
                                                   ),
@@ -222,7 +221,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                                     ? Colors.red
                                                     : Colors.green),
                                           ),
-                                          Text(
+                                          const Text(
                                             ' Time/Hour',
                                             style: TextStyle(
                                               fontSize: 12,
@@ -232,8 +231,8 @@ class _TransactionPageState extends State<TransactionPage> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 8),
-                                  Text(
+                                  const SizedBox(height: 8),
+                                  const Text(
                                     'Completed On:',
                                     style: TextStyle(
                                         fontSize: 14,
@@ -242,7 +241,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                   Text(
                                     getTimeStamp(
                                         listFiltered.data[index].timestamp),
-                                    style: TextStyle(fontSize: 12),
+                                    style: const TextStyle(fontSize: 12),
                                   ),
                                   CustomDivider(
                                       color: themeData1().primaryColor)

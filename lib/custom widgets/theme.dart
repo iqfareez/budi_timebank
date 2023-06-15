@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData themeData1() {
   return ThemeData(
     textSelectionTheme:
-        TextSelectionThemeData(cursorColor: Color.fromARGB(255, 0, 146, 143)),
+        const TextSelectionThemeData(cursorColor: Color.fromARGB(255, 0, 146, 143)),
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(),
 

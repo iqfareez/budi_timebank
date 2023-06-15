@@ -107,19 +107,19 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           )
         ],
-        title: Text('Profile Page'),
+        title: const Text('Profile Page'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: isLoad
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -143,35 +143,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                     .titleCase()),
                             const SizedBox(height: 10),
                             Text(
-                                '${profile.user.profile.identificationNo.type.toString().capitalize()}',
-                                style: TextStyle(
+                                profile.user.profile.identificationNo.type.toString().capitalize(),
+                                style: const TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             Text(
                                 '${profile.user.profile.identificationNo.value}',
-                                style: TextStyle(fontSize: 12)),
+                                style: const TextStyle(fontSize: 12)),
                             const SizedBox(height: 10),
-                            Text('Gender',
+                            const Text('Gender',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             Text(
-                                '${profile.user.profile.gender.toString().capitalize()}',
-                                style: TextStyle(fontSize: 12)),
+                                profile.user.profile.gender.toString().capitalize(),
+                                style: const TextStyle(fontSize: 12)),
                           ],
                         ),
                       ),
                     ),
                   ),
 
-                  CustomHeadline(heading: ' Ratings'),
+                  const CustomHeadline(heading: ' Ratings'),
                   RatingCardDetails1(
                       isProvider: true,
                       userRating: profile.user.rating.asProvider),
                   // RatingCardDetails1(
                   //     isProvider: false,
                   //     userRating: profile.user.rating.asRequestor),
-                  CustomHeadline(heading: ' Skill List'),
+                  const CustomHeadline(heading: ' Skill List'),
                   isEmpty(skills)
-                      ? Text('No skills entered')
+                      ? const Text('No skills entered')
                       : SizedBox(
                           height: 50,
                           child: ListView.builder(
@@ -193,7 +193,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                           )),
 
-                  CustomHeadline(heading: ' Contact List'),
+                  const CustomHeadline(heading: ' Contact List'),
                   Row(
                     children: [
                       ContactWidget(
@@ -204,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(email)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: email)
                     ],
                   ),
@@ -218,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(phone)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: phone)
                     ],
                   ),
@@ -232,7 +232,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(twitter)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: twitter)
                     ],
                   ),
@@ -246,7 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(whatsapp)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: whatsapp)
                     ],
                   ),

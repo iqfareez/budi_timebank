@@ -36,8 +36,8 @@ class _RatingCardDetails1State extends State<RatingCardDetails1> {
         color: widget.isProvider
             ? themeData1().primaryColor
             : themeData1().secondaryHeaderColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +47,7 @@ class _RatingCardDetails1State extends State<RatingCardDetails1> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           color: Colors.white),
@@ -62,9 +62,9 @@ class _RatingCardDetails1State extends State<RatingCardDetails1> {
                             )),
                 ),
                 widget.isProvider
-                    ? Text('Provider Rating',
+                    ? const Text('Provider Rating',
                         style: TextStyle(color: Colors.white, fontSize: 12))
-                    : Text('Requestor Rating',
+                    : const Text('Requestor Rating',
                         style: TextStyle(color: Colors.white, fontSize: 12))
               ],
             ),
@@ -72,11 +72,11 @@ class _RatingCardDetails1State extends State<RatingCardDetails1> {
               padding: const EdgeInsets.only(right: 15.0),
               child: Row(
                 children: [
-                  Text('Count: ',
+                  const Text('Count: ',
                       style: TextStyle(color: Colors.white, fontSize: 12)),
                   Text(widget.userRating.count.toString(),
-                      style: TextStyle(color: Colors.white, fontSize: 12)),
-                  Text(' | ',
+                      style: const TextStyle(color: Colors.white, fontSize: 12)),
+                  const Text(' | ',
                       style: TextStyle(color: Colors.white, fontSize: 12)),
                   // Text('Average: ',
                   //     style: TextStyle(color: Colors.white)),

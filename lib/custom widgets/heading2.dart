@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
 
 class Heading2 extends StatelessWidget {
   String heading2;
@@ -12,7 +11,7 @@ class Heading2 extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Text(
         heading2,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 15,
           fontWeight: FontWeight.bold,

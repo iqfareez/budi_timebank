@@ -39,8 +39,8 @@ class RequestDetails extends StatefulWidget {
   final completed;
   final media;
 
-  RequestDetails(
-      { //required this.function,
+  const RequestDetails(
+      {super.key,  //required this.function,
       //this.ratinglist,
       // this.counter,
       required this.isRequest,
@@ -303,14 +303,14 @@ class _RequestDetailsState extends State<RequestDetails> {
       appBar: widget.isRequest
           ? AppBar(
               backgroundColor: Theme.of(context).primaryColor,
-              title: Text('Job Details'),
+              title: const Text('Job Details'),
             )
           : AppBar(
               backgroundColor: Theme.of(context).secondaryHeaderColor,
-              title: Text('Job Details'),
+              title: const Text('Job Details'),
             ),
       body: isLoad
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(15.0),
               child: ListView(
@@ -341,13 +341,12 @@ class _RequestDetailsState extends State<RequestDetails> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Heading2('Rate'),
-                          Text('\$time/hour ' +
-                              widget.rate.toString().capitalize()),
+                          Text('\$time/hour ${widget.rate.toString().capitalize()}'),
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   widget.isRequest
                       ? Card(
                           elevation: 5,
@@ -360,7 +359,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                     ? Column(
                                         children: [
                                           Heading2('Applicants'),
-                                          Text('No Applicants'),
+                                          const Text('No Applicants'),
                                         ],
                                       )
                                     : isNull(widget.provider) // have applicants
@@ -372,7 +371,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Heading2('Applicants'),
-                                                Text(
+                                                const Text(
                                                     'Select your applicants: '),
                                                 ListView.builder(
                                                   shrinkWrap: true,
@@ -405,12 +404,12 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                               },
                                                               child: Text(
                                                                 '${index + 1}) ${_listApplicants[index].user.name.toString().titleCase()}',
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
                                                                     fontSize:
                                                                         12),
                                                               )),
                                                         ),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(width: 8),
                                                         IconButton(
                                                           onPressed: (() {
                                                             Navigator.push(
@@ -474,9 +473,9 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                         color: themeData2()
                                                             .primaryColor),
                                                   )),
-                                              SizedBox(height: 5),
+                                              const SizedBox(height: 5),
                                               isNull(widget.provider)
-                                                  ? Text('No provider selected')
+                                                  ? const Text('No provider selected')
                                                   : Padding(
                                                       padding: const EdgeInsets
                                                           .fromLTRB(3, 3, 3, 6),
@@ -520,25 +519,25 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                     message: 'Job updated!!!');
                                                 Navigator.of(context).pop();
                                               },
-                                              child: Text(
+                                              child: const Text(
                                                   'Update Job Details (coming soon)')),
                                           ElevatedButton(
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor: Colors.grey),
                                               onPressed: () {},
                                               child:
-                                                  Text('Job is still pending')),
+                                                  const Text('Job is still pending')),
                                         ],
                                       )
                                     : isComplete() //when request is complete
                                         ? isRated() //still for request
                                             ? isProviderRated()
-                                                ? Text(
+                                                ? const Text(
                                                     'You have rated the provider.')
                                                 : Column(children: [
-                                                    Padding(
+                                                    const Padding(
                                                       padding:
-                                                          const EdgeInsets.all(
+                                                          EdgeInsets.all(
                                                               8.0),
                                                       child: Text(
                                                         'Rate the provider',
@@ -570,7 +569,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                     TextFormField(
                                                       controller:
                                                           _comment1Controller,
-                                                      decoration: InputDecoration(
+                                                      decoration: const InputDecoration(
                                                           hintText:
                                                               'Enter comment'),
                                                     ),
@@ -593,7 +592,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                                   .text,
                                                               widget.id);
                                                         },
-                                                        child: Text(
+                                                        child: const Text(
                                                             'Rate Provider'))
                                                   ])
                                             : Column(
@@ -635,7 +634,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   _completeJob(
                                                       widget.id, widget.user);
                                                 },
-                                                child: Text('Complete Job'))
+                                                child: const Text('Complete Job'))
                                             : ElevatedButton(
                                                 style: themeData2()
                                                     .elevatedButtonTheme
@@ -662,7 +661,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   // _completeJob(
                                                   //     widget.id, widget.user);
                                                 },
-                                                child: Text('Start Job')),
+                                                child: const Text('Start Job')),
 
                                 // : Container(
                                 //     padding: EdgeInsets.all(5),
@@ -680,7 +679,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                         onPressed: () {
                                           _deleteRequest(widget.id);
                                         },
-                                        child: Text('Delete Job'))
+                                        child: const Text('Delete Job'))
                                     : isComplete()
                                         ? Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -692,11 +691,11 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   Navigator.of(context)
                                                       .push(MaterialPageRoute(
                                                     builder: (context) =>
-                                                        RateGivenPage(),
+                                                        const RateGivenPage(),
                                                   ));
                                                 },
                                                 child:
-                                                    Text('Go to rating page')),
+                                                    const Text('Go to rating page')),
                                           )
                                         : TextButton(
                                             style: themeData2()
@@ -710,7 +709,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                               //Navigator.of(context).popUntil((route) => route.i);
                                               //Navigator.of(context).pushNamed('/navigation');
                                             },
-                                            child: Text('Abort Job')),
+                                            child: const Text('Abort Job')),
                               ],
                             ),
                           ),
@@ -741,7 +740,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                     //SizedBox(height: 5),
                                     isRated() //for providor
                                         ? isRequestorRated()
-                                            ? Text('Requestor has been rated')
+                                            ? const Text('Requestor has been rated')
                                             : Column(
                                                 children: [
                                                   Center(
@@ -764,7 +763,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   TextFormField(
                                                     controller:
                                                         _commentController,
-                                                    decoration: InputDecoration(
+                                                    decoration: const InputDecoration(
                                                         hintText:
                                                             'Enter comment'),
                                                   ),
@@ -781,7 +780,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                                 .text,
                                                             widget.id);
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                           'Rate Requestor')),
                                                 ],
                                               )
@@ -795,7 +794,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   Navigator.of(context)
                                                       .push(MaterialPageRoute(
                                                         builder: (context) =>
-                                                            RateGivenPage(),
+                                                            const RateGivenPage(),
                                                       ))
                                                       .then((value) => setState(
                                                             () {
@@ -805,14 +804,14 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                           ));
                                                 },
                                                 child:
-                                                    Text('Go to rating page')),
+                                                    const Text('Go to rating page')),
                                           )
                                   ],
                                 ),
                               ),
                             )
                           : isOngoing()
-                              ? Center(
+                              ? const Center(
                                   child: Text(
                                       'You are currently taking this Job...'))
                               : Card(
@@ -830,7 +829,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                             // print(widget.user);
                                             applyJob(widget.id, widget.user);
                                           },
-                                          child: Text('Request Job')),
+                                          child: const Text('Request Job')),
                                     ],
                                   ),
                                 ),
@@ -848,7 +847,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                   Text('City: ' + widget.longitude),
                   Heading2('Media'),
                   isNull(widget.media)
-                      ? Text('No Attachment')
+                      ? const Text('No Attachment')
                       : SizedBox(
                           //height: 50,
                           child: ListView.builder(

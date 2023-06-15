@@ -7,7 +7,7 @@ class ClientServiceRequest {
 
   ClientServiceRequest(ClientChannel channel) {
     stub = ServiceRequestClient(channel,
-        options: CallOptions(timeout: Duration(seconds: 30)));
+        options: CallOptions(timeout: const Duration(seconds: 30)));
   }
 
   Future<GetById_Response> getResponseById(String id) async {
@@ -93,10 +93,10 @@ class ClientServiceRequest {
   }
 
   Future<CompleteService_Response> completeService1(
-      String req_id, String user_id) async {
+      String reqId, String userId) async {
     return await stub.completeService(CompleteService_Request()
-      ..requestId = req_id
-      ..userId = user_id);
+      ..requestId = reqId
+      ..userId = userId);
   }
 
   // Future<GetCommitment_Response> getCommitment1(String req_id) async {

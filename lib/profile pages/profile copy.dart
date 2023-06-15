@@ -7,10 +7,7 @@ import 'package:testfyp/auth%20pages/account_page.dart';
 import 'package:testfyp/custom%20widgets/customHeadline.dart';
 import 'package:testfyp/extension_string.dart';
 import 'package:testfyp/profile%20pages/listViewContact.dart';
-import 'package:testfyp/profile%20pages/ratingCardWidget.dart';
 
-import '../bin/client_rating.dart';
-import '../bin/common.dart';
 import '../custom widgets/ratingCardDetails1.dart';
 import '../custom widgets/theme.dart';
 import 'contactIconWidget.dart';
@@ -19,7 +16,7 @@ import 'emptyCardWidget.dart';
 //import 'package:testfyp/splash_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -41,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late double _userRatingRequestor = 0;
   // late dynamic user;
 
-  String _avatarUrl = 'asset/girl.png';
+  final String _avatarUrl = 'asset/girl.png';
   late List<dynamic> skills;
   late List<dynamic> email1;
   late List<dynamic> phone1;
@@ -164,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 245, 167, 44),
+        backgroundColor: const Color.fromARGB(255, 245, 167, 44),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -181,17 +178,17 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           )
         ],
-        title: Text('Profile Page'),
+        title: const Text('Profile Page'),
       ),
       body: _loading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -210,17 +207,17 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CustomHeadline(heading: _username),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Row(
                               children: [
                                 Text(
                                     '${_identificationTypeNumber.capitalize()}: '),
-                                Text('$_identificationNumber'),
+                                Text(_identificationNumber),
                               ],
                             ),
                             Row(
                               children: [
-                                Text('Gender: '),
+                                const Text('Gender: '),
                                 Text('${_gender.capitalize}'),
                               ],
                             ),
@@ -229,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  CustomHeadline(heading: ' Rating'),
+                  const CustomHeadline(heading: ' Rating'),
                   RatingCardDetails1(
                       isProvider: true,
                       userRating: _userRatingProvider.toString()),
@@ -248,9 +245,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   //   iconRating: Icons.handshake,
                   //   userRating: _userRating,
                   // ),
-                  CustomHeadline(heading: ' Skill List'),
+                  const CustomHeadline(heading: ' Skill List'),
                   isEmpty(skills)
-                      ? Text(' You have not entered any skills')
+                      ? const Text(' You have not entered any skills')
                       : SizedBox(
                           height: 50,
                           child: ListView.builder(
@@ -271,7 +268,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                           )),
-                  CustomHeadline(heading: ' Contact List'),
+                  const CustomHeadline(heading: ' Contact List'),
                   Row(
                     children: [
                       ContactWidget(
@@ -282,7 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(email1)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: email1)
                     ],
                   ),
@@ -296,7 +293,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(phone1)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: phone1)
                     ],
                   ),
@@ -310,7 +307,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(twitter1)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: twitter1)
                     ],
                   ),
@@ -324,7 +321,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           iconColor: Colors.white),
                       isEmpty(whatsapp1)
-                          ? emptyCardContact()
+                          ? const emptyCardContact()
                           : CustomListviewContact(contactList: whatsapp1)
                     ],
                   ),

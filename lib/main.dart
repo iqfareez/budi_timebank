@@ -28,10 +28,12 @@ Future<void> main() async {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1ZXBza3JycG92end5ZHZmZXpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjcxMjU1NzksImV4cCI6MTk4MjcwMTU3OX0.DCX9Qw3GKYdg-Ew96DHU-4wCIqdFm-AS7S63AAx8wFQ';
 
   await Supabase.initialize(url: ammarUrl, anonKey: ammarKey);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,9 +50,9 @@ class MyApp extends StatelessWidget {
         '/navigationP': (_) => const PersistentBottomNavigationBar(),
         '/profile': (_) => const ProfilePage(isMyProfile: true),
         '/passwordReset': (_) => const PasswordPage(),
-        '/request': (_) => RequestPage(),
-        '/service': (_) => ServicePage(),
-        '/dashboard': (_) => DashBoard(),
+        '/request': (_) => const RequestPage(),
+        '/service': (_) => const ServicePage(),
+        '/dashboard': (_) => const DashBoard(),
       },
     );
   }

@@ -4,7 +4,7 @@ import '../components/constants.dart';
 import '../custom widgets/customCardServiceRequest.dart';
 
 class CompletedRequest extends StatefulWidget {
-  CompletedRequest({Key? key}) : super(key: key);
+  const CompletedRequest({Key? key}) : super(key: key);
 
   @override
   State<CompletedRequest> createState() => _CompletedRequestState();
@@ -170,12 +170,12 @@ class _CompletedRequestState extends State<CompletedRequest> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
+                    const Text(
                       'All completed request will be listed here, remember to declare the job to "Completed". No completed requests...',
                       textAlign: TextAlign.center,
                     ),
                     Container(
-                        margin: EdgeInsets.only(bottom: 0),
+                        margin: const EdgeInsets.only(bottom: 0),
                         alignment: Alignment.center,
                         child: Image.asset(
                           'asset/Business deal-pana.png',
@@ -222,14 +222,14 @@ class _CompletedRequestState extends State<CompletedRequest> {
                           );
                         } else {
                           if (finalCount < 6) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                            return const Padding(
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Text('No more request...'),
                             );
                           }
                           if (finalCount < from) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                            return const Padding(
+                              padding: EdgeInsets.only(left: 15.0),
                               child: Text('No more request...'),
                             );
                           } else {

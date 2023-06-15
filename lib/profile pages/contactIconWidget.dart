@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../custom widgets/theme.dart';
 
 class ContactWidget extends StatelessWidget {
   final Color containerColor;
