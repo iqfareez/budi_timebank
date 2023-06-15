@@ -1,4 +1,15 @@
-Forked from: https://github.com/de-timebank
+# BUDI TIME BANK
+
+Forked from: https://github.com/de-timebank/frontend
+
+## Getting Started
+
+1. Run `flutter pub get` to install all dependencies
+2. Run `firebase init` to link Firebase project to this app.
+3. (Optional) Start Firebase emulator by running `firebase emulators:start`. The import & export feature is quite helpful during development. Learn more [here](https://firebase.google.com/docs/emulator-suite/install_and_configure#export_and_import_emulator_data).
+4. Run `flutter run` to run the app
+
+_Content after the line below is from the original repo. Preserved here for reference._
 
 ---
 
