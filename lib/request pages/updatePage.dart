@@ -1,5 +1,5 @@
 import 'package:csc_picker/csc_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:grpc/grpc.dart';
 import 'package:testfyp/bin/client_service_request.dart';
@@ -290,7 +290,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     CSCPicker(
                       // showCities: true,
 
-                      defaultCountry: DefaultCountry.Malaysia,
+                      defaultCountry: CscCountry.Malaysia,
                       disableCountry: true,
                       currentState: stateValue,
                       currentCity: cityValue,

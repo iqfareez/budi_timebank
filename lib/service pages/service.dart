@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:testfyp/service%20pages/available_service.dart';
 import 'package:testfyp/service%20pages/completedService.dart';
 import 'package:testfyp/service%20pages/yourServices.dart';
@@ -24,8 +24,8 @@ class _ServicePageState extends State<ServicePage> {
                 Badge(
                     showBadge: false,
                     badgeContent: Text('!'),
-                    animationType: BadgeAnimationType.scale,
-                    animationDuration: Duration(milliseconds: 100),
+                    badgeAnimation: BadgeAnimation.scale(
+                        animationDuration: Duration(milliseconds: 100)),
                     child: Tab(text: 'Available\n\tRequest')),
                 Tab(text: 'Ongoing\nRequest'),
                 Tab(text: 'Completed\n\t\tRequest')
