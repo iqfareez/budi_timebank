@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/auth%20pages/forgotPasword.dart';
-import 'package:testfyp/auth%20pages/signUpPage.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
+import '../components/constants.dart';
+import 'forgotPasword.dart';
+import 'signUpPage.dart';
+import '../custom%20widgets/theme.dart';
 
 import '../bin/common.dart';
 

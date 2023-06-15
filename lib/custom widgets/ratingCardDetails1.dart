@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
+import 'theme.dart';
 
 class RatingCardDetails1 extends StatefulWidget {
   final bool isProvider;
@@ -75,7 +75,8 @@ class _RatingCardDetails1State extends State<RatingCardDetails1> {
                   const Text('Count: ',
                       style: TextStyle(color: Colors.white, fontSize: 12)),
                   Text(widget.userRating.count.toString(),
-                      style: const TextStyle(color: Colors.white, fontSize: 12)),
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 12)),
                   const Text(' | ',
                       style: TextStyle(color: Colors.white, fontSize: 12)),
                   // Text('Average: ',

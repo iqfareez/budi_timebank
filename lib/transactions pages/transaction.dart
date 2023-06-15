@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/custom%20widgets/customDivider.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/request%20pages/requestDetails1.dart';
+import '../custom%20widgets/customDivider.dart';
+import '../custom%20widgets/theme.dart';
+import '../request%20pages/requestDetails1.dart';
 
 import '../bin/client_service_request.dart';
 import '../bin/client_user.dart';

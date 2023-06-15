@@ -2,18 +2,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/auth%20pages/account_page.dart';
-import 'package:testfyp/custom%20widgets/customHeadline.dart';
-import 'package:testfyp/extension_string.dart';
-import 'package:testfyp/profile%20pages/listViewContact.dart';
+import '../components/constants.dart';
+import '../auth%20pages/account_page.dart';
+import '../custom%20widgets/customHeadline.dart';
+import '../extension_string.dart';
+import 'listViewContact.dart';
 
 import '../custom widgets/ratingCardDetails1.dart';
 import '../custom widgets/theme.dart';
 import 'contactIconWidget.dart';
 import 'emptyCardWidget.dart';
 
-//import 'package:testfyp/splash_page.dart';
+//import 'package:budi_timebank/splash_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

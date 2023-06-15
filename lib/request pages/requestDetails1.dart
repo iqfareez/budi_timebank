@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:grpc/grpc.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/custom%20widgets/customHeadline.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
-import 'package:testfyp/other%20profile/viewProfile.dart';
-import 'package:testfyp/rate%20pages/rateGiven.dart';
-import 'package:testfyp/request%20pages/updatePage.dart';
+import '../components/constants.dart';
+import '../custom%20widgets/customHeadline.dart';
+import '../custom%20widgets/theme.dart';
+import '../extension_string.dart';
+import '../other%20profile/viewProfile.dart';
+import '../rate%20pages/rateGiven.dart';
+import 'updatePage.dart';
 import '../bin/client_rating.dart';
 import '../bin/client_service_request.dart';
 import '../bin/client_user.dart';
@@ -20,7 +20,10 @@ class RequestDetails1 extends StatefulWidget {
   final bool isRequest;
   final String user;
   const RequestDetails1(
-      {super.key, required this.requestId, required this.isRequest, required this.user});
+      {super.key,
+      required this.requestId,
+      required this.isRequest,
+      required this.user});
 
   @override
   State<RequestDetails1> createState() => _RequestDetails1State();
@@ -323,8 +326,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                             //   color: themeData1().secondaryHeaderColor,
                             //   width: 3,
                             // ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12)),
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -349,8 +351,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                           //   color: themeData1().secondaryHeaderColor,
                           //   width: 3,
                           // ),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(12)),
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -373,8 +374,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                           //   color: themeData1().secondaryHeaderColor,
                           //   width: 3,
                           // ),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(12)),
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -400,8 +400,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                             //   color: themeData1().secondaryHeaderColor,
                             //   width: 3,
                             // ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12)),
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
                           elevation: 5,
                           child: Container(
@@ -456,8 +455,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                           'Select ${_listApplicants[index].user.name.toString().titleCase()}?'),
                                                                       content: Text(
                                                                           '${_listApplicants[index].user.name.toString().titleCase()} will be your provider.'),
-                                                                      actions: <
-                                                                          Widget>[
+                                                                      actions: <Widget>[
                                                                         TextButton(
                                                                           onPressed: () => Navigator.pop(
                                                                               context,
@@ -490,7 +488,8 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                 '${index + 1}) ${_listApplicants[index].user.name.toString().titleCase()}',
                                                               )),
                                                         ),
-                                                        const SizedBox(width: 8),
+                                                        const SizedBox(
+                                                            width: 8),
                                                         IconButton(
                                                           onPressed: (() {
                                                             Navigator.push(
@@ -528,7 +527,8 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                       'Provider Selected')),
                                               isNull(requestDetails
                                                       .request.provider)
-                                                  ? const Text('No provider selected')
+                                                  ? const Text(
+                                                      'No provider selected')
                                                   : Padding(
                                                       padding: const EdgeInsets
                                                           .fromLTRB(3, 3, 3, 6),
@@ -608,7 +608,8 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          const Text('Payment: '),
+                                                          const Text(
+                                                              'Payment: '),
                                                           Text(
                                                             '${requestDetails.request.actualPayment.toStringAsFixed(2)} Time/hour',
                                                             style: const TextStyle(
@@ -669,9 +670,10 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                     TextFormField(
                                                       controller:
                                                           _comment1Controller,
-                                                      decoration: const InputDecoration(
-                                                          hintText:
-                                                              'Enter comment'),
+                                                      decoration:
+                                                          const InputDecoration(
+                                                              hintText:
+                                                                  'Enter comment'),
                                                     ),
                                                     const SizedBox(height: 15),
                                                     ElevatedButton(
@@ -686,8 +688,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                   AlertDialog(
                                                                 title: const Text(
                                                                     'Submit Review?'),
-                                                                actions: <
-                                                                    Widget>[
+                                                                actions: <Widget>[
                                                                   TextButton(
                                                                     onPressed: () =>
                                                                         Navigator.pop(
@@ -772,7 +773,8 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                               ],
                                                             ),
                                                           ),
-                                                      child: const Text('Delete Job'))
+                                                      child: const Text(
+                                                          'Delete Job'))
                                                 ],
                                               )
                                         : isOngoing()
@@ -853,8 +855,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                     AlertDialog(
                                                                   title: const Text(
                                                                       'Start Request'),
-                                                                  actions: <
-                                                                      Widget>[
+                                                                  actions: <Widget>[
                                                                     TextButton(
                                                                       onPressed: () => Navigator.pop(
                                                                           context,
@@ -1001,8 +1002,8 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                     //   color: themeData1().secondaryHeaderColor,
                                     //   width: 3,
                                     // ),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.all(15.0),
@@ -1070,8 +1071,7 @@ class _RequestDetails1State extends State<RequestDetails1> {
                                                                           AlertDialog(
                                                                         title: const Text(
                                                                             'Apply request?'),
-                                                                        actions: <
-                                                                            Widget>[
+                                                                        actions: <Widget>[
                                                                           TextButton(
                                                                             onPressed: () =>
                                                                                 Navigator.pop(context, 'Cancel'),

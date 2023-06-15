@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:testfyp/bin/client_rating.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/extension_string.dart';
+import '../bin/client_rating.dart';
+import '../components/constants.dart';
+import '../extension_string.dart';
 import '../bin/client_service_request.dart';
 import '../bin/common.dart';
 import '../custom widgets/heading2.dart';
@@ -27,7 +27,7 @@ class ServiceDetails extends StatefulWidget {
   final media;
 
   const ServiceDetails(
-      {super.key,  //required this.function,
+      {super.key, //required this.function,
       required this.user,
       required this.id,
       required this.requestor,
@@ -172,8 +172,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                           ),
                           TextFormField(
                             controller: _commentController,
-                            decoration:
-                                const InputDecoration(hintText: 'Enter comment'),
+                            decoration: const InputDecoration(
+                                hintText: 'Enter comment'),
                           ),
                           ElevatedButton(
                               onPressed: () {

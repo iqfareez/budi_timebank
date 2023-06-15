@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/bin/client_user.dart';
-import 'package:testfyp/bin/common.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
+import '../bin/client_user.dart';
+import '../bin/common.dart';
+import 'theme.dart';
+import '../extension_string.dart';
 
 class CustomCardServiceRequest extends StatefulWidget {
   final requestor;

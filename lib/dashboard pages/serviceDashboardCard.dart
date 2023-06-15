@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/bin/client_service_request.dart';
-import 'package:testfyp/bin/common.dart';
-import 'package:testfyp/components/constants.dart';
+import '../bin/client_service_request.dart';
+import '../bin/common.dart';
+import '../components/constants.dart';
 
 import 'dashboardLoadingText.dart';
 

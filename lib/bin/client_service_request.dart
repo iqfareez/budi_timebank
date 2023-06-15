@@ -1,5 +1,5 @@
 import 'package:grpc/grpc.dart';
-import 'package:testfyp/generated/misc.pb.dart';
+import '../generated/misc.pb.dart';
 import '../generated/collection/service-request.pbgrpc.dart';
 
 class ClientServiceRequest {

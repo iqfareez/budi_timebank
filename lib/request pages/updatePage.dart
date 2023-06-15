@@ -2,13 +2,13 @@ import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:grpc/grpc.dart';
-import 'package:testfyp/bin/client_service_request.dart';
-import 'package:testfyp/bin/common.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/custom%20widgets/customHeadline.dart';
-import 'package:testfyp/custom%20widgets/heading2.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
+import '../bin/client_service_request.dart';
+import '../bin/common.dart';
+import '../components/constants.dart';
+import '../custom%20widgets/customHeadline.dart';
+import '../custom%20widgets/heading2.dart';
+import '../custom%20widgets/theme.dart';
+import '../extension_string.dart';
 
 class UpdatePage extends StatefulWidget {
   final String id;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:grpc/grpc.dart';
-import 'package:testfyp/bin/client_rating.dart';
-import 'package:testfyp/bin/client_user.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/custom%20widgets/customHeadline.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
+import '../bin/client_rating.dart';
+import '../bin/client_user.dart';
+import '../components/constants.dart';
+import '../custom%20widgets/customHeadline.dart';
+import '../custom%20widgets/theme.dart';
+import '../extension_string.dart';
 import '../bin/client_service_request.dart';
 import '../bin/common.dart';
 import '../custom widgets/heading2.dart';
@@ -24,7 +24,8 @@ class RatingDetails extends StatefulWidget {
   final updatedAt;
   final requestId;
 
-  const RatingDetails({super.key, 
+  const RatingDetails({
+    super.key,
     //required this.function,
     required this.isProvider,
     required this.ratingFor,

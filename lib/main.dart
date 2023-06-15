@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/dashboard%20pages/dashboard.dart';
-import 'package:testfyp/navigation.dart';
-import 'package:testfyp/auth%20pages/account_page.dart';
-import 'package:testfyp/auth%20pages/loginPage.dart';
-import 'package:testfyp/auth%20pages/password.dart';
-import 'package:testfyp/auth%20pages/signUpPage.dart';
-import 'package:testfyp/navigationPersistent.dart';
-import 'package:testfyp/service%20pages/service.dart';
-import 'package:testfyp/splash_page.dart';
-import 'package:testfyp/profile%20pages/profile.dart';
+import 'dashboard%20pages/dashboard.dart';
+import 'navigation.dart';
+import 'auth%20pages/account_page.dart';
+import 'auth%20pages/loginPage.dart';
+import 'auth%20pages/password.dart';
+import 'auth%20pages/signUpPage.dart';
+import 'navigationPersistent.dart';
+import 'service%20pages/service.dart';
+import 'splash_page.dart';
+import 'profile%20pages/profile.dart';
 import 'custom widgets/theme.dart';
 import 'request pages/request.dart';
 

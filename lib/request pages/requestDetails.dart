@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:grpc/grpc.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/custom%20widgets/customDivider.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
-import 'package:testfyp/other%20profile/viewProfile.dart';
-import 'package:testfyp/rate%20pages/rateGiven.dart';
+import '../components/constants.dart';
+import '../custom%20widgets/customDivider.dart';
+import '../custom%20widgets/theme.dart';
+import '../extension_string.dart';
+import '../other%20profile/viewProfile.dart';
+import '../rate%20pages/rateGiven.dart';
 import '../bin/client_rating.dart';
 import '../bin/client_service_request.dart';
 import '../bin/client_user.dart';
@@ -40,7 +40,7 @@ class RequestDetails extends StatefulWidget {
   final media;
 
   const RequestDetails(
-      {super.key,  //required this.function,
+      {super.key, //required this.function,
       //this.ratinglist,
       // this.counter,
       required this.isRequest,
@@ -341,7 +341,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Heading2('Rate'),
-                          Text('\$time/hour ${widget.rate.toString().capitalize()}'),
+                          Text(
+                              '\$time/hour ${widget.rate.toString().capitalize()}'),
                         ],
                       ),
                     ],
@@ -404,12 +405,14 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                               },
                                                               child: Text(
                                                                 '${index + 1}) ${_listApplicants[index].user.name.toString().titleCase()}',
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12),
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            12),
                                                               )),
                                                         ),
-                                                        const SizedBox(width: 8),
+                                                        const SizedBox(
+                                                            width: 8),
                                                         IconButton(
                                                           onPressed: (() {
                                                             Navigator.push(
@@ -475,7 +478,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   )),
                                               const SizedBox(height: 5),
                                               isNull(widget.provider)
-                                                  ? const Text('No provider selected')
+                                                  ? const Text(
+                                                      'No provider selected')
                                                   : Padding(
                                                       padding: const EdgeInsets
                                                           .fromLTRB(3, 3, 3, 6),
@@ -525,8 +529,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor: Colors.grey),
                                               onPressed: () {},
-                                              child:
-                                                  const Text('Job is still pending')),
+                                              child: const Text(
+                                                  'Job is still pending')),
                                         ],
                                       )
                                     : isComplete() //when request is complete
@@ -537,8 +541,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                 : Column(children: [
                                                     const Padding(
                                                       padding:
-                                                          EdgeInsets.all(
-                                                              8.0),
+                                                          EdgeInsets.all(8.0),
                                                       child: Text(
                                                         'Rate the provider',
                                                         style: TextStyle(
@@ -569,9 +572,10 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                     TextFormField(
                                                       controller:
                                                           _comment1Controller,
-                                                      decoration: const InputDecoration(
-                                                          hintText:
-                                                              'Enter comment'),
+                                                      decoration:
+                                                          const InputDecoration(
+                                                              hintText:
+                                                                  'Enter comment'),
                                                     ),
                                                     ElevatedButton(
                                                         style: themeData2()
@@ -634,7 +638,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   _completeJob(
                                                       widget.id, widget.user);
                                                 },
-                                                child: const Text('Complete Job'))
+                                                child:
+                                                    const Text('Complete Job'))
                                             : ElevatedButton(
                                                 style: themeData2()
                                                     .elevatedButtonTheme
@@ -694,8 +699,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                         const RateGivenPage(),
                                                   ));
                                                 },
-                                                child:
-                                                    const Text('Go to rating page')),
+                                                child: const Text(
+                                                    'Go to rating page')),
                                           )
                                         : TextButton(
                                             style: themeData2()
@@ -740,7 +745,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                                     //SizedBox(height: 5),
                                     isRated() //for providor
                                         ? isRequestorRated()
-                                            ? const Text('Requestor has been rated')
+                                            ? const Text(
+                                                'Requestor has been rated')
                                             : Column(
                                                 children: [
                                                   Center(
@@ -763,9 +769,10 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                   TextFormField(
                                                     controller:
                                                         _commentController,
-                                                    decoration: const InputDecoration(
-                                                        hintText:
-                                                            'Enter comment'),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            hintText:
+                                                                'Enter comment'),
                                                   ),
                                                   ElevatedButton(
                                                       style: themeData2()
@@ -803,8 +810,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                             },
                                                           ));
                                                 },
-                                                child:
-                                                    const Text('Go to rating page')),
+                                                child: const Text(
+                                                    'Go to rating page')),
                                           )
                                   ],
                                 ),

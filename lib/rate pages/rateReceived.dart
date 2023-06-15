@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/bin/client_rating.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/rate%20pages/customCardRating.dart';
+import '../bin/client_rating.dart';
+import '../custom%20widgets/theme.dart';
+import 'customCardRating.dart';
 
 import '../bin/common.dart';
 import '../components/constants.dart';

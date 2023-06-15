@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:testfyp/components/avatar.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
-import 'package:testfyp/splash_page.dart';
+// import 'package:budi_timebank/components/avatar.dart';
+import '../components/constants.dart';
+import '../custom%20widgets/theme.dart';
+import '../extension_string.dart';
+import '../splash_page.dart';
 
 import '../custom widgets/customHeadline.dart';
 import '../generated/user.pb.dart';
@@ -282,7 +282,8 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   TextFormField(
                     controller: _usernameController,
-                    decoration: const InputDecoration(border: OutlineInputBorder()),
+                    decoration:
+                        const InputDecoration(border: OutlineInputBorder()),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter name...';

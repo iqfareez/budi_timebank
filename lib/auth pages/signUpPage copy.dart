@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-//import 'package:testfyp/auth%20pages/account_page.dart';
-import 'package:testfyp/components/constants.dart';
+//import 'package:budi_timebank/auth%20pages/account_page.dart';
+import '../components/constants.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

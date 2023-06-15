@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:testfyp/bin/client_user.dart';
-import 'package:testfyp/bin/common.dart';
-import 'package:testfyp/extension_string.dart';
+import '../bin/client_user.dart';
+import '../bin/common.dart';
+import '../extension_string.dart';
 
 import '../custom widgets/theme.dart';
 

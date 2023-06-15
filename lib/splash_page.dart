@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 //import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/components/constants.dart';
+import 'components/constants.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

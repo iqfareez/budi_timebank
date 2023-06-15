@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/dashboard%20pages/dashboard.dart';
+import '../dashboard%20pages/dashboard.dart';
 import '../service pages/service.dart';
 
 class CustomDrawer extends StatelessWidget {

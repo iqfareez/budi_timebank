@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/request%20pages/requestDetails1.dart';
+import 'requestDetails1.dart';
 import '../components/constants.dart';
 import '../custom widgets/customCardServiceRequest.dart';
 
@@ -38,7 +38,6 @@ class _CompletedRequestState extends State<CompletedRequest> {
           fetch();
           // from += 5;
           // to += 5;
-
         }
       },
     );

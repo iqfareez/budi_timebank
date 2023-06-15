@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:testfyp/bin/client_user.dart';
-import 'package:testfyp/bin/common.dart';
-import 'package:testfyp/custom%20widgets/customHeadline.dart';
-import 'package:testfyp/custom%20widgets/ratingCardDetails1.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
+import '../bin/client_user.dart';
+import '../bin/common.dart';
+import '../custom%20widgets/customHeadline.dart';
+import '../custom%20widgets/ratingCardDetails1.dart';
+import '../custom%20widgets/theme.dart';
+import '../extension_string.dart';
 
 import '../profile pages/contactIconWidget.dart';
 import '../profile pages/emptyCardWidget.dart';
@@ -125,7 +125,9 @@ class _ViewProfileState extends State<ViewProfile> {
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             Text(
-                                profile.user.profile.gender.toString().capitalize(),
+                                profile.user.profile.gender
+                                    .toString()
+                                    .capitalize(),
                                 style: const TextStyle(fontSize: 12)),
                           ],
                         ),

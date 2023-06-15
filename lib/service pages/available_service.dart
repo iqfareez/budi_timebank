@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/request%20pages/requestDetails1.dart';
+import '../custom%20widgets/theme.dart';
+import '../request%20pages/requestDetails1.dart';
 import 'searchfunction.dart';
 import '../components/constants.dart';
 import '../custom widgets/customCardServiceRequest.dart';
@@ -238,7 +238,6 @@ class _AvailableServicesState extends State<AvailableServices> {
           .eq('category', _categoryController.text);
 
       // .like('location', '%${_stateController.text.toString()}%')
-
     } else if (_categoryController.text != 'All Categories' &&
         _stateController.text != listState[0]) {
       listFiltered.addAll(await supabase

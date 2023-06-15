@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:testfyp/bin/client_auth.dart';
-import 'package:testfyp/bin/common.dart';
-import 'package:testfyp/components/constants.dart';
-import 'package:testfyp/custom%20widgets/customHeadline.dart';
-import 'package:testfyp/custom%20widgets/theme.dart';
-import 'package:testfyp/extension_string.dart';
+import '../bin/client_auth.dart';
+import '../bin/common.dart';
+import '../components/constants.dart';
+import '../custom%20widgets/customHeadline.dart';
+import '../custom%20widgets/theme.dart';
+import '../extension_string.dart';
 
 import '../generated/user.pb.dart';
 
