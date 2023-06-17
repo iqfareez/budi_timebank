@@ -35,10 +35,6 @@ dependencies:
   json_annotation: ^4.4.0
   badges: ^3.1.1
   http: ^0.13.5
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  supabase_flutter: ^1.0.1
   image_picker: ^0.8.6
   uni_links: ^0.5.1
   grpc: ^3.1.0
@@ -52,6 +48,10 @@ dependencies:
   flutter_datetime_picker:
     git:
       url: https://github.com/HasanAlqaisi/flutter_datetime_picker.git
+  firebase_auth: ^4.6.3
+  cloud_firestore: ^4.8.1
+  firebase_core: ^2.14.0
+  firebase_storage: ^11.2.3
 
 dev_dependencies:
   flutter_test:
