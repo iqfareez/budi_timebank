@@ -1,4 +1,6 @@
-# BUDI TIME BANK
+# See main branch. Salah checkout branch dulu.. :")
+
+# BUDI TIME BANK 
 
 Forked from: https://github.com/de-timebank/frontend
 
