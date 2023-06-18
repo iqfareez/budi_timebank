@@ -1,49 +1,46 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:budi_timebank/components/avatar.dart';
 import '../components/constants.dart';
 import '../custom%20widgets/theme.dart';
 import '../extension_string.dart';
+import '../model/contact.dart';
+import '../model/identification.dart';
+import '../model/profile.dart';
 import '../splash_page.dart';
 
 import '../custom widgets/customHeadline.dart';
-import '../generated/user.pb.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
   @override
-  _AccountPageState createState() => _AccountPageState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
 class _AccountPageState extends State<AccountPage> {
   final _usernameController = TextEditingController();
   final _contactController = TextEditingController();
-  final _contactControllerType = TextEditingController();
   final _idController = TextEditingController();
-  final _idTypeController = TextEditingController();
-  final _genderController = TextEditingController();
   final _skillController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  late List<dynamic> skills;
-  late List<dynamic> contacts;
-  List<String> listGender = <String>['male', 'female'];
-  List<String> listContactType = <String>[
-    'WhatsApp',
-    'Email',
-    'Phone',
-    'Twitter'
-  ];
-  List<String> idUser = <String>['passport', 'matricno', 'mykad'];
+  late List<String> skills;
+  late List<Contact> contacts;
+  List<Gender> listGender = Gender.values;
+  List<ContactType> listContactType = ContactType.values;
+  List<IdentificationType> idUser = IdentificationType.values;
   bool _loading = true;
+
+  ContactType _selectedContactType = ContactType.phone;
+  IdentificationType _selectedIdType = IdentificationType.mykad;
+  Gender? _userGender;
 
   @override
   void initState() {
     super.initState();
     // _genderController.text = listGender[0];
-    _contactControllerType.text = listContactType[2];
     // _idTypeController.text = idUser[0];
     Future.delayed(Duration.zero, _getProfile);
   }
@@ -60,37 +57,22 @@ class _AccountPageState extends State<AccountPage> {
     });
   }
 
-  _deleteContact(String skill) {
+  _deleteContact(String contact) {
     setState(() {
-      contacts.removeWhere((element) => element['address'] == skill);
+      contacts.removeWhere((element) => element.value == contact);
     });
   }
 
-  _addcontact(String type, String address) {
-    var contact2 = Contact()
-      ..address = address
-      ..type = type;
-    //print(contact2);
-    setState(() {
-      contacts.insert(0, contact2.toProto3Json());
-      //print(contacts);
-    });
-  }
-
-  _isSkillsEmpty(dynamic stuff) {
-    if (stuff.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  _isContactsEmpty(dynamic stuff) {
-    if (stuff.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
+  _addcontact(ContactType type, String value) {
+    throw UnimplementedError('addcontact is not implemented yet');
+    // var contact2 = Contact()
+    //   ..value = value
+    //   ..type = type;
+    // //print(contact2);
+    // setState(() {
+    //   contacts.insert(0, contact2.toProto3Json());
+    //   //print(contacts);
+    // });
   }
 
   Future<void> _getProfile() async {
@@ -102,57 +84,45 @@ class _AccountPageState extends State<AccountPage> {
     });
 
     try {
-      final userId = supabase.auth.currentUser!.id; //map the user ID
-      final data = await supabase
-          .from('profiles')
-          .select()
-          .eq('user_id', userId)
-          .single() as Map;
-      _usernameController.text = (data['name'] ?? '') as String;
-      // _contactController.text = (data['website'] ?? '') as String;
-      _idController.text = (data['identification_no']['value'] ?? '') as String;
-      // print(data['identification_no']['type']);
-      // print(data['identification_no']['value'] == 'mykad');
-      if (data['identification_no']['type'] == 'mykad') {
-        _idTypeController.text = idUser[2];
-      } else if (data['identification_no']['type'] == 'matricno') {
-        _idTypeController.text = idUser[1];
-      } else {
-        _idTypeController.text = idUser[0];
-      }
+      final userId = FirebaseAuth.instance.currentUser!.uid;
 
-      if (data['gender'] == 'male') {
-        _genderController.text = listGender[0];
-      } else {
-        _genderController.text = listGender[1];
-      }
+      final document = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get()
+          .then((value) => value.data());
+
+      final data = Profile.fromJson(document!['profile']);
+
+      _usernameController.text = data.name;
+      // _contactController.text = (data['website'] ?? '') as String;
+      _idController.text = data.identification.value;
+      _selectedIdType = data.identification.identificationType;
+
+      _userGender = data.gender;
 
       // _idTypeController.text =
-      //     (data['identification_no']['type'] ?? '') as String;
+      //     (data['identification']['type'] ?? '') as String;
       // _genderController.text = (data['gender'] ?? '') as String;
       //print(_idController.text);
 
-      // for (int i = 0; i < data['identification_no'].length; i++) {
+      // for (int i = 0; i < data['identification'].length; i++) {
       //   if (data['skills'][i] != '') {
       //     skills.add(data['skills'][i]);
       //   }
       // }
 
-      for (int i = 0; i < data['skills'].length; i++) {
-        if (data['skills'][i] != '') {
-          skills.add(data['skills'][i]);
-        }
-      }
-      for (int i = 0; i < data['contacts'].length; i++) {
-        if (data['contacts'][i] != '') {
-          contacts.add(data['contacts'][i]);
-        }
-      }
-    } on PostgrestException catch (error) {
+      // assign skills
+      skills = data.skills;
+
+      // assign contacts
+
+      contacts = data.contacts;
+    } on FirebaseException catch (error) {
       if (_usernameController.text == '') {
         context.showSnackBar(message: 'Welcome to BUDI!');
       } else {
-        context.showErrorSnackBar(message: error.message);
+        context.showErrorSnackBar(message: error.message.toString());
         print(error);
       }
     } catch (error) {
@@ -189,36 +159,32 @@ class _AccountPageState extends State<AccountPage> {
       _loading = true;
     });
     final userName = _usernameController.text;
-    // final idnum = _idController.text;
-    final user = supabase.auth.currentUser;
-    final gender = _genderController.text;
-    final idUser = {
-      'type': _idTypeController.text,
-      'value': _idController.text
-    };
+    final user = FirebaseAuth.instance.currentUser;
+    final idUser = {'type': _selectedIdType.name, 'value': _idController.text};
+    final contactsUser = contacts
+        .map((e) => {
+              'type': e.contactType.name,
+              'value': e.value,
+            })
+        .toList();
     final updates = {
-      'user_id': user!.id,
       'name': userName,
       'skills': skills,
-      'contacts': contacts,
-      'updated_at': DateTime.now().toIso8601String(),
-      'identification_no': idUser,
-      'gender': gender,
+      'contacts': contactsUser,
+      'identification': idUser,
+      'gender': _userGender?.name,
       // 'avatar_url': _avatarUrl,
     };
     try {
-      await supabase.from('profiles').upsert(updates);
+      FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+        'profile': updates,
+        'updated_at': DateTime.now().toIso8601String(),
+      });
       if (mounted) {
         context.showSnackBar(message: 'Successfully updated profile!');
-        Navigator.of(context).pop();
-        // Navigator.of(context).popUntil((route) => route.isFirst);
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (BuildContext context) => BottomBarNavigation()));
       }
-    } on PostgrestException catch (error) {
-      context.showErrorSnackBar(message: error.message);
+    } on FirebaseException catch (error) {
+      context.showErrorSnackBar(message: error.message.toString());
     } catch (error) {
       context.showErrorSnackBar(message: 'Unable to Update Profile');
       print(error);
@@ -230,8 +196,8 @@ class _AccountPageState extends State<AccountPage> {
 
   Future<void> _signOut() async {
     try {
-      await supabase.auth.signOut();
-    } on AuthException {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException {
       context.showErrorSnackBar(message: 'error signing out');
     } catch (error) {
       context.showErrorSnackBar(message: 'Unable to signout');
@@ -251,7 +217,6 @@ class _AccountPageState extends State<AccountPage> {
     _usernameController.dispose();
     _contactController.dispose();
     _idController.dispose();
-    _genderController.dispose();
     _skillController.dispose();
     super.dispose();
   }
@@ -309,21 +274,21 @@ class _AccountPageState extends State<AccountPage> {
                               color: themeData2().primaryColor,
                               width: 2,
                             )),
-                        child: DropdownButton<String>(
+                        child: DropdownButton<Gender>(
                           isExpanded: true,
                           underline: Container(
                             height: 0,
                           ),
                           iconEnabledColor: themeData2().primaryColor,
-                          value: _genderController.text,
-                          items: listGender.map<DropdownMenuItem<String>>((e) {
-                            return DropdownMenuItem<String>(
+                          value: _userGender,
+                          items: listGender.map<DropdownMenuItem<Gender>>((e) {
+                            return DropdownMenuItem<Gender>(
                                 value: e,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: Text(
-                                    e.titleCase(),
+                                    e.name.titleCase(),
                                     style: TextStyle(
                                         color: themeData2().primaryColor,
                                         fontWeight: FontWeight.bold,
@@ -333,7 +298,7 @@ class _AccountPageState extends State<AccountPage> {
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              _genderController.text = value.toString();
+                              _userGender = value!;
                               //print(_genderController.text);
                             });
                           },
@@ -372,21 +337,22 @@ class _AccountPageState extends State<AccountPage> {
                               color: themeData2().primaryColor,
                               width: 2,
                             )),
-                        child: DropdownButton<String>(
+                        child: DropdownButton<IdentificationType>(
                           isExpanded: true,
                           underline: Container(
                             height: 0,
                           ),
                           iconEnabledColor: themeData2().primaryColor,
-                          value: _idTypeController.text,
-                          items: idUser.map<DropdownMenuItem<String>>((e) {
-                            return DropdownMenuItem<String>(
+                          value: _selectedIdType,
+                          items: idUser
+                              .map<DropdownMenuItem<IdentificationType>>((e) {
+                            return DropdownMenuItem<IdentificationType>(
                                 value: e,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: Text(
-                                    e.titleCase(),
+                                    e.name.titleCase(),
                                     style: TextStyle(
                                         color: themeData2().primaryColor,
                                         fontWeight: FontWeight.bold,
@@ -396,7 +362,7 @@ class _AccountPageState extends State<AccountPage> {
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              _idTypeController.text = value.toString();
+                              _selectedIdType = value!;
                               //print(_genderController.text);
                             });
                           },
@@ -449,7 +415,7 @@ class _AccountPageState extends State<AccountPage> {
                     padding: EdgeInsets.all(8.0),
                     child: Text('Your Skills: '),
                   ),
-                  _isSkillsEmpty(skills)
+                  skills.isEmpty
                       ? const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text('You have not entered any skill'),
@@ -527,7 +493,7 @@ class _AccountPageState extends State<AccountPage> {
                                 message: 'You have not entered any contact..');
                           } else {
                             try {
-                              _addcontact(_contactControllerType.text,
+                              _addcontact(_selectedContactType,
                                   _contactController.text);
                               _contactController.clear();
                               context.showSnackBar(message: 'Contact Added!');
@@ -548,7 +514,7 @@ class _AccountPageState extends State<AccountPage> {
                               color: themeData2().primaryColor,
                               width: 2,
                             )),
-                        child: DropdownButton<String>(
+                        child: DropdownButton<ContactType>(
                           isExpanded: true,
                           //dropdownColor: themeData2().primaryColor,
                           iconEnabledColor: themeData2().primaryColor,
@@ -557,16 +523,15 @@ class _AccountPageState extends State<AccountPage> {
                           ),
                           // iconEnabledColor:
                           //     themeData2().primaryColor,
-                          value: _contactControllerType.text,
-                          items: listContactType
-                              .map<DropdownMenuItem<String>>((e) {
-                            return DropdownMenuItem<String>(
+                          value: _selectedContactType,
+                          items: listContactType.map((e) {
+                            return DropdownMenuItem<ContactType>(
                                 value: e,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: Text(
-                                    e,
+                                    e.name.titleCase(),
                                     style: TextStyle(
                                         color: themeData2().primaryColor,
                                         fontWeight: FontWeight.bold,
@@ -576,7 +541,7 @@ class _AccountPageState extends State<AccountPage> {
                           }).toList(),
                           onChanged: (value) {
                             setState(() {
-                              _contactControllerType.text = value.toString();
+                              _selectedContactType = value!;
                             });
                           },
                         ),
@@ -587,7 +552,7 @@ class _AccountPageState extends State<AccountPage> {
                     padding: EdgeInsets.all(8.0),
                     child: Text('Your Contacts: '),
                   ),
-                  _isContactsEmpty(contacts)
+                  contacts.isEmpty
                       ? const Text('You have not entered any contacts...')
                       : SizedBox(
                           height: 180,
@@ -610,11 +575,12 @@ class _AccountPageState extends State<AccountPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(contacts[index]['type']
-                                              .toString()
+                                          Text(contacts[index]
+                                              .contactType
+                                              .name
                                               .capitalize()),
-                                          Text(contacts[index]['address']
-                                              .toString()),
+                                          Text(
+                                              contacts[index].value.toString()),
                                         ],
                                       ),
                                       const SizedBox(
@@ -622,9 +588,8 @@ class _AccountPageState extends State<AccountPage> {
                                       ),
                                       IconButton(
                                           onPressed: () {
-                                            _deleteContact(contacts[index]
-                                                    ['address']
-                                                .toString());
+                                            _deleteContact(
+                                                contacts[index].value);
                                           },
                                           icon: const Icon(
                                             Icons.remove_circle_outline,

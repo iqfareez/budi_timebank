@@ -1,6 +1,6 @@
 # BUDI TIME BANK
 
-Forked from: https://github.com/de-timebank/frontend
+Forked from: https://github.com/de-timebank/frontend (grpc-supabase)
 
 ## Getting Started
 

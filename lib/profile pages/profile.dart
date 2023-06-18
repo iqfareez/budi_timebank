@@ -1,14 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../bin/client_user.dart';
-import '../bin/common.dart';
-import '../components/constants.dart';
 import '../custom%20widgets/customHeadline.dart';
-import '../custom%20widgets/ratingCardDetails1.dart';
 import '../custom%20widgets/theme.dart';
 import '../extension_string.dart';
 
 import '../auth pages/account_page.dart';
+import '../model/contact.dart';
+import '../model/profile.dart';
 import '../profile pages/contactIconWidget.dart';
 import '../profile pages/emptyCardWidget.dart';
 import '../profile pages/listViewContact.dart';
@@ -22,68 +22,30 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late dynamic profile;
-  late List<String> skills;
-  late List<dynamic> email;
-  late List<dynamic> phone;
-  late List<dynamic> twitter;
-  late List<dynamic> whatsapp;
+  late Future<Profile> futureProfile;
+  List<String> skills = [];
+  List<String> email = [];
+  List<String> phone = [];
+  List<String> twitter = [];
+  List<String> whatsapp = [];
 
-  //late final dynamic contacts = [];
-
-  bool isLoad = true;
   @override
   void initState() {
-    Future.delayed(Duration.zero, getInstance);
-    // TODO: implement initState
     super.initState();
+    futureProfile = getProfile();
   }
 
-  getInstance() async {
-    final user = supabase.auth.currentUser!.id;
-    profile = await ClientUser(Common().channel).getProfile1(user);
+  Future<Profile> getProfile() async {
+    final userUid = FirebaseAuth.instance.currentUser!.uid;
 
-    //print(profile);
-    // print('the type is : ' + profile.user.profile.contacts[0].type.toString());
-    skills = [];
-    email = [];
-    phone = [];
-    twitter = [];
-    whatsapp = [];
-    //print(profile.user.profile.skills);
-    for (int i = 0; i < profile.user.profile.skills.length; i++) {
-      skills.add(profile.user.profile.skills[i]);
-    }
-    for (int i = 0; i < profile.user.profile.contacts.length; i++) {
-      //print(data['contacts'][i]['type'].toString() == 'Email');
-      if (profile.user.profile.contacts[i].type.toString() == 'Email') {
-        //print("ui");
-        email.add(profile.user.profile.contacts[i].address.toString());
-      }
-      if (profile.user.profile.contacts[i].type.toString() == 'Phone') {
-        phone.add(profile.user.profile.contacts[i].address.toString());
-      }
-      if (profile.user.profile.contacts[i].type.toString() == 'Twitter') {
-        twitter.add(profile.user.profile.contacts[i].address.toString());
-      }
-      if (profile.user.profile.contacts[i].type.toString() == 'WhatsApp') {
-        whatsapp.add(profile.user.profile.contacts[i].address.toString());
-      }
-    }
+    var snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userUid).get();
 
-    //print(contacts);
-    setState(() {
-      isLoad = false;
-    });
-    //print(skills);
-  }
+    var snapshotData = snapshot.data()!['profile'];
 
-  bool isEmpty(stuff) {
-    if (stuff.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
+    var profile = Profile.fromJson(snapshotData);
+
+    return profile;
   }
 
   @override
@@ -101,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     builder: (context) => const AccountPage(),
                   )).then((value) => setState(
                     () {
-                      getInstance();
+                      getProfile();
                     },
                   ));
             },
@@ -111,11 +73,35 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: isLoad
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
+        child: FutureBuilder(
+            future: futureProfile,
+            builder: (context, AsyncSnapshot<Profile> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              skills = snapshot.data!.skills;
+              for (int i = 0; i < snapshot.data!.contacts.length; i++) {
+                if (snapshot.data!.contacts[i].contactType ==
+                    ContactType.email) {
+                  email.add(snapshot.data!.contacts[i].value);
+                }
+                if (snapshot.data!.contacts[i].contactType ==
+                    ContactType.phone) {
+                  phone.add(snapshot.data!.contacts[i].value);
+                }
+                if (snapshot.data!.contacts[i].contactType ==
+                    ContactType.twitter) {
+                  twitter.add(snapshot.data!.contacts[i].value);
+                }
+                if (snapshot.data!.contacts[i].contactType ==
+                    ContactType.email) {
+                  email.add(snapshot.data!.contacts[i].value);
+                }
+              }
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -138,25 +124,24 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CustomHeadline(
-                                heading: profile.user.profile.name
-                                    .toString()
-                                    .titleCase()),
+                                heading:
+                                    snapshot.data!.name.toString().titleCase()),
                             const SizedBox(height: 10),
                             Text(
-                                profile.user.profile.identificationNo.type
+                                snapshot.data!.identification.identificationType
+                                    .name
                                     .toString()
                                     .capitalize(),
                                 style: const TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
-                            Text(
-                                '${profile.user.profile.identificationNo.value}',
+                            Text(snapshot.data!.identification.value,
                                 style: const TextStyle(fontSize: 12)),
                             const SizedBox(height: 10),
                             const Text('Gender',
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold)),
                             Text(
-                                profile.user.profile.gender
+                                snapshot.data!.gender.name
                                     .toString()
                                     .capitalize(),
                                 style: const TextStyle(fontSize: 12)),
@@ -167,14 +152,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
 
                   const CustomHeadline(heading: ' Ratings'),
-                  RatingCardDetails1(
-                      isProvider: true,
-                      userRating: profile.user.rating.asProvider),
+                  // RatingCardDetails1(
+                  //     isProvider: true,
+                  //     userRating: profile.user.rating.asProvider),
                   // RatingCardDetails1(
                   //     isProvider: false,
                   //     userRating: profile.user.rating.asRequestor),
                   const CustomHeadline(heading: ' Skill List'),
-                  isEmpty(skills)
+                  skills.isEmpty
                       ? const Text('No skills entered')
                       : SizedBox(
                           height: 50,
@@ -207,7 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.white,
                           ),
                           iconColor: Colors.white),
-                      isEmpty(email)
+                      email.isEmpty
                           ? const emptyCardContact()
                           : CustomListviewContact(contactList: email)
                     ],
@@ -221,7 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.white,
                           ),
                           iconColor: Colors.white),
-                      isEmpty(phone)
+                      phone.isEmpty
                           ? const emptyCardContact()
                           : CustomListviewContact(contactList: phone)
                     ],
@@ -235,7 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.white,
                           ),
                           iconColor: Colors.white),
-                      isEmpty(twitter)
+                      twitter.isEmpty
                           ? const emptyCardContact()
                           : CustomListviewContact(contactList: twitter)
                     ],
@@ -249,7 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.white,
                           ),
                           iconColor: Colors.white),
-                      isEmpty(whatsapp)
+                      whatsapp.isEmpty
                           ? const emptyCardContact()
                           : CustomListviewContact(contactList: whatsapp)
                     ],
@@ -267,7 +252,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   //   userRating: profile.user.rating.asRequestor,
                   // ),
                 ],
-              ),
+              );
+            }),
       ),
     );
   }
