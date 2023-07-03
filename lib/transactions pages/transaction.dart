@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../custom%20widgets/customDivider.dart';
+import '../custom widgets/custom_divider.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_service_request.dart';
 import '../db_helpers/client_user.dart';

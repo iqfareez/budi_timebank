@@ -7,7 +7,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../components/constants.dart';
-import '../custom%20widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../model/service_request.dart' as model;
 

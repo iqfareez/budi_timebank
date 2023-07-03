@@ -31,7 +31,6 @@ class CustomCardServiceRequest extends StatefulWidget {
       _CustomCardServiceRequestState();
 }
 
-// ignore: camel_case_typesc
 class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
   late Profile _userCurrent;
   bool isLoading = false;

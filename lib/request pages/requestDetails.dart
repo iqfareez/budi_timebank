@@ -12,7 +12,7 @@ import '../extension_string.dart';
 import '../model/profile.dart';
 import '../model/service_request.dart';
 import '../other%20profile/viewProfile.dart';
-import '../rate%20pages/rateGiven.dart';
+import '../rate pages/rate_given_page.dart';
 import 'applicants_selection.dart';
 import 'updatePage.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../custom widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_user.dart';
-import '../rate pages/rateReceived.dart';
-import '../rate%20pages/rateGiven.dart';
+import '../rate pages/rate_received_page.dart';
+import '../rate pages/rate_given_page.dart';
 import '../transactions%20pages/transaction.dart';
 import 'request_dashboard_content.dart';
 import 'service_dashboard_content.dart';

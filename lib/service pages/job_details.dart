@@ -4,7 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../components/constants.dart';
 import '../custom widgets/heading2.dart';
-import '../custom%20widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_rating.dart';
 import '../db_helpers/client_service_request.dart';
@@ -12,7 +12,7 @@ import '../db_helpers/client_user.dart';
 import '../extension_string.dart';
 import '../model/profile.dart';
 import '../model/service_request.dart';
-import '../rate pages/rateReceived.dart';
+import '../rate pages/rate_received_page.dart';
 
 /// Basically request details but in Job offers tab
 class JobDetails extends StatefulWidget {
@@ -357,7 +357,7 @@ class _JobDetailsState extends State<JobDetails> {
                                       child: const Text('Go to rating page'))
                                 ] else ...[
                                   const SizedBox(height: 10),
-                                  Text('No rating has been given yet'),
+                                  const Text('No rating has been given yet'),
                                   const SizedBox(height: 10),
                                 ]
                               ],

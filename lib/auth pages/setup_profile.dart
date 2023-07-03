@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/constants.dart';
-import '../custom widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_user.dart';
 import '../extension_string.dart';

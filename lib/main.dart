@@ -13,7 +13,6 @@ import 'custom widgets/theme.dart';
 import 'dashboard%20pages/dashboard.dart';
 import 'firebase_options.dart';
 import 'navigation.dart';
-import 'navigationPersistent.dart';
 import 'profile%20pages/profile.dart';
 import 'request pages/request.dart';
 import 'service%20pages/service.dart';
@@ -49,7 +48,6 @@ class MyApp extends StatelessWidget {
         '/account': (_) => const AccountPage(),
         '/setupProfile': (_) => const SetupProfile(),
         '/navigation': (_) => const BottomBarNavigation(valueListenable: 0),
-        '/navigationP': (_) => const PersistentBottomNavigationBar(),
         '/profile': (_) => const ProfilePage(isMyProfile: true),
         '/passwordReset': (_) => const PasswordPage(),
         '/request': (_) => const RequestPage(),

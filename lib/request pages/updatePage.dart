@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import '../components/constants.dart';
-import '../custom%20widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/heading2.dart';
 import '../custom%20widgets/theme.dart';
 import '../extension_string.dart';

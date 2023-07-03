@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../custom widgets/heading2.dart';
-import '../custom%20widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_service_request.dart';
 import '../db_helpers/client_user.dart';

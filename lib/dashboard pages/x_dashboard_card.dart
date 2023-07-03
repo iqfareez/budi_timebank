@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../custom widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../navigation.dart';
 
 /// Dashboard card for "Your Request" and "Your Service"

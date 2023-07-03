@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../custom widgets/custom_card_service_request.dart';
 import '../db_helpers/client_service_request.dart';
 import '../model/service_request.dart';
 import 'requestDetails.dart';
-
-import '../custom widgets/customCardServiceRequest.dart';
 
 class RequestedJob extends StatefulWidget {
   const RequestedJob({Key? key}) : super(key: key);

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-
-import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_rating.dart';
 import '../model/rating.dart';
-import 'customCardRating.dart';
-import 'ratingDetails.dart';
+import 'custom_card_rating.dart';
 
-class RateReceivedPage extends StatefulWidget {
-  const RateReceivedPage({super.key});
+import 'rating_details.dart';
+
+class RateGivenPage extends StatefulWidget {
+  const RateGivenPage({super.key});
 
   @override
-  State<RateReceivedPage> createState() => _RateReceivedPageState();
+  State<RateGivenPage> createState() => _RateGivenPageState();
 }
 
-class _RateReceivedPageState extends State<RateReceivedPage> {
+class _RateGivenPageState extends State<RateGivenPage> {
   late bool isLoad;
   late List<Rating> data;
 
@@ -25,9 +24,9 @@ class _RateReceivedPageState extends State<RateReceivedPage> {
   }
 
   void getinstance() async {
-    var receivedRating = await ClientRating.getAllReceivedRating();
+    var givenRating = await ClientRating.getAllGivenRating();
     setState(() {
-      data = receivedRating;
+      data = givenRating;
       isLoad = false;
     });
   }
@@ -35,24 +34,25 @@ class _RateReceivedPageState extends State<RateReceivedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Received Rating'),
-          backgroundColor: themeData1().secondaryHeaderColor),
+      appBar: AppBar(title: const Text('Given Rating')),
       body: isLoad
           ? const Center(child: CircularProgressIndicator())
           : data.isEmpty
-              ? const Center(child: Text('No rating received...'))
+              ? const Center(child: Text('No rate given to other people...'))
               : ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
                         Navigator.of(context)
-                            .push(MaterialPageRoute(
+                            .push(
+                              MaterialPageRoute(
                                 builder: (context) => RatingDetails(
-                                      isProvider: false,
-                                      ratingDetails: data[index],
-                                    )))
+                                  isProvider: true,
+                                  ratingDetails: data[index],
+                                ),
+                              ),
+                            )
                             .then((value) => setState(
                                   () {
                                     //_isEmpty = true;
@@ -61,7 +61,7 @@ class _RateReceivedPageState extends State<RateReceivedPage> {
                                 ));
                       },
                       child: CustomCardRating(
-                        isProvider: false,
+                        isProvider: true,
                         ratingDetails: data[index],
                       ),
                     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../custom%20widgets/customHeadline.dart';
+import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/ratingCardDetails1.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_user.dart';

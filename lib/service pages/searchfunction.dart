@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../custom widgets/customCardServiceRequest.dart';
+import '../custom widgets/custom_card_service_request.dart';
 import '../request pages/requestDetails.dart';
 import 'job_details.dart';
 
