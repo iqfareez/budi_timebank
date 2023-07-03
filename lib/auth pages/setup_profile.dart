@@ -300,7 +300,7 @@ class _SetupProfileState extends State<SetupProfile> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: CustomHeadline(heading: 'Owner type'),
+                        child: CustomHeadline(heading: 'Account type'),
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width / 2.6,
