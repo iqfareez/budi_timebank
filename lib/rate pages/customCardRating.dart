@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../bin/client_user.dart';
-import '../bin/common.dart';
+import '../db_helpers/client_user.dart';
 import '../extension_string.dart';
 
 import '../custom widgets/theme.dart';
+import '../model/profile.dart';
+import '../model/rating.dart';
 
 class CustomCardRating extends StatefulWidget {
-  final requestor;
-  final value;
-  final provider;
-  final title; //details
-  final rate;
-  final ratingFor;
+  final bool isProvider;
+  final Rating ratingDetails;
 
   const CustomCardRating({
     super.key,
-    required this.requestor,
-    required this.value,
-    required this.provider,
-    required this.title, //details /
-    required this.rate,
-    required this.ratingFor,
+    required this.isProvider,
+    required this.ratingDetails,
   });
 
   @override
@@ -30,39 +23,28 @@ class CustomCardRating extends StatefulWidget {
 
 // ignore: camel_case_types
 class _CustomCardRatingState extends State<CustomCardRating> {
-  late dynamic _userRequestor;
-  late dynamic _userProvider;
-  bool isLoading = false;
-  bool forProvider = false;
+  late Profile _userRequestor;
+  late Profile _userProvider;
+  bool isLoading = true;
+
+  void getInstance() async {
+    setState(() => isLoading = true);
+
+    // get requestor profile
+    _userRequestor =
+        await ClientUser.getUserProfileById(widget.ratingDetails.authorId);
+
+    // get provider profile
+    _userProvider =
+        await ClientUser.getUserProfileById(widget.ratingDetails.rateeId);
+    setState(() => isLoading = false);
+  }
+
   @override
   void initState() {
-    isLoading = true;
-    getRequestorName();
-    // TODO: implement initState
-
     super.initState();
+    getInstance();
   }
-
-  getRequestorName() async {
-    _userRequestor =
-        await ClientUser(Common().channel).getUserById(widget.requestor);
-
-    _userProvider =
-        await ClientUser(Common().channel).getUserById(widget.provider);
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  isProvider() {
-    if (widget.ratingFor == 'provider') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  //get function => null;
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +65,14 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          widget.title.toString().isEmpty
+                          widget.ratingDetails.message == null ||
+                                  widget.ratingDetails.message!.isEmpty
                               ? const Text('No comment from the requestor',
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14))
-                              : Text(widget.title.toString().capitalize(),
+                              : Text(widget.ratingDetails.message!.capitalize(),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold, fontSize: 14)
                                   //     Theme.of(context).textTheme.headline1,
@@ -97,8 +80,7 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(
-                              "Author: ${_userRequestor.user.name.toString().titleCase()}",
+                          Text("Author: ${_userRequestor.name.titleCase()}",
                               style: const TextStyle(fontSize: 12)),
                         ],
                       ),
@@ -111,7 +93,7 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                         child: Container(
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: isProvider()
+                                    color: widget.isProvider
                                         ? themeData1().secondaryHeaderColor
                                         : themeData1().primaryColor,
                                     width: 2),
@@ -119,14 +101,14 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: isProvider()
+                                child: widget.isProvider
                                     ? Text(
-                                        'Provider\n${_userProvider.user.name.toString().titleCase()}',
+                                        'Provider\n${_userProvider.name.titleCase()}',
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(fontSize: 12),
                                       )
                                     : Text(
-                                        'Requestor\n${_userProvider.user.name.toString().titleCase()}',
+                                        'Requestor\n${_userRequestor.name.titleCase()}',
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(fontSize: 12),
                                       ))),
@@ -138,7 +120,7 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                       child: RatingBar.builder(
                         ignoreGestures: true,
                         itemSize: 20,
-                        initialRating: double.parse(widget.value.toString()),
+                        initialRating: widget.ratingDetails.rating.toDouble(),
                         itemBuilder: (context, index) => Icon(
                           Icons.star,
                           color: themeData1().secondaryHeaderColor,
@@ -150,12 +132,6 @@ class _CustomCardRatingState extends State<CustomCardRating> {
                       ),
                     ),
                   ),
-                  // Flexible(
-                  //   flex: 1,
-                  //   child: IconButton(
-                  //       onPressed: (() {}),
-                  //       icon: Icon(Icons.favorite_border_outlined)),
-                  // )
                 ],
               ),
             ),

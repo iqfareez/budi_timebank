@@ -36,7 +36,6 @@ class _BottomBarNavigationState extends State<BottomBarNavigation> {
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   late int _selectedIndex;
-  final session = supabase.auth.currentSession;
 
   final List<Widget> _widgetOptions = [
     const DashBoard(),

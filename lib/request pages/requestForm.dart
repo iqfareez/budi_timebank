@@ -1,14 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csc_picker/csc_picker.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide DatePickerTheme;
-import 'package:grpc/grpc.dart';
-import '../bin/client_service_request.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+
 import '../components/constants.dart';
 import '../custom%20widgets/customHeadline.dart';
 import '../custom%20widgets/theme.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
-import '../bin/common.dart';
+import '../model/service_request.dart' as model;
 
 //map API
 //https://levelup.gitconnected.com/how-to-add-google-maps-in-a-flutter-app-and-get-the-current-location-of-the-user-dynamically-2172f0be53f6
@@ -51,6 +52,8 @@ class _RequestFormState extends State<RequestForm> {
     'Wellness',
   ];
 
+  DateTime? selectedDate;
+
   late String address;
   late String location1;
   late DateTime? newDate;
@@ -68,7 +71,6 @@ class _RequestFormState extends State<RequestForm> {
     isLoad = false;
     isLocationFetched = false;
     _categoryController.text = listCategories[2];
-    // TODO: implement initState
     super.initState();
   }
 
@@ -108,7 +110,7 @@ class _RequestFormState extends State<RequestForm> {
         desiredAccuracy: LocationAccuracy.high);
   }
 
-  //Method to get full address from latitude & longitude co-ordinates (lat long to address)
+  // Method to get full address from latitude & longitude co-ordinates (lat long to address)
   Future<void> GetAddressFromLatLong(Position position) async {
     setState(() {
       isLoad = true;
@@ -214,7 +216,7 @@ class _RequestFormState extends State<RequestForm> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: const Text('Request Form'),
-          // backgroundColor: Color.fromARGB(255, 127, 17, 224),
+          // backgroundColor: Color.fromARGB(255, `1`27, 17, 224),
         ),
         body: isLoad
             ? const Center(child: CircularProgressIndicator())
@@ -312,8 +314,8 @@ class _RequestFormState extends State<RequestForm> {
                                   onChanged: (date) {
                                 //print('change $date');
                               }, onConfirm: (date) {
+                                selectedDate = date;
                                 _dateController.text = date.toString();
-                                print(_dateController.text);
                                 _dateControllerDisplay.text =
                                     'Date: ${date.day}-${date.month}-${date.year} Time: ${date.hour.toString().padLeft(2, '0')} : ${date.minute.toString().padLeft(2, '0')}';
                               },
@@ -510,29 +512,24 @@ class _RequestFormState extends State<RequestForm> {
                                   });
                                 },
                               ),
-                        Row(
-                          children: [
-                            // Expanded(
-                            //   child: ElevatedButton(
-                            //       onPressed: () async {
-                            //         GetLatLongfromAddress(_locationController.text);
-                            //       },
-                            //       child: Text('Enter Address')),
-                            // ),
-                            // SizedBox(width: 5),
-                            Expanded(
-                              child: ElevatedButton(
-                                  onPressed: () async {
-                                    Position position =
-                                        await _getGeoLocationPosition();
-                                    GetAddressFromLatLong(position);
-                                  },
-                                  child: isLoad
-                                      ? const Text('Loading...')
-                                      : const Text('Get current location')),
-                            ),
-                          ],
-                        ),
+                        // TODO: Reimplement this feature because rn I prefer it to run
+                        // in the emulator. But, my emulator doesnt have Google Play, hence
+                        // resulting the fetch failed
+                        // Row(
+                        //   children: [
+                        //     // Expanded(
+                        //     //   child: ElevatedButton(
+                        //     //       onPressed: () async {
+                        //     //         Position position =
+                        //     //             await _getGeoLocationPosition();
+                        //     //         GetAddressFromLatLong(position);
+                        //     //       },
+                        //     //       child: isLoad
+                        //     //           ? const Text('Loading...')
+                        //     //           : const Text('Get current location')),
+                        //     // ),
+                        //   ],
+                        // ),
                         const SizedBox(height: 8),
                         // Padding(
                         //   padding: const EdgeInsets.all(8.0),
@@ -775,7 +772,9 @@ class _RequestFormState extends State<RequestForm> {
                         const SizedBox(height: 8),
                         ElevatedButton(
                             onPressed: () async {
-                              final user = supabase.auth.currentUser!.id;
+                              // final user = supabase.auth.currentUser!.id;
+                              final user =
+                                  FirebaseAuth.instance.currentUser!.uid;
                               // print(_stateController.text);
                               // print(_cityController.text);
                               //final _userCurrent = getCurrentUser(user);
@@ -794,18 +793,44 @@ class _RequestFormState extends State<RequestForm> {
                                 var time =
                                     double.parse(_timeLimitController.text);
 
-                                _submitJobForm(
-                                    _titleController.text,
-                                    _descriptionController.text,
-                                    _stateController.text,
-                                    _cityController.text,
-                                    _locationController.text,
-                                    rate,
-                                    mediaList,
-                                    user,
-                                    _categoryController.text,
-                                    time,
-                                    _dateController.text);
+                                // _submitJobForm(
+                                //     _titleController.text,
+                                //     _descriptionController.text,
+                                //     _stateController.text,
+                                //     _cityController.text,
+                                //     _locationController.text,
+                                //     rate,
+                                //     mediaList,
+                                //     user,
+                                //     _categoryController.text,
+                                //     time,
+                                //     _dateController.text)
+
+                                var requestorId =
+                                    FirebaseAuth.instance.currentUser!.uid;
+
+                                if (selectedDate == null) return;
+
+                                var request = model.ServiceRequest(
+                                  title: _titleController.text,
+                                  description: _descriptionController.text,
+                                  location: model.Location(
+                                    address: _locationController.text,
+                                    city: _cityController.text,
+                                    state: _stateController.text,
+                                  ),
+                                  status: model.ServiceRequestStatus.pending,
+                                  rate: rate,
+                                  media: mediaList,
+                                  requestorId: requestorId,
+                                  applicants: [],
+                                  category: _categoryController.text,
+                                  timeLimit: time,
+                                  date: selectedDate!,
+                                  createdAt: DateTime.now(),
+                                );
+
+                                _submitJobForm(request);
                               }
                             },
                             child: const Text('Create Request')),
@@ -820,41 +845,19 @@ class _RequestFormState extends State<RequestForm> {
               ));
   }
 
-  Future<void> _submitJobForm(
-      String title,
-      String description,
-      String latitude,
-      String longitude,
-      String locName,
-      double rate,
-      List<String> media,
-      String requestor,
-      String category,
-      double timeLimit,
-      String date) async {
+  Future<void> _submitJobForm(model.ServiceRequest serviceRequest) async {
     try {
-      await ClientServiceRequest(Common().channel).createServiceRequest(
-          title,
-          description,
-          latitude,
-          longitude,
-          locName,
-          rate,
-          media,
-          requestor,
-          category,
-          timeLimit,
-          date);
-      //print(test);
-      //dprint(test.toProto3Json());
-      context.showSnackBar(message: 'Job Created');
+      final CollectionReference serviceRequestCollection =
+          FirebaseFirestore.instance.collection('serviceRequests');
+      var docRef =
+          await serviceRequestCollection.add(serviceRequest.toFirestoreMap());
+
+      context.showSnackBar(message: 'Job Created ${docRef.id}');
       Navigator.of(context).pop();
-    } on GrpcError catch (e) {
+    } on FirebaseException catch (e) {
       context.showErrorSnackBar(message: '${e.message}');
-      print(e.toString());
     } catch (e) {
       context.showErrorSnackBar(message: e.toString());
-      print(e.toString());
     }
   }
 }

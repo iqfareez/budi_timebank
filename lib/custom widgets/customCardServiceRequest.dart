@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-import '../bin/client_user.dart';
-import '../bin/common.dart';
-import 'theme.dart';
+
+import '../db_helpers/client_user.dart';
 import '../extension_string.dart';
+import '../model/profile.dart';
+import '../model/service_request.dart';
+import 'theme.dart';
 
 class CustomCardServiceRequest extends StatefulWidget {
-  final requestor;
-  final state;
-  final title; //details
-  final rate;
-  final date;
-  final location;
-  final category;
+  final String requestorId;
+  final ServiceRequestStatus status;
+  final String title; //details
+  final String rate;
+  final DateTime date;
+  final Location location;
+  final String category;
 
   const CustomCardServiceRequest({
     super.key,
-    required this.requestor,
+    required this.requestorId,
     required this.title, //details /
     required this.rate,
-    required this.state,
+    required this.status,
     required this.date,
     required this.location,
     required this.category,
@@ -29,19 +31,15 @@ class CustomCardServiceRequest extends StatefulWidget {
       _CustomCardServiceRequestState();
 }
 
-// ignore: camel_case_types
+// ignore: camel_case_typesc
 class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
-  late dynamic _userCurrent;
+  late Profile _userCurrent;
   bool isLoading = false;
-
-  late dynamic dateJob;
 
   @override
   void initState() {
     isLoading = true;
     getRequestorName();
-    // TODO: implement initState
-    dateJob = DateTime.parse(widget.date);
     super.initState();
   }
 
@@ -65,23 +63,12 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
   }
 
   getRequestorName() async {
-    _userCurrent =
-        await ClientUser(Common().channel).getUserById(widget.requestor);
-    // print('The current user (widget)' + widget.requestor);
+    _userCurrent = await ClientUser.getUserProfileById(widget.requestorId);
 
-    //print('The current user' + _userCurrent.toString());
-    //print(_userCurrent.user.name);
-    // _userCurrent = await supabase
-    //     .from('profiles')
-    //     .select()
-    //     .eq('user_id', widget.requestor)
-    //     .single() as Map;
-    setState(() {
-      isLoading = false;
-    });
+    setState(() => isLoading = false);
   }
-  //get function => null;
 
+  //get function => null;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -135,12 +122,13 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                               flex: 2,
                               child: Container(
                                   decoration: BoxDecoration(
-                                      color: changeColor(widget.state),
+                                      color: changeColor(
+                                          widget.status.name.toTitleCase()),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      widget.state.toString(),
+                                      widget.status.name.toTitleCase(),
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,
@@ -152,22 +140,23 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                         ),
                         const Divider(),
                         //SizedBox(height: 10),
-                        Text(_userCurrent.user.name.toString().titleCase(),
+                        Text(_userCurrent.name.toString().titleCase(),
                             style: const TextStyle(fontSize: 12)),
                         const SizedBox(height: 10),
-                        Text('${widget.location}',
+                        Text(widget.location.address,
                             style: const TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 6),
                         Text(
-                          '${widget.rate} \$Time/hour',
+                          '\$ ${widget.rate} Time/hour',
                           style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Text('${dateJob.day}-${dateJob.month}-${dateJob.year}',
+                        Text(
+                            '${widget.date.day}-${widget.date.month}-${widget.date.year}',
                             style: const TextStyle(fontSize: 12)),
                       ],
                     ),

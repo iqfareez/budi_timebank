@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-final supabase = Supabase.instance.client;
 
 extension ShowSnackBar on BuildContext {
   void showSnackBar({
@@ -20,6 +17,7 @@ extension ShowSnackBar on BuildContext {
 
   void showErrorSnackBar({required String message}) {
     showSnackBar(
-        message: message, backgroundColor: const Color.fromARGB(255, 244, 26, 10));
+        message: message,
+        backgroundColor: const Color.fromARGB(255, 244, 26, 10));
   }
 }

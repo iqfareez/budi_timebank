@@ -10,40 +10,40 @@ import '../extension_string.dart';
 import '../model/contact.dart';
 import '../model/identification.dart';
 import '../model/profile.dart';
-import '../splash_page.dart';
 
-class AccountPage extends StatefulWidget {
-  const AccountPage({super.key});
+class SetupProfile extends StatefulWidget {
+  const SetupProfile({super.key});
 
   @override
-  State<AccountPage> createState() => _AccountPageState();
+  State<SetupProfile> createState() => _SetupProfileState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _SetupProfileState extends State<SetupProfile> {
   final _usernameController = TextEditingController();
   final _contactController = TextEditingController();
   final _idController = TextEditingController();
   final _skillController = TextEditingController();
+  final _organizationNameController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  late List<String> skills;
-  late List<Contact> contacts;
+  List<String> skills = [];
+  List<Contact> contacts = [];
   List<Gender> listGender = Gender.values;
   List<ContactType> listContactType = ContactType.values;
   List<IdentificationType> idUser = IdentificationType.values;
-  bool _loading = true;
-
   ContactType _selectedContactType = ContactType.phone;
   IdentificationType _selectedIdType = IdentificationType.mykad;
-  Gender? _userGender;
+  OwnerType _selectedOwnerType = OwnerType.individual;
+  Gender _userGender = Gender.male;
+
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+  bool _loading = true;
 
   @override
   void initState() {
     super.initState();
-    // _genderController.text = listGender[0];
-    // _idTypeController.text = idUser[0];
-    Future.delayed(Duration.zero, _getProfile);
+    _initProfile();
   }
 
   _addskills(String skill) {
@@ -65,118 +65,54 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   _addcontact(ContactType type, String value) {
-    throw UnimplementedError('addcontact is not implemented yet');
-    // var contact2 = Contact()
-    //   ..value = value
-    //   ..type = type;
-    // //print(contact2);
-    // setState(() {
-    //   contacts.insert(0, contact2.toProto3Json());
-    //   //print(contacts);
-    // });
-  }
-
-  Future<void> _getProfile() async {
-    skills = [];
-    contacts = [];
+    var newContact = Contact(contactType: type, value: value);
 
     setState(() {
-      _loading = true;
+      contacts.insert(0, newContact);
     });
+  }
+
+  Future<void> _initProfile() async {
+    setState(() => _loading = true);
 
     try {
-      final userId = FirebaseAuth.instance.currentUser!.uid;
-
-      final document = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get()
-          .then((value) => value.data());
-
-      final data = Profile.fromJson(document!['profile']);
-
-      _usernameController.text = data.name;
-      // _contactController.text = (data['website'] ?? '') as String;
-      _idController.text = data.identification.value;
-      _selectedIdType = data.identification.identificationType;
-
-      _userGender = data.gender;
-
-      // _idTypeController.text =
-      //     (data['identification']['type'] ?? '') as String;
-      // _genderController.text = (data['gender'] ?? '') as String;
-      //print(_idController.text);
-
-      // for (int i = 0; i < data['identification'].length; i++) {
-      //   if (data['skills'][i] != '') {
-      //     skills.add(data['skills'][i]);
-      //   }
-      // }
-
-      // assign skills
-      skills = data.skills;
-
-      // assign contacts
-
-      contacts = data.contacts;
+      // Create user profile
+      FirebaseFirestore.instance.collection('users').doc(userId).set({
+        'earningsHistory': [],
+        'profile': null,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
     } on FirebaseException catch (error) {
-      if (_usernameController.text == '') {
-        context.showSnackBar(message: 'Welcome to BUDI!');
-      } else {
-        context.showErrorSnackBar(message: error.message.toString());
-      }
-    } catch (error) {
-      context.showErrorSnackBar(message: 'Missing Description');
+      context.showErrorSnackBar(message: error.message.toString());
+      return;
     }
 
-    setState(() {
-      _loading = false;
-    });
+    setState(() => _loading = false);
   }
 
-  // _updateContact() async{
-  //   final user = supabase.auth.currentUser;
-  //   final updates = {
-  //     'user_id': user!.id,
-  //     'skills': skills,
-  //     'contacts': contacts,
-  //     'updatedAt': DateTime.now().toIso8601String(),
-  //     // 'avatar_url': _avatarUrl,
-  //   };
-  //   try {
-  //     await supabase.from('profiles').upsert(updates);
-  //   } on PostgrestException catch (error) {
-  //     context.showErrorSnackBar(message: error.message);
-  //   } catch (error) {
-  //     context.showErrorSnackBar(message: 'Unable to Update Profile');
-  //   }
-  // }
+  /// Called when user taps `Save` button
+  Future<void> _saveProfile() async {
+    setState(() => _loading = true);
+    var userIdentification = Identification(
+        identificationType: _selectedIdType, value: _idController.text);
+    var orgName = _selectedOwnerType == OwnerType.individual
+        ? null
+        : _organizationNameController.text;
 
-  /// Called when user taps `Update` button
-  Future<void> _updateProfile() async {
-    setState(() {
-      _loading = true;
-    });
-    final userName = _usernameController.text;
-    final user = FirebaseAuth.instance.currentUser;
-    final idUser = {'type': _selectedIdType.name, 'value': _idController.text};
-    final contactsUser = contacts
-        .map((e) => {
-              'type': e.contactType.name,
-              'value': e.value,
-            })
-        .toList();
-    final updates = {
-      'name': userName,
-      'skills': skills,
-      'contacts': contactsUser,
-      'identification': idUser,
-      'gender': _userGender?.name,
-      // 'avatar_url': _avatarUrl,
-    };
+    var newProfile = Profile(
+      name: _usernameController.text,
+      skills: skills,
+      contacts: contacts,
+      identification: userIdentification,
+      ownerType: _selectedOwnerType,
+      gender: _userGender,
+      organizationName: orgName,
+    );
+
     try {
-      FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
-        'profile': updates,
+      FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'earningsHistory': [],
+        'profile': newProfile.toMap(),
         'updatedAt': DateTime.now().toIso8601String(),
       });
       if (mounted) {
@@ -190,29 +126,13 @@ class _AccountPageState extends State<AccountPage> {
     }
 
     // add points
-    await ClientUser.addPoints(points: 10);
+
+    await ClientUser.addPoints(
+        points: _selectedOwnerType == OwnerType.individual ? 10 : 200);
 
     setState(() {
       _loading = false;
     });
-  }
-
-  Future<void> _signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException {
-      context.showErrorSnackBar(message: 'error signing out');
-    } catch (error) {
-      context.showErrorSnackBar(message: 'Unable to signout');
-    }
-    if (mounted) {
-      //Navigator.of(context).pushReplacementNamed('/');
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => const SplashPage()));
-    }
   }
 
   @override
@@ -221,6 +141,7 @@ class _AccountPageState extends State<AccountPage> {
     _contactController.dispose();
     _idController.dispose();
     _skillController.dispose();
+    _organizationNameController.dispose();
     super.dispose();
   }
 
@@ -373,9 +294,76 @@ class _AccountPageState extends State<AccountPage> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CustomHeadline(heading: 'Owner type'),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2.6,
+                        //padding: EdgeInsets.all(8),
+                        margin: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: themeData2().primaryColor,
+                              width: 2,
+                            )),
+                        child: DropdownButton<OwnerType>(
+                          isExpanded: true,
+                          underline: Container(
+                            height: 0,
+                          ),
+                          iconEnabledColor: themeData2().primaryColor,
+                          value: _selectedOwnerType,
+                          items: OwnerType.values
+                              .map<DropdownMenuItem<OwnerType>>((e) {
+                            return DropdownMenuItem<OwnerType>(
+                                value: e,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    e.name.titleCase(),
+                                    style: TextStyle(
+                                        color: themeData2().primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ),
+                                ));
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedOwnerType = value!;
+                              //print(_genderController.text);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_selectedOwnerType == OwnerType.organization) ...[
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      controller: _organizationNameController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Enter organization name'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter organization name number...';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+
+                  const Divider(
                       //horizontal line
-                      color: themeData2().primaryColor,
                       height: 30,
                       thickness: 2,
                       indent: 15,
@@ -590,14 +578,14 @@ class _AccountPageState extends State<AccountPage> {
                                         height: 5,
                                       ),
                                       IconButton(
-                                          onPressed: () {
-                                            _deleteContact(
-                                                contacts[index].value);
-                                          },
-                                          icon: const Icon(
-                                            Icons.remove_circle_outline,
-                                            color: Colors.red,
-                                          ))
+                                        onPressed: () {
+                                          _deleteContact(contacts[index].value);
+                                        },
+                                        icon: const Icon(
+                                          Icons.remove_circle_outline,
+                                          color: Colors.red,
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -606,51 +594,17 @@ class _AccountPageState extends State<AccountPage> {
                           )),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                    // style: ElevatedButton.styleFrom(
-                    //   foregroundColor: Colors.white,
-                    //   backgroundColor: themeData2().primaryColor,
-                    // ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _updateProfile();
+                    onPressed: () async {
+                      if (!_formKey.currentState!.validate()) return;
+
+                      await _saveProfile();
+                      if (mounted) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/navigation', (route) => false);
                       }
                     },
-                    child: Text(_loading ? 'Loading...' : 'Update'),
+                    child: Text(_loading ? 'Loading...' : 'Save'),
                   ),
-                  // ElevatedButton(
-                  //   onPressed: (() {
-                  //     Navigator.of(context).popUntil((route) => route.isFirst);
-                  //     // Navigator.pushReplacement(
-                  //     //     context,
-                  //     //     MaterialPageRoute(
-                  //     //         builder: (BuildContext context) =>
-                  //     //             BottomBarNavigation()));
-                  //   }),
-                  //   child: Text('Go to DashBoard'),
-                  // ),
-                  TextButton(
-                      style: TextButton.styleFrom(foregroundColor: Colors.red),
-                      onPressed: () => showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Confirm Sign Out?'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, 'Cancel'),
-                                  child: const Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    _signOut();
-                                  },
-                                  child: const Text('Sign Out'),
-                                ),
-                              ],
-                            ),
-                          ),
-                      // onPressed: _signOut,
-                      child: const Text('Sign Out')),
                 ],
               ),
             ),

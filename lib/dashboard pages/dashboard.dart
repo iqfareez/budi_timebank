@@ -1,27 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../bin/client_user.dart';
-import '../bin/common.dart';
+
+import '../custom widgets/customHeadline.dart';
 import '../custom%20widgets/theme.dart';
-import 'serviceDashboardCard.dart';
-import '../navigation.dart';
+import '../db_helpers/client_user.dart';
+import '../rate pages/rateReceived.dart';
 import '../rate%20pages/rateGiven.dart';
 import '../transactions%20pages/transaction.dart';
-import '../components/constants.dart';
-import '../custom widgets/customHeadline.dart';
-import '../rate pages/rateReceived.dart';
+import 'request_dashboard_content.dart';
+import 'service_dashboard_content.dart';
+import 'x_dashboard_card.dart';
 
 class DashBoard extends StatefulWidget {
-  final onTapped;
-  const DashBoard({Key? key, this.onTapped}) : super(key: key);
+  const DashBoard({Key? key}) : super(key: key);
 
   @override
   State<DashBoard> createState() => _DashBoardState();
 }
 
 class _DashBoardState extends State<DashBoard> {
-  late final credit;
-  late final data;
+  // late final double credit;
+  // late final data;
+  late final double points;
   // late final data1;
   bool isLoading = false;
 
@@ -36,24 +35,11 @@ class _DashBoardState extends State<DashBoard> {
     setState(() {
       isLoading = true;
     });
-    final user = supabase.auth.currentUser!.id;
-    //print(user);
-    data = await ClientUser(Common().channel).getUserCreditBalance(user);
-    // data1 = await ClientUser(Common().channel).getTransactionHistory(user);
-    //print(data1.toString());
 
-    //print(data);
-
-    // data = await supabase
-    //     .from('user_credits')
-    //     .select()
-    //     .eq('user_id', user)
-    //     .single() as Map;
-
+    points = await ClientUser.getTotalPoints();
     setState(() {
       isLoading = false;
     });
-    //print(data!['total']);
   }
 
   @override
@@ -110,7 +96,9 @@ class _DashBoardState extends State<DashBoard> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Text(
-                                  'Time/hour: ${(data.total - data.reserved).toStringAsFixed(2)}',
+                                  // TODO: Check what is data reserved?
+                                  // 'Time/hour: ${(data.total - data.reserved).toStringAsFixed(2)}',
+                                  'Time/hour: ${points.toStringAsFixed(2)}',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
@@ -120,98 +108,26 @@ class _DashBoardState extends State<DashBoard> {
                         )),
                   ),
                   Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Expanded(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: themeData1().primaryColor,
-                              width: 3,
-                            ),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
-                          ),
-                          //elevation: 5,
-                          child: InkWell(
-                            onTap: () {
-                              //d_onItemTapped
-                              Navigator.of(context).pushReplacement(
-                                CupertinoPageRoute(
-                                  //fullscreenDialog: true,
-                                  builder: (BuildContext context) =>
-                                      const BottomBarNavigation(
-                                          valueListenable: 1),
-                                ),
-                              );
-
-                              // Navigator.of(context).pushReplacement(
-                              //   CupertinoPageRoute(
-                              //     builder: (BuildContext context) {
-                              //       return RequestPage();
-                              //     },
-                              //   ),
-                              // );
-                              //Navigator.of(context).pushNamed('/request');
-                              // PersistentNavBarNavigator.pushNewScreen(
-                              //   context,
-                              //   screen: RequestPage(),
-                              //   //settings: Navigator.pushNamed(),
-                              //   withNavBar:
-                              //       true, // OPTIONAL VALUE. True by default.
-                              //   pageTransitionAnimation:
-                              //       PageTransitionAnimation.cupertino,
-                              // );
-                            },
-                            child: const Column(
-                              children: [
-                                CustomHeadline(heading: 'Your Request'),
-                                ServiceDashboardCard(isRequest: true)
-                              ],
-                            ),
-                          ),
+                        child: XDashboardCard(
+                          title: "Your Request",
+                          borderColor: themeData1().primaryColor,
+                          navBarIndex: 1,
+                          content: const RequestDashboardContent(),
                         ),
                       ),
                       Expanded(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: themeData1().secondaryHeaderColor,
-                              width: 3,
-                            ),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
-                          ),
-                          //elevation: 5,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                CupertinoPageRoute(
-                                  //fullscreenDialog: true,
-                                  builder: (BuildContext context) =>
-                                      const BottomBarNavigation(
-                                          valueListenable: 2),
-                                ),
-                                // MaterialPageRoute(
-                                //   builder: (context) => BottomBarNavigation(
-                                //         valueListenable: 2,
-                                //       ))
-                              );
-                            },
-                            child: const Column(
-                              children: [
-                                CustomHeadline(heading: 'Your Service'),
-                                ServiceDashboardCard(isRequest: false)
-                              ],
-                            ),
-                          ),
+                        child: XDashboardCard(
+                          title: "Your Service",
+                          borderColor: themeData1().secondaryHeaderColor,
+                          navBarIndex: 2,
+                          content: const ServiceDashboardContent(),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   //CustomDivider(),
                   const Padding(
                     padding: EdgeInsets.only(left: 8.0),

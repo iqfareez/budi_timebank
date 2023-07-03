@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../components/constants.dart';
 //import 'package:budi_timebank/pages/password.dart';
 import 'signUpPage.dart';
@@ -20,7 +20,7 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
   bool _isLoading = false;
   final bool _redirecting = false;
   late final TextEditingController _emailController;
-  late final StreamSubscription<AuthState> _authStateSubscription;
+  late final StreamSubscription<User?> _authStateSubscription;
   //final session = supabase.auth.currentSession;
   //late final TextEditingController _passwordController;
   //late final StreamSubscription<AuthState> _authStateSubscription;
@@ -29,16 +29,27 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
       _isLoading = true;
     });
     try {
-      await supabase.auth.resetPasswordForEmail(
-        _emailController.text,
-        redirectTo: kIsWeb ? null : 'io.supabase.flutter://reset-callback/',
-      );
+      // await supabase.auth.resetPasswordForEmail(
+      //   _emailController.text,
+      //   redirectTo: kIsWeb ? null : 'io.supabase.flutter://reset-callback/',
+      // );
+      // TODO: I dont know about the code below. Need to check if is is really working
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+          email: _emailController.text,
+          actionCodeSettings: ActionCodeSettings(
+              url: 'https://budi-timebank.web.app',
+              handleCodeInApp: true,
+              androidPackageName: 'com.iqfareez.budi_timebank',
+              androidInstallApp: true,
+              androidMinimumVersion: '16',
+              iOSBundleId: 'com.example.budiTimebank',
+              dynamicLinkDomain: 'budi-timebank.web.app'));
       if (mounted) {
         context.showSnackBar(
             message: 'Check your email for password recovery!');
       }
-    } on AuthException catch (error) {
-      context.showErrorSnackBar(message: error.message);
+    } on FirebaseAuthException catch (error) {
+      context.showErrorSnackBar(message: error.message.toString());
     } catch (error) {
       context.showErrorSnackBar(message: 'Unexpected error occured');
     }
@@ -50,20 +61,29 @@ class PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
   @override
   void initState() {
     _emailController = TextEditingController();
-    _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
-      if (_redirecting) return;
-      final session = data.session;
-      final AuthChangeEvent event = data.event;
-      //print(event);
-      if (event == AuthChangeEvent.passwordRecovery && session != null) {
-        // handle signIn
-        Navigator.of(context).pushReplacementNamed('/passwordReset');
+    _authStateSubscription =
+        FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+        // TODO: Handle bende alah ni
+      } else {
+        print('User is signed in!');
       }
-      // Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (BuildContext context) => const PasswordPage()));
     });
+    // _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+    //   if (_redirecting) return;
+    //   final session = data.session;
+    //   final AuthChangeEvent event = data.event;
+    //   //print(event);
+    //   if (event == AuthChangeEvent.passwordRecovery && session != null) {
+    //     // handle signIn
+    //     Navigator.of(context).pushReplacementNamed('/passwordReset');
+    //   }
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) => const PasswordPage()));
+    // });
     super.initState();
   }
 

@@ -1,40 +1,33 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../components/constants.dart';
 import 'forgotPasword.dart';
 import 'signUpPage.dart';
 import '../custom%20widgets/theme.dart';
 
-import '../bin/common.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   bool _redirecting = false;
   bool _passwordVisible = false;
-  late Common _common;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  late final StreamSubscription<AuthState> _authStateSubscription;
+  late final StreamSubscription<User?> _authStateSubscription;
 
   Future<void> _logIn() async {
     setState(() {
       _isLoading = true;
     });
     try {
-      await supabase.auth.signInWithPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-        // emailRedirectTo:
-        //     kIsWeb ? null : 'io.supabase.fluttercallback://Login-callback/',
-      );
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text, password: _passwordController.text);
       // await ClientAuth(Common().channel)
       //     .signInUser(_emailController.text, _passwordController.text);
 
@@ -42,14 +35,13 @@ class _LoginPageState extends State<LoginPage> {
       //   context.showSnackBar(message: 'Check your email for Login link!');
       //   _emailController.clear();
       // }
-    } on AuthException catch (error) {
-      context.showErrorSnackBar(message: error.message);
+    } on FirebaseAuthException catch (error) {
+      context.showErrorSnackBar(message: error.message.toString());
       //print(error);
     } catch (error) {
       context.showErrorSnackBar(message: 'Unable to log in!!');
     }
     setState(() {
-      _common = Common();
       _isLoading = false;
     });
   }
@@ -58,15 +50,24 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+    // _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+    //   if (_redirecting) return;
+    //   final session = data.session;
+    //   // final AuthChangeEvent event = data.event;
+    //   // if (event == AuthChangeEvent.passwordRecovery && session != null) {
+    //   //   // handle signIn
+    //   //   Navigator.of(context).pushReplacementNamed('/passwordReset');
+    //   // } else
+    //   if (session != null) {
+    //     _redirecting = true;
+    //     Navigator.of(context).pushReplacementNamed('/navigation');
+    //   }
+    // });
+
+    _authStateSubscription =
+        FirebaseAuth.instance.authStateChanges().listen((user) {
       if (_redirecting) return;
-      final session = data.session;
-      // final AuthChangeEvent event = data.event;
-      // if (event == AuthChangeEvent.passwordRecovery && session != null) {
-      //   // handle signIn
-      //   Navigator.of(context).pushReplacementNamed('/passwordReset');
-      // } else
-      if (session != null) {
+      if (user != null) {
         _redirecting = true;
         Navigator.of(context).pushReplacementNamed('/navigation');
       }

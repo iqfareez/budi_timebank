@@ -4,18 +4,24 @@ import 'contact.dart';
 import 'identification.dart';
 
 class Profile {
+  String? userUid;
   final String name;
   final List<String> skills;
   final List<Contact> contacts;
   final Identification identification;
   final Gender gender;
+  final OwnerType ownerType;
+  final String? organizationName;
 
   Profile({
+    this.userUid,
     required this.name,
     required this.skills,
     required this.contacts,
     required this.identification,
     required this.gender,
+    required this.ownerType,
+    this.organizationName,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) {
@@ -27,6 +33,8 @@ class Profile {
           .toList(),
       identification: Identification.fromJson(json['identification']),
       gender: _parseGender(json['gender']),
+      ownerType: _parseOwnerType(json['ownerType']),
+      organizationName: json['organizationName'] as String?,
     );
   }
 
@@ -41,7 +49,9 @@ class Profile {
       'skills': skills,
       'contacts': contacts.map((contact) => contact.toMap()).toList(),
       'identification': identification.toMap(),
-      'gender': gender.name
+      'gender': gender.name,
+      'ownerType': ownerType.name,
+      'organizationName': organizationName,
     };
   }
 
@@ -55,6 +65,12 @@ class Profile {
     }
   }
 
+  static OwnerType _parseOwnerType(String ownerType) {
+    return OwnerType.values.firstWhere(
+        (element) => ownerType == element.name.toLowerCase(),
+        orElse: () => OwnerType.individual);
+  }
+
   @override
   String toString() {
     return 'Profile{name: $name, gender: $gender';
@@ -62,3 +78,5 @@ class Profile {
 }
 
 enum Gender { male, female }
+
+enum OwnerType { individual, organization }

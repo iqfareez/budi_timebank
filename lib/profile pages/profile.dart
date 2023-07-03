@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../custom%20widgets/customHeadline.dart';
 import '../custom%20widgets/theme.dart';
+import '../db_helpers/client_user.dart';
 import '../extension_string.dart';
 
 import '../auth pages/account_page.dart';
@@ -22,6 +23,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final userUid = FirebaseAuth.instance.currentUser!.uid;
   late Future<Profile> futureProfile;
   List<String> skills = [];
   List<String> email = [];
@@ -32,20 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    futureProfile = getProfile();
-  }
-
-  Future<Profile> getProfile() async {
-    final userUid = FirebaseAuth.instance.currentUser!.uid;
-
-    var snapshot =
-        await FirebaseFirestore.instance.collection('users').doc(userUid).get();
-
-    var snapshotData = snapshot.data()!['profile'];
-
-    var profile = Profile.fromJson(snapshotData);
-
-    return profile;
+    futureProfile = ClientUser.getUserProfileById(userUid);
   }
 
   @override
@@ -63,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     builder: (context) => const AccountPage(),
                   )).then((value) => setState(
                     () {
-                      getProfile();
+                      futureProfile = ClientUser.getUserProfileById(userUid);
                     },
                   ));
             },
@@ -82,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
               if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
+              // FIXME: The list readded when rebuild, fix this later
               skills = snapshot.data!.skills;
               for (int i = 0; i < snapshot.data!.contacts.length; i++) {
                 if (snapshot.data!.contacts[i].contactType ==
@@ -105,6 +95,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (kDebugMode)
+                    Text(
+                      userUid,
+                      style: const TextStyle(color: Colors.red),
+                    ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Card(
@@ -151,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
 
-                  const CustomHeadline(heading: ' Ratings'),
+                  // const CustomHeadline(heading: ' Ratings'),
                   // RatingCardDetails1(
                   //     isProvider: true,
                   //     userRating: profile.user.rating.asProvider),

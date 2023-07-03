@@ -1,9 +1,6 @@
-// import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
-import 'components/constants.dart';
 import 'custom%20widgets/theme.dart';
 import 'dashboard%20pages/dashboard.dart';
 import 'profile%20pages/profile.dart';
@@ -25,7 +22,6 @@ class _PersistentBottomNavigationBarState
       PersistentTabController(initialIndex: 0);
 
   int _selectedIndex = 0;
-  final session = supabase.auth.currentSession;
 
   //https://pub.dev/packages/persistent_bottom_nav_bar
 

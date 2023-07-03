@@ -4,6 +4,7 @@
 //redirects the user accordingly.
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 //import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,7 +14,7 @@ class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
@@ -52,7 +53,8 @@ class _SplashPageState extends State<SplashPage> {
 
     _redicrectCalled = true;
 
-    final session = supabase.auth.currentSession;
+    // final session = supabase.auth.currentSession;
+    final session = FirebaseAuth.instance.currentUser;
     //print('The session is ' + session.toString());
     // _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
     //   //if (_redirecting) return;

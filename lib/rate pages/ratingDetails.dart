@@ -1,41 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:grpc/grpc.dart';
-import '../bin/client_rating.dart';
-import '../bin/client_user.dart';
-import '../components/constants.dart';
+
+import '../custom widgets/heading2.dart';
 import '../custom%20widgets/customHeadline.dart';
 import '../custom%20widgets/theme.dart';
+import '../db_helpers/client_service_request.dart';
+import '../db_helpers/client_user.dart';
 import '../extension_string.dart';
-import '../bin/client_service_request.dart';
-import '../bin/common.dart';
-import '../custom widgets/heading2.dart';
-import '../request pages/requestDetails1.dart';
+import '../model/profile.dart';
+import '../model/rating.dart';
+import '../model/service_request.dart';
+import '../request pages/requestDetails.dart';
 
 class RatingDetails extends StatefulWidget {
-  //final function;
   final bool isProvider;
-  final ratingFor;
-  final author;
-  final recipient;
-  final value; //detailsF
-  final comment;
-  final createdAt; //location
-  final updatedAt;
-  final requestId;
+  final Rating ratingDetails;
 
   const RatingDetails({
     super.key,
-    //required this.function,
     required this.isProvider,
-    required this.ratingFor,
-    required this.author,
-    required this.recipient,
-    required this.value, //details /
-    required this.comment,
-    required this.createdAt, //location
-    required this.updatedAt,
-    required this.requestId,
+    required this.ratingDetails,
   });
 
   @override
@@ -43,17 +28,10 @@ class RatingDetails extends StatefulWidget {
 }
 
 class _RatingDetailsState extends State<RatingDetails> {
-//   AS ENUM (
-//   'requestor',
-//   'provider'
-// );
-  late dynamic _userRequestor;
-  late dynamic _userProvider;
-
-  late final dateCreatedOn;
-  late final dateUpdatedOn;
-  late final requestName;
-  late final user;
+  final String userUid = FirebaseAuth.instance.currentUser!.uid;
+  late Profile _userRequestor;
+  late Profile _userProvider;
+  late ServiceRequest requestDetails;
 
   bool isLoad = false;
 
@@ -68,18 +46,13 @@ class _RatingDetailsState extends State<RatingDetails> {
       isLoad = true;
     });
     _userRequestor =
-        await ClientUser(Common().channel).getUserById(widget.author);
+        await ClientUser.getUserProfileById(widget.ratingDetails.authorId);
 
     _userProvider =
-        await ClientUser(Common().channel).getUserById(widget.recipient);
+        await ClientUser.getUserProfileById(widget.ratingDetails.rateeId);
 
-    requestName = await ClientServiceRequest(Common().channel)
-        .getResponseById(widget.requestId);
-
-    user = supabase.auth.currentUser!.id;
-
-    dateCreatedOn = DateTime.parse(widget.createdAt);
-    dateUpdatedOn = DateTime.parse(widget.updatedAt);
+    requestDetails = await ClientServiceRequest.getMyServiceRequestById(
+        widget.ratingDetails.jobId);
 
     setState(() {
       isLoad = false;
@@ -95,20 +68,7 @@ class _RatingDetailsState extends State<RatingDetails> {
   }
 
   void _deleteRating(String id, String ratingFor) async {
-    try {
-      ClientRating(Common().channel).deleteRating(id, ratingFor);
-      context.showSnackBar(message: 'Rate Deleted');
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-    } on GrpcError catch (e) {
-      context.showErrorSnackBar(message: e.toString());
-    } catch (e) {
-      context.showErrorSnackBar(message: e.toString());
-    }
-
-    // setState(() {
-    //   getinstance();
-    // });
+    throw UnimplementedError('delete rating not implemented');
   }
 
   //final rateServiceController = TextEditingController();
@@ -153,13 +113,14 @@ class _RatingDetailsState extends State<RatingDetails> {
                                   Heading2('Comment'),
                                 ],
                               ),
-                              widget.comment.toString().isEmpty
+                              widget.ratingDetails.message == null ||
+                                      widget.ratingDetails.message!.isEmpty
                                   ? const Text(
                                       'No comment from provider',
                                       style: TextStyle(color: Colors.grey),
                                     )
-                                  : Text(
-                                      widget.comment.toString().capitalize()),
+                                  : Text(widget.ratingDetails.message!
+                                      .capitalize()),
                             ],
                           ),
                           Column(
@@ -170,7 +131,7 @@ class _RatingDetailsState extends State<RatingDetails> {
                                   ignoreGestures: true,
                                   itemSize: 20,
                                   initialRating:
-                                      double.parse(widget.value.toString()),
+                                      widget.ratingDetails.rating.toDouble(),
                                   itemBuilder: (context, index) => Icon(
                                     Icons.star,
                                     color: themeData1().secondaryHeaderColor,
@@ -206,9 +167,7 @@ class _RatingDetailsState extends State<RatingDetails> {
                               CustomHeadline(
                                   heading: 'Recipient',
                                   color: themeData1().secondaryHeaderColor),
-                              Text(_userProvider.user.name
-                                  .toString()
-                                  .titleCase()),
+                              Text(_userProvider.name.toString().titleCase()),
                             ],
                           ),
                           Column(
@@ -217,18 +176,7 @@ class _RatingDetailsState extends State<RatingDetails> {
                                 heading: 'Author',
                                 color: themeData1().secondaryHeaderColor,
                               ),
-                              Text(_userRequestor.user.name
-                                  .toString()
-                                  .titleCase()),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              CustomHeadline(
-                                heading: 'Rating As:',
-                                color: themeData1().secondaryHeaderColor,
-                              ),
-                              Text(widget.ratingFor.toString().capitalize()),
+                              Text(_userRequestor.name.toString().titleCase()),
                             ],
                           ),
                         ],
@@ -238,7 +186,7 @@ class _RatingDetailsState extends State<RatingDetails> {
                   const SizedBox(height: 15),
                   Heading2(' Created On'),
                   Text(
-                      ' Date: ${dateCreatedOn.day}-${dateCreatedOn.month}-${dateCreatedOn.year}\n\tTime: ${dateCreatedOn.hour}:${dateCreatedOn.minute}'),
+                      ' Date: ${widget.ratingDetails.createdAt.day}-${widget.ratingDetails.createdAt.month}-${widget.ratingDetails.createdAt.year}\n\tTime: ${widget.ratingDetails.createdAt.hour}:${widget.ratingDetails.createdAt.minute}'),
                   const SizedBox(height: 15),
                   // Heading2(' Updated On'),
                   // Text(
@@ -248,12 +196,11 @@ class _RatingDetailsState extends State<RatingDetails> {
                   ElevatedButton(
                     onPressed: (() {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => RequestDetails1(
-                              requestId: requestName.request.id,
-                              isRequest: widget.isProvider,
-                              user: user)));
+                          // buat checking for widget.isProvider and return widget accordingly
+                          builder: (context) => RequestDetails(
+                              requestId: requestDetails.id!, user: userUid)));
                     }),
-                    child: Text(' ${requestName.request.title}'),
+                    child: Text(' ${requestDetails.title}'),
                   ),
 
                   const SizedBox(height: 15),
@@ -274,8 +221,8 @@ class _RatingDetailsState extends State<RatingDetails> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        _deleteRating(
-                                            widget.requestId, widget.ratingFor);
+                                        // _deleteRating(
+                                        //     widget.requestId, widget.ratingFor);
                                       },
                                       child: const Text('Delete'),
                                     ),

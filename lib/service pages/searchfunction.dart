@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../custom widgets/customCardServiceRequest.dart';
-import '../request pages/requestDetails1.dart';
+import '../request pages/requestDetails.dart';
+import 'job_details.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   List<dynamic> listRequest;
@@ -69,17 +70,15 @@ class CustomSearchDelegate extends SearchDelegate {
         return InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => RequestDetails1(
-                    requestId: matchQuery[index]['id'],
-                    isRequest: false,
-                    user: user)));
+                builder: (context) => JobDetails(
+                    requestId: matchQuery[index]['id'], user: user)));
           },
           child: CustomCardServiceRequest(
             category: matchQuery[index]['category'],
             location: matchQuery[index]['location']['state'],
             date: matchQuery[index]['date'],
-            state: changeState(matchQuery[index]['state']),
-            requestor: matchQuery[index]['requestor'],
+            status: changeState(matchQuery[index]['state']),
+            requestorId: matchQuery[index]['requestor'],
             title: matchQuery[index]['title'],
             rate: matchQuery[index]['rate'],
           ),
@@ -106,19 +105,17 @@ class CustomSearchDelegate extends SearchDelegate {
         return InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => RequestDetails1(
-                    requestId: matchQuery[index]['id'],
-                    isRequest: false,
-                    user: user)));
+                builder: (context) => JobDetails(
+                    requestId: matchQuery[index]['id'], user: user)));
           },
           child: CustomCardServiceRequest(
             category: matchQuery[index]['category'],
             location: matchQuery[index]['location']['state'],
             date: matchQuery[index]['date'],
-            state: isRequested(matchQuery[index]['applicants'])
+            status: isRequested(matchQuery[index]['applicants'])
                 ? 'Available'
                 : changeState(matchQuery[index]['state']),
-            requestor: matchQuery[index]['requestor'],
+            requestorId: matchQuery[index]['requestor'],
             title: matchQuery[index]['title'],
             rate: matchQuery[index]['rate'],
           ),

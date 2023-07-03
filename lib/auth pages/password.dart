@@ -1,7 +1,7 @@
 import 'dart:async';
 // import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../components/constants.dart';
 import '../custom%20widgets/heading2.dart';
 import '../custom%20widgets/theme.dart';
@@ -27,14 +27,8 @@ class PasswordPageState extends State<PasswordPage> {
       _isLoading = true;
     });
     try {
-      await supabase.auth.updateUser(
-        UserAttributes(
-          password: _passwordController.text,
-        ),
+      // TODO: Do Firebase password reset here
 
-        // _emailController.text,
-        // redirectTo: kIsWeb ? null : 'io.supabase.flutter://reset-callback/',
-      );
       if (mounted) {
         context.showSnackBar(message: 'Password Updated!');
         Navigator.of(context)
@@ -43,8 +37,8 @@ class PasswordPageState extends State<PasswordPage> {
         //Navigator.of(context).pushReplacementNamed('/');
         //_passwordController.clear();
       }
-    } on AuthException catch (error) {
-      context.showErrorSnackBar(message: error.message);
+    } on FirebaseAuthException catch (error) {
+      context.showErrorSnackBar(message: error.message.toString());
     } catch (error) {
       context.showErrorSnackBar(message: 'Unexpected error occured');
     }

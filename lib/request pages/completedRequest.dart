@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'requestDetails1.dart';
-import '../components/constants.dart';
+import '../db_helpers/client_service_request.dart';
+import '../model/service_request.dart';
+import 'requestDetails.dart';
 import '../custom widgets/customCardServiceRequest.dart';
 
 class CompletedRequest extends StatefulWidget {
@@ -11,60 +13,17 @@ class CompletedRequest extends StatefulWidget {
 }
 
 class _CompletedRequestState extends State<CompletedRequest> {
+  final String currentUserUid = FirebaseAuth.instance.currentUser!.uid;
   late bool isLoad;
-  //late dynamic listRequest;
-  late dynamic listFiltered;
+  late List<ServiceRequest> data;
   late dynamic listRating;
-  late String user;
-  late bool _isEmpty;
   bool isRequest = true;
-  //for pagination
-  late int from;
-  late int to;
-  late int finalCount;
-  late dynamic data;
-
-  //for listview controller;
-  final _scrollController = ScrollController();
 
   @override
   void initState() {
     isLoad = true;
-    _isEmpty = true;
-    _scrollController.addListener(
-      () {
-        if (_scrollController.position.maxScrollExtent ==
-            _scrollController.offset) {
-          fetch();
-          // from += 5;
-          // to += 5;
-        }
-      },
-    );
     getinstance();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  changeState(state) {
-    switch (state) {
-      case 0:
-        return 'Pending';
-      case 1:
-        return 'Accepted';
-      case 2:
-        return 'Ongoing';
-      case 3:
-        return 'Completed';
-      case 4:
-        return 'Aborted';
-    }
   }
 
   isRated(jobId) {
@@ -75,89 +34,23 @@ class _CompletedRequestState extends State<CompletedRequest> {
     }
   }
 
-  void fetch() async {
-    //setState(() {});
-    from += 7;
-    to += 7;
-    // print('from ' + from.toString());
-    // print('to ' + to.toString());
-    final data1;
-    final ratingData;
-    //print('fetching data...');
-
-    data1 = await supabase
-        .from('service_requests')
-        .select()
-        .eq('requestor', user)
-        .eq('applicants', []).range(from, to);
-
-    ratingData = await supabase
-        .from('ratings')
-        .select()
-        .eq('author', user)
-        .range(from, to);
-
-    // final data1 = await supabase
-    //     .from('service_requests')
-    //     .select()
-    //     .neq('requestor', user)
-    //     .range(from, to);
-    setState(() {
-      listRating.addAll(ratingData);
-      listFiltered.addAll(data1);
-    });
-
-    //print('new added list $listFiltered');
-    // print(listFiltered);
-    // print(listFiltered.length);
-  }
-
   Future getinstance() async {
-    setState(() {
-      isLoad = true;
-      from = 0;
-      to = 6;
-    });
-    listFiltered = [];
-    listRating = [];
-    user = supabase.auth.currentUser!.id;
+    setState(() => isLoad = true);
 
-    listFiltered.addAll(await supabase
-        .from('service_requests')
-        .select()
-        .eq('requestor', user)
-        .eq('state', 3)
-        .neq('applicants', []).range(from, to));
-    data = await supabase
-        .from('service_requests')
-        .select()
-        .eq('requestor', user)
-        .eq('state', 3)
-        .neq('applicants', []);
+    var completedReqs = await ClientServiceRequest.getCompletedRequest();
+    // TODO: Implement rating
 
-    finalCount = data.length;
-
-    listRating.addAll(await supabase
-        .from('ratings')
-        .select()
-        .eq('author', user)
-        .range(from, to));
+    // listRating.addAll(await supabase
+    //     .from('ratings')
+    //     .select()
+    //     .eq('author', user)
+    //     .range(from, to));
 
     setState(() {
+      data = completedReqs;
       isLoad = false;
-      isEmpty();
     });
     //print(listRequest.requests.length);
-  }
-
-  bool isEmpty() {
-    if (listFiltered.length == 0) {
-      _isEmpty = true;
-      return _isEmpty;
-    } else {
-      _isEmpty = false;
-      return _isEmpty;
-    }
   }
 
   @override
@@ -165,7 +58,7 @@ class _CompletedRequestState extends State<CompletedRequest> {
     return Scaffold(
       body: isLoad
           ? const Center(child: CircularProgressIndicator())
-          : _isEmpty
+          : data.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -188,54 +81,35 @@ class _CompletedRequestState extends State<CompletedRequest> {
                     onRefresh: getinstance,
                     child: ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      controller: _scrollController,
-                      itemCount: listFiltered.length + 1,
+                      itemCount: data.length,
                       itemBuilder: (context, index) {
-                        if (index < listFiltered.length) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(
-                                      builder: (context) => RequestDetails1(
-                                          requestId: listFiltered[index]['id'],
-                                          isRequest: isRequest,
-                                          user: user)))
-                                  .then((value) => setState(
-                                        () {
-                                          getinstance();
-                                        },
-                                      ));
-                            },
-                            child: CustomCardServiceRequest(
-                              category: listFiltered[index]['category'],
-                              location: listFiltered[index]['location']
-                                  ['state'],
-                              date: listFiltered[index]['date'],
-                              state: isRated(listFiltered[index]['id'])
-                                  ? 'Completed (Rated)'
-                                  : 'Completed (Unrated)',
-                              requestor: listFiltered[index]['requestor'],
-                              title: listFiltered[index]['title'],
-                              rate: listFiltered[index]['rate'],
-                            ),
-                          );
-                        } else {
-                          if (finalCount < 6) {
-                            return const Padding(
-                              padding: EdgeInsets.only(left: 15.0),
-                              child: Text('No more request...'),
-                            );
-                          }
-                          if (finalCount < from) {
-                            return const Padding(
-                              padding: EdgeInsets.only(left: 15.0),
-                              child: Text('No more request...'),
-                            );
-                          } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                        }
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(
+                                    builder: (context) => RequestDetails(
+                                        requestId: data[index].id!,
+                                        user: currentUserUid)))
+                                .then((value) => setState(
+                                      () {
+                                        getinstance();
+                                      },
+                                    ));
+                          },
+                          child: CustomCardServiceRequest(
+                            category: data[index].category,
+                            location: data[index].location,
+                            date: data[index].date,
+                            // status: isRated(listFiltered[index].id)
+                            //     ? 'Completed (Rated)'
+                            //     : 'Completed (Unrated)',
+                            // TODO: implement rated/notrated
+                            status: data[index].status,
+                            requestorId: data[index].requestorId,
+                            title: data[index].title,
+                            rate: data[index].rate.toString(),
+                          ),
+                        );
                       },
                     ),
                   ),

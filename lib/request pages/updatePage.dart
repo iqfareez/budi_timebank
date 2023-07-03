@@ -1,9 +1,7 @@
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:grpc/grpc.dart';
-import '../bin/client_service_request.dart';
-import '../bin/common.dart';
+
 import '../components/constants.dart';
 import '../custom%20widgets/customHeadline.dart';
 import '../custom%20widgets/heading2.dart';
@@ -68,21 +66,16 @@ class _UpdatePageState extends State<UpdatePage> {
   ];
 
   updateJob(String body) async {
-    try {
-      if (body == '') {
-        context.showErrorSnackBar(message: 'Update value cant be empty');
-        Navigator.of(context).pop();
-      }
-
-      await ClientServiceRequest(Common().channel)
-          .updateService(widget.id, body);
-      context.showSnackBar(message: 'Job Updated');
+    if (body == '') {
+      context.showErrorSnackBar(message: 'Update value cant be empty');
       Navigator.of(context).pop();
-    } on GrpcError catch (e) {
-      context.showErrorSnackBar(message: e.toString());
-    } catch (e) {
-      context.showErrorSnackBar(message: e.toString());
     }
+
+    // TODO: implement edit service request
+    // await ClientServiceRequest(Common().channel)
+    //     .updateService(widget.id, body);
+    context.showSnackBar(message: 'Job Updated');
+    Navigator.of(context).pop();
   }
 
   @override

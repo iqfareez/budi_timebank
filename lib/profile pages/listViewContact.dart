@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../custom widgets/theme.dart';
 
 class CustomListviewContact extends StatefulWidget {
-  final List<dynamic> contactList;
+  final List<String> contactList;
   const CustomListviewContact({super.key, required this.contactList});
 
   @override

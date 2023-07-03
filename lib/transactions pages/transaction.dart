@@ -1,13 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import '../custom%20widgets/customDivider.dart';
 import '../custom%20widgets/theme.dart';
-import '../request%20pages/requestDetails1.dart';
+import '../db_helpers/client_service_request.dart';
+import '../db_helpers/client_user.dart';
+import '../extension_string.dart';
+import '../model/earnings_history.dart';
+import '../model/profile.dart';
+import '../request pages/requestDetails.dart';
 
-import '../bin/client_service_request.dart';
-import '../bin/client_user.dart';
-import '../bin/common.dart';
-import '../components/constants.dart';
-// import 'requestDetails.dart';
+class _MyEarningHistory {
+  EarningsHistory earningsHistory;
+  String jobTitle;
+  bool isReceived; // to paint the text red/green
+  Profile? senderProfile; //from
+  Profile? receiverProfile; //to
+  String? senderUid;
+  String? receiverUid;
+
+  _MyEarningHistory({
+    required this.earningsHistory,
+    required this.jobTitle,
+    required this.isReceived,
+    // Profiles is used to display user name (if applicable)
+    this.senderProfile,
+    this.receiverProfile,
+    // id is used to check current user
+    this.senderUid,
+    this.receiverUid,
+  });
+}
 
 class TransactionPage extends StatefulWidget {
   const TransactionPage({Key? key}) : super(key: key);
@@ -18,19 +41,11 @@ class TransactionPage extends StatefulWidget {
 
 class _TransactionPageState extends State<TransactionPage> {
   late bool isLoad;
-  //late dynamic listRequest;
-  late dynamic listFiltered;
-  late dynamic listTo;
-  late dynamic listFrom;
-  late dynamic listRequestName;
-  late String user;
-
-  //late bool _isEmpty;
+  late List<_MyEarningHistory> myEarningsHistory;
 
   @override
   void initState() {
     isLoad = true;
-    //_isEmpty = true;
 
     getinstance();
     super.initState();
@@ -39,63 +54,72 @@ class _TransactionPageState extends State<TransactionPage> {
   Future getinstance() async {
     setState(() {
       isLoad = true;
-      // from = 0;
-      // to = 6;
     });
-    listFiltered = [];
-    listTo = [];
-    listFrom = [];
-    listRequestName = [];
-    // dateJob = [];
-    user = supabase.auth.currentUser!.id;
 
-    listFiltered =
-        await ClientUser(Common().channel).getTransactionHistory(user);
+    var earningsData = await ClientUser.getUserEarningsHistory();
+    List<_MyEarningHistory> myEarnHistories = [];
 
-    // listFiltered.sort((a,b)) {
+    for (var earningData in earningsData) {
+      Profile? receiveProfile, senderProfile;
+      String? senderUid, receiverUid;
+      bool isReceived = false;
+      var receiveIdData = earningData.to;
+      if (receiveIdData.startsWith('id:')) {
+        receiverUid = receiveIdData.replaceFirst('id:', '');
+        var profile = await ClientUser.getUserProfileById(receiverUid);
+        receiveProfile = profile;
+        isReceived = receiverUid == FirebaseAuth.instance.currentUser!.uid;
+      } else {
+        receiveProfile = null;
+      }
 
-    // }
+      var senderIdData = earningData.from;
+      if (senderIdData.startsWith('id:')) {
+        senderUid = senderIdData.replaceFirst('id:', '');
+        var profile = await ClientUser.getUserProfileById(senderUid);
+        senderProfile = profile;
+      } else {
+        senderProfile = null;
+      }
 
-    for (int i = 0; i < listFiltered.data.length; i++) {
-      //print(widget.applicants[i]);
-      var name2 = await ClientServiceRequest(Common().channel)
-          .getResponseById(listFiltered.data[i].requestId);
-      listRequestName.add(name2.request.title);
-      var name1 = await ClientUser(Common().channel)
-          .getUserById(listFiltered.data[i].to);
-      listTo.add(name1.user.name);
-      var name = await ClientUser(Common().channel)
-          .getUserById(listFiltered.data[i].from);
-      listFrom.add(name.user.name);
+      var extractedJobId = extractJobId(earningData.reason);
+      String? jobTitle;
 
-      // dateJob[i] = DateTime.parse(listFiltered.data[i].timestamp);
+      if (extractedJobId != null) {
+        // the job id is valid, then, fetch the job details
+        var job =
+            await ClientServiceRequest.getServiceRequestById(extractedJobId);
+        jobTitle = job.title;
+      } else {
+        // not a job id, then simply display the reason
+        jobTitle = earningData.reason;
+      }
+
+      myEarnHistories.add(_MyEarningHistory(
+          jobTitle: jobTitle.titleCase(),
+          earningsHistory: earningData,
+          isReceived: isReceived,
+          senderProfile: senderProfile,
+          receiverProfile: receiveProfile,
+          senderUid: senderUid,
+          receiverUid: receiverUid));
     }
-    // print(dateJob);
-    //print(listRequestName);
-    // dynamic user1 = await ClientUser(Common().channel).getUserById(user);
-    // print(user1);
-    //print(listFiltered);
+
     setState(() {
       isLoad = false;
-      //isEmpty();
+      myEarningsHistory = myEarnHistories;
     });
-    //print(listRequest.requests.length);
   }
 
-  String getTimeStamp(timeStamp) {
-    dynamic dateJob;
-    dateJob = DateTime.parse(timeStamp);
-    return 'Date: ${dateJob.day}/${dateJob.month}/${dateJob.year} Time: ${dateJob.hour}:${dateJob.minute}:${dateJob.second}';
+  String getTimeStamp(DateTime timestamp) {
+    return 'Date: ${timestamp.day}/${timestamp.month}/${timestamp.year} Time: ${timestamp.hour}:${timestamp.minute}:${timestamp.second}';
   }
 
-  bool isReceived(id) {
-    final user = supabase.auth.currentUser!.id;
+  String? extractJobId(String transactionReason) {
+    if (!transactionReason.startsWith("job:")) return null;
 
-    if (id == user) {
-      return false;
-    } else {
-      return true;
-    }
+    var id = transactionReason.replaceFirst('job:', '');
+    return id;
   }
 
   @override
@@ -106,7 +130,7 @@ class _TransactionPageState extends State<TransactionPage> {
           backgroundColor: themeData1().primaryColor),
       body: isLoad
           ? const Center(child: CircularProgressIndicator())
-          : listFiltered.data.isEmpty
+          : myEarningsHistory.isEmpty
               ? RefreshIndicator(
                   onRefresh: getinstance,
                   child: const Center(
@@ -126,19 +150,51 @@ class _TransactionPageState extends State<TransactionPage> {
                     child: ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),
                       //controller: _scrollController,
-                      itemCount: listFiltered.data.length,
+                      itemCount: myEarningsHistory.length,
                       itemBuilder: (context, index) {
-                        //if (index < listFiltered.length) {
+                        // Give value to receiverName and senderName based on the data
+                        // Possible values: You, System, <User Name>
+                        String receiverName, senderName;
+
+                        if (myEarningsHistory[index].receiverProfile == null) {
+                          receiverName = "System";
+                        } else {
+                          if (myEarningsHistory[index].receiverUid ==
+                              FirebaseAuth.instance.currentUser!.uid) {
+                            receiverName = "You";
+                          } else {
+                            receiverName =
+                                myEarningsHistory[index].receiverProfile!.name;
+                          }
+                        }
+
+                        if (myEarningsHistory[index].senderProfile == null) {
+                          senderName = "System";
+                        } else {
+                          if (myEarningsHistory[index].senderUid ==
+                              FirebaseAuth.instance.currentUser!.uid) {
+                            senderName = "You";
+                          } else {
+                            senderName =
+                                myEarningsHistory[index].senderProfile!.name;
+                          }
+                        }
+
                         return InkWell(
                             onTap: () {
+                              var jobId = extractJobId(myEarningsHistory[index]
+                                  .earningsHistory
+                                  .reason);
+
+                              if (jobId == null) return;
+                              // return the determine the isRequest
                               Navigator.of(context)
                                   .push(MaterialPageRoute(
-                                      builder: (context) => RequestDetails1(
-                                          requestId: listFiltered
-                                              .data[index].requestId,
-                                          isRequest: isReceived(
-                                              listFiltered.data[index].to),
-                                          user: user)))
+                                    builder: (context) => RequestDetails(
+                                        requestId: jobId,
+                                        user: FirebaseAuth
+                                            .instance.currentUser!.uid),
+                                  ))
                                   .then((value) => setState(
                                         () {
                                           getinstance();
@@ -164,8 +220,8 @@ class _TransactionPageState extends State<TransactionPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                listRequestName[index]
-                                                    .toString(),
+                                                myEarningsHistory[index]
+                                                    .jobTitle,
                                                 style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -180,7 +236,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                                   //       fontWeight: FontWeight.bold),
                                                   // ),
                                                   Text(
-                                                    listFrom[index].toString(),
+                                                    senderName,
                                                     style: const TextStyle(
                                                       fontSize: 11,
                                                     ),
@@ -197,7 +253,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                                   //       fontWeight: FontWeight.bold),
                                                   // ),
                                                   Text(
-                                                    listTo[index].toString(),
+                                                    receiverName,
                                                     style: const TextStyle(
                                                       fontSize: 11,
                                                     ),
@@ -211,13 +267,15 @@ class _TransactionPageState extends State<TransactionPage> {
                                       Row(
                                         children: [
                                           Text(
-                                            listFiltered.data[index].amount
+                                            myEarningsHistory[index]
+                                                .earningsHistory
+                                                .amount
                                                 .toStringAsFixed(2),
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
-                                                color: isReceived(listFiltered
-                                                        .data[index].to)
+                                                color: !myEarningsHistory[index]
+                                                        .isReceived
                                                     ? Colors.red
                                                     : Colors.green),
                                           ),
@@ -239,8 +297,9 @@ class _TransactionPageState extends State<TransactionPage> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    getTimeStamp(
-                                        listFiltered.data[index].timestamp),
+                                    getTimeStamp(myEarningsHistory[index]
+                                        .earningsHistory
+                                        .date),
                                     style: const TextStyle(fontSize: 12),
                                   ),
                                   CustomDivider(

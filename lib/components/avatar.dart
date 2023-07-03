@@ -1,6 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'constants.dart';
 
 class Avatar extends StatefulWidget {
@@ -14,7 +17,7 @@ class Avatar extends StatefulWidget {
   final void Function(String) onUpload;
 
   @override
-  _AvatarState createState() => _AvatarState();
+  State<Avatar> createState() => _AvatarState();
 }
 
 class _AvatarState extends State<Avatar> {
@@ -52,42 +55,68 @@ class _AvatarState extends State<Avatar> {
             ),
           ),
         ElevatedButton(
-          onPressed: _isLoading ? null : _upload,
+          onPressed: _isLoading
+              ? null
+              : () async {
+                  // show dialog to select destination where to pick image
+                  ImageSource? imgSource = await showDialog(
+                      context: context,
+                      builder: (_) {
+                        return SimpleDialog(
+                          children: [
+                            SimpleDialogOption(
+                              onPressed: () {
+                                Navigator.pop(context, ImageSource.camera);
+                              },
+                              child: const Text('Camera'),
+                            ),
+                            SimpleDialogOption(
+                              onPressed: () {
+                                Navigator.pop(context, ImageSource.gallery);
+                              },
+                              child: const Text('Gallery'),
+                            ),
+                          ],
+                        );
+                      });
+
+                  // if user cancel picking image
+                  if (imgSource == null) return;
+
+                  // pick image from selected source
+                  final picker = ImagePicker();
+                  final imageFile = await picker.pickImage(
+                    source: imgSource,
+                    maxWidth: 300,
+                    maxHeight: 300,
+                  );
+
+                  // if user cancel picking image
+                  if (imageFile == null) return;
+
+                  setState(() => _isLoading = true);
+
+                  // upload to storage bucket
+                  await _upload(File(imageFile.path));
+                },
           child: const Text('Upload'),
         ),
       ],
     );
   }
 
-  Future<void> _upload() async {
-    final picker = ImagePicker();
-    final imageFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 300,
-      maxHeight: 300,
-    );
-    if (imageFile == null) {
-      return;
-    }
-    setState(() => _isLoading = true);
-
+  Future<void> _upload(File imageFile) async {
     try {
-      final bytes = await imageFile.readAsBytes();
-      final fileExt = imageFile.path.split('.').last;
-      final fileName = '${DateTime.now().toIso8601String()}.$fileExt';
-      final filePath = fileName;
-      await supabase.storage.from('avatars').uploadBinary(
-            filePath,
-            bytes,
-            fileOptions: FileOptions(contentType: imageFile.mimeType),
-          );
-      final imageUrlResponse = await supabase.storage
-          .from('avatars')
-          .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 10);
-      widget.onUpload(imageUrlResponse);
-    } on StorageException catch (error) {
+      final userUid = FirebaseAuth.instance.currentUser!.uid;
+      final imgReferences =
+          FirebaseStorage.instance.ref('avatars/$userUid.png');
+      await imgReferences.putFile(imageFile);
+      var urlImage = await imgReferences.getDownloadURL();
+
+      widget.onUpload(urlImage);
+    } on FirebaseException catch (error) {
       if (mounted) {
-        context.showErrorSnackBar(message: error.message);
+        context.showErrorSnackBar(message: error.message.toString());
       }
     } catch (error) {
       if (mounted) {
