@@ -45,7 +45,7 @@ jobs:
 
       - name: Create FirebaseOptions file
         run: |
-          cat > firebase_options.dart <<EOF
+          cat > lib/firebase_options.dart <<EOF
           GH_REPO_PAT=${{ secrets.FIREBASE_OPTIONS_FILE }}
           EOF
 
