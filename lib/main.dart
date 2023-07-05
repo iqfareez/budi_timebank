@@ -20,6 +20,7 @@ import 'splash_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Firebase Console: https://console.firebase.google.com/u/0/project/budi-timebank/overview
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // emulator settings

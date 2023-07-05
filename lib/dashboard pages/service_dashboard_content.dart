@@ -23,10 +23,10 @@ class _ServiceDashboardContentState extends State<ServiceDashboardContent> {
 
   _getinstance() async {
     var summaryValues = await ClientServiceRequest.getServicesSummary();
-    pending = summaryValues[0];
-    accepted = summaryValues[1];
-    ongoing = summaryValues[2];
-    completed = summaryValues[3];
+    pending = summaryValues.$1;
+    accepted = summaryValues.$2;
+    ongoing = summaryValues.$3;
+    completed = summaryValues.$4;
 
     total = pending + accepted + ongoing + completed;
 

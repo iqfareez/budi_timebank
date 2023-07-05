@@ -74,66 +74,57 @@ class _CompletedServicesState extends State<CompletedServices> {
           : data.isEmpty
               ? RefreshIndicator(
                   onRefresh: getinstance,
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.3,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Text(
-                            'When you service/help is completed, the job will be listed here. No completed job yet...',
-                            textAlign: TextAlign.center,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 0),
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'asset/completed_job.png',
-                              height: MediaQuery.of(context).size.height / 2.3,
-                            ),
-                          ),
-                        ],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text(
+                        'When you service/help is completed, the job will be listed here. No completed job yet...',
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 0),
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          'asset/completed_job.png',
+                          height: MediaQuery.of(context).size.height / 2.3,
+                        ),
+                      ),
+                    ],
                   ),
                 )
-              : SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.2,
-                  child: RefreshIndicator(
-                    onRefresh: getinstance,
-                    child: ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(
-                                    builder: (context) => JobDetails(
-                                        requestId: data[index].id!,
-                                        user: currentUserUid)))
-                                .then((value) => setState(
-                                      () {
-                                        getinstance();
-                                      },
-                                    ));
-                          },
-                          child: CustomCardServiceRequest(
-                            category: data[index].category,
-                            location: data[index].location,
-                            date: data[index].date,
-                            // status: isRated(listFiltered[index].id!)
-                            //     ? 'Completed (Rated)'
-                            //     : 'Completed (Unrated)',
-                            status: data[index].status,
-                            requestorId: data[index].requestorId,
-                            title: data[index].title,
-                            rate: data[index].rate.toString(),
-                          ),
-                        );
-                      },
-                    ),
+              : RefreshIndicator(
+                  onRefresh: getinstance,
+                  child: ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(
+                                  builder: (context) => JobDetails(
+                                      requestId: data[index].id!,
+                                      user: currentUserUid)))
+                              .then((value) => setState(
+                                    () {
+                                      getinstance();
+                                    },
+                                  ));
+                        },
+                        child: CustomCardServiceRequest(
+                          category: data[index].category,
+                          location: data[index].location,
+                          date: data[index].date,
+                          // status: isRated(listFiltered[index].id!)
+                          //     ? 'Completed (Rated)'
+                          //     : 'Completed (Unrated)',
+                          status: data[index].status,
+                          requestorId: data[index].requestorId,
+                          title: data[index].title,
+                          rate: data[index].rate.toString(),
+                        ),
+                      );
+                    },
                   ),
                 ),
     );

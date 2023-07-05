@@ -181,208 +181,201 @@ class _AvailableServicesState extends State<AvailableServices> {
           : listFiltered.isEmpty
               ? RefreshIndicator(
                   onRefresh: getinstance,
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.3,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(height: 50),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          //     children: [
-                          //       Icon(
-                          //         Icons.tune,
-                          //         color: themeData1().secondaryHeaderColor,
-                          //       ),
-                          //       const SizedBox(width: 3),
-                          //       Container(
-                          //         alignment: Alignment.center,
-                          //         //margin: EdgeInsets.all(8),
-                          //         decoration: BoxDecoration(
-                          //             borderRadius: BorderRadius.circular(15),
-                          //             border: Border.all(
-                          //               color: Theme.of(context)
-                          //                   .secondaryHeaderColor,
-                          //               width: 2,
-                          //             )),
-                          //         child: DropdownButton<String>(
-                          //           underline: Container(
-                          //             height: 0,
-                          //           ),
-                          //           iconEnabledColor: Colors.black,
-                          //           value: _filterController.text,
-                          //           items: listFilter
-                          //               .map<DropdownMenuItem<String>>((e) {
-                          //             return DropdownMenuItem<String>(
-                          //                 value: e,
-                          //                 child: Padding(
-                          //                   padding: const EdgeInsets.symmetric(
-                          //                       horizontal: 10),
-                          //                   child: Text(
-                          //                     e,
-                          //                     style: const TextStyle(
-                          //                         color: Colors.black,
-                          //                         fontWeight: FontWeight.bold,
-                          //                         fontSize: 15),
-                          //                   ),
-                          //                 ));
-                          //           }).toList(),
-                          //           onChanged: (value) {
-                          //             setState(() {
-                          //               _filterController.text =
-                          //                   value.toString();
-                          //               //print(_categoryController.text);
-                          //               //getinstance();
-                          //               //print(_genderController.text);
-                          //             });
-                          //           },
-                          //         ),
-                          //       ),
-                          //       const SizedBox(width: 5),
-                          //       Expanded(
-                          //         child: ListView.builder(
-                          //           // physics: const AlwaysScrollableScrollPhysics(),
-                          //           shrinkWrap: true,
-                          //           itemCount: 1,
-                          //           itemBuilder:
-                          //               (BuildContext context, int index) {
-                          //             if (_filterController.text ==
-                          //                 listFilter[1]) {
-                          //               return Container(
-                          //                 alignment: Alignment.center,
-                          //                 //margin: EdgeInsets.all(8),
-                          //                 decoration: BoxDecoration(
-                          //                     borderRadius:
-                          //                         BorderRadius.circular(15),
-                          //                     border: Border.all(
-                          //                       color: Theme.of(context)
-                          //                           .secondaryHeaderColor,
-                          //                       width: 2,
-                          //                     )),
-                          //                 child: DropdownButton<String>(
-                          //                   isExpanded: true,
-                          //                   underline: Container(
-                          //                     height: 0,
-                          //                   ),
-                          //                   iconEnabledColor: Colors.black,
-                          //                   value: _stateController.text,
-                          //                   items: listState
-                          //                       .map<DropdownMenuItem<String>>(
-                          //                           (e) {
-                          //                     return DropdownMenuItem<String>(
-                          //                         value: e,
-                          //                         child: Padding(
-                          //                           padding: const EdgeInsets
-                          //                                   .symmetric(
-                          //                               horizontal: 10),
-                          //                           child: Text(
-                          //                             e,
-                          //                             style: const TextStyle(
-                          //                                 color: Colors.black,
-                          //                                 fontWeight:
-                          //                                     FontWeight.bold,
-                          //                                 fontSize: 15),
-                          //                           ),
-                          //                         ));
-                          //                   }).toList(),
-                          //                   onChanged: (value) {
-                          //                     setState(() {
-                          //                       _stateController.text =
-                          //                           value.toString();
-                          //                       //print(_categoryController.text);
-                          //                       getinstance();
-                          //                       //print(_genderController.text);
-                          //                     });
-                          //                   },
-                          //                 ),
-                          //               );
-                          //             } else {
-                          //               return Container(
-                          //                 alignment: Alignment.center,
-                          //                 //margin: EdgeInsets.all(8),
-                          //                 decoration: BoxDecoration(
-                          //                     borderRadius:
-                          //                         BorderRadius.circular(15),
-                          //                     border: Border.all(
-                          //                       color: Theme.of(context)
-                          //                           .secondaryHeaderColor,
-                          //                       width: 2,
-                          //                     )),
-                          //                 child: DropdownButton<String>(
-                          //                   isExpanded: true,
-                          //                   underline: Container(
-                          //                     height: 0,
-                          //                   ),
-                          //                   iconEnabledColor: Colors.black,
-                          //                   value: _categoryController.text,
-                          //                   items: listCategories
-                          //                       .map<DropdownMenuItem<String>>(
-                          //                           (e) {
-                          //                     return DropdownMenuItem<String>(
-                          //                         value: e,
-                          //                         child: Padding(
-                          //                           padding: const EdgeInsets
-                          //                                   .symmetric(
-                          //                               horizontal: 10),
-                          //                           child: Text(
-                          //                             e,
-                          //                             style: const TextStyle(
-                          //                                 color: Colors.black,
-                          //                                 fontWeight:
-                          //                                     FontWeight.bold,
-                          //                                 fontSize: 15),
-                          //                           ),
-                          //                         ));
-                          //                   }).toList(),
-                          //                   onChanged: (value) {
-                          //                     setState(() {
-                          //                       _categoryController.text =
-                          //                           value.toString();
-                          //                       //print(_categoryController.text);
-                          //                       getinstance();
-                          //                       //print(_genderController.text);
-                          //                     });
-                          //                   },
-                          //                 ),
-                          //               );
-                          //             }
-                          //           },
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-                          const Text(
-                            'All available jobs based on category will be listed here...\nSo far there are no available job...',
-                            textAlign: TextAlign.center,
-                          ),
-                          Container(
-                              //padding: EdgeInsets.only(top: 5),
-                              height: MediaQuery.of(context).size.height / 4.6,
-                              width: MediaQuery.of(context).size.width,
-                              // decoration: BoxDecoration(
-                              //   image: DecorationImage(
-                              //       image: AssetImage('asset/available_job.png'),
-                              //       fit: BoxFit.fitWidth),
-                              // ),
-                              margin: const EdgeInsets.only(bottom: 0),
-                              child: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Image.asset(
-                                  'asset/available_job.png',
-                                  height:
-                                      MediaQuery.of(context).size.height / 3,
-                                  // width: double.infinity,
-                                  // repeat: ImageRepeat.repeatX,
-                                ),
-                              )),
-                        ],
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(height: 50),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //     children: [
+                      //       Icon(
+                      //         Icons.tune,
+                      //         color: themeData1().secondaryHeaderColor,
+                      //       ),
+                      //       const SizedBox(width: 3),
+                      //       Container(
+                      //         alignment: Alignment.center,
+                      //         //margin: EdgeInsets.all(8),
+                      //         decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(15),
+                      //             border: Border.all(
+                      //               color: Theme.of(context)
+                      //                   .secondaryHeaderColor,
+                      //               width: 2,
+                      //             )),
+                      //         child: DropdownButton<String>(
+                      //           underline: Container(
+                      //             height: 0,
+                      //           ),
+                      //           iconEnabledColor: Colors.black,
+                      //           value: _filterController.text,
+                      //           items: listFilter
+                      //               .map<DropdownMenuItem<String>>((e) {
+                      //             return DropdownMenuItem<String>(
+                      //                 value: e,
+                      //                 child: Padding(
+                      //                   padding: const EdgeInsets.symmetric(
+                      //                       horizontal: 10),
+                      //                   child: Text(
+                      //                     e,
+                      //                     style: const TextStyle(
+                      //                         color: Colors.black,
+                      //                         fontWeight: FontWeight.bold,
+                      //                         fontSize: 15),
+                      //                   ),
+                      //                 ));
+                      //           }).toList(),
+                      //           onChanged: (value) {
+                      //             setState(() {
+                      //               _filterController.text =
+                      //                   value.toString();
+                      //               //print(_categoryController.text);
+                      //               //getinstance();
+                      //               //print(_genderController.text);
+                      //             });
+                      //           },
+                      //         ),
+                      //       ),
+                      //       const SizedBox(width: 5),
+                      //       Expanded(
+                      //         child: ListView.builder(
+                      //           // physics: const AlwaysScrollableScrollPhysics(),
+                      //           shrinkWrap: true,
+                      //           itemCount: 1,
+                      //           itemBuilder:
+                      //               (BuildContext context, int index) {
+                      //             if (_filterController.text ==
+                      //                 listFilter[1]) {
+                      //               return Container(
+                      //                 alignment: Alignment.center,
+                      //                 //margin: EdgeInsets.all(8),
+                      //                 decoration: BoxDecoration(
+                      //                     borderRadius:
+                      //                         BorderRadius.circular(15),
+                      //                     border: Border.all(
+                      //                       color: Theme.of(context)
+                      //                           .secondaryHeaderColor,
+                      //                       width: 2,
+                      //                     )),
+                      //                 child: DropdownButton<String>(
+                      //                   isExpanded: true,
+                      //                   underline: Container(
+                      //                     height: 0,
+                      //                   ),
+                      //                   iconEnabledColor: Colors.black,
+                      //                   value: _stateController.text,
+                      //                   items: listState
+                      //                       .map<DropdownMenuItem<String>>(
+                      //                           (e) {
+                      //                     return DropdownMenuItem<String>(
+                      //                         value: e,
+                      //                         child: Padding(
+                      //                           padding: const EdgeInsets
+                      //                                   .symmetric(
+                      //                               horizontal: 10),
+                      //                           child: Text(
+                      //                             e,
+                      //                             style: const TextStyle(
+                      //                                 color: Colors.black,
+                      //                                 fontWeight:
+                      //                                     FontWeight.bold,
+                      //                                 fontSize: 15),
+                      //                           ),
+                      //                         ));
+                      //                   }).toList(),
+                      //                   onChanged: (value) {
+                      //                     setState(() {
+                      //                       _stateController.text =
+                      //                           value.toString();
+                      //                       //print(_categoryController.text);
+                      //                       getinstance();
+                      //                       //print(_genderController.text);
+                      //                     });
+                      //                   },
+                      //                 ),
+                      //               );
+                      //             } else {
+                      //               return Container(
+                      //                 alignment: Alignment.center,
+                      //                 //margin: EdgeInsets.all(8),
+                      //                 decoration: BoxDecoration(
+                      //                     borderRadius:
+                      //                         BorderRadius.circular(15),
+                      //                     border: Border.all(
+                      //                       color: Theme.of(context)
+                      //                           .secondaryHeaderColor,
+                      //                       width: 2,
+                      //                     )),
+                      //                 child: DropdownButton<String>(
+                      //                   isExpanded: true,
+                      //                   underline: Container(
+                      //                     height: 0,
+                      //                   ),
+                      //                   iconEnabledColor: Colors.black,
+                      //                   value: _categoryController.text,
+                      //                   items: listCategories
+                      //                       .map<DropdownMenuItem<String>>(
+                      //                           (e) {
+                      //                     return DropdownMenuItem<String>(
+                      //                         value: e,
+                      //                         child: Padding(
+                      //                           padding: const EdgeInsets
+                      //                                   .symmetric(
+                      //                               horizontal: 10),
+                      //                           child: Text(
+                      //                             e,
+                      //                             style: const TextStyle(
+                      //                                 color: Colors.black,
+                      //                                 fontWeight:
+                      //                                     FontWeight.bold,
+                      //                                 fontSize: 15),
+                      //                           ),
+                      //                         ));
+                      //                   }).toList(),
+                      //                   onChanged: (value) {
+                      //                     setState(() {
+                      //                       _categoryController.text =
+                      //                           value.toString();
+                      //                       //print(_categoryController.text);
+                      //                       getinstance();
+                      //                       //print(_genderController.text);
+                      //                     });
+                      //                   },
+                      //                 ),
+                      //               );
+                      //             }
+                      //           },
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      const Text(
+                        'All available jobs based on category will be listed here...\nSo far there are no available job...',
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      Container(
+                          //padding: EdgeInsets.only(top: 5),
+                          height: MediaQuery.of(context).size.height / 4.6,
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(
+                          //   image: DecorationImage(
+                          //       image: AssetImage('asset/available_job.png'),
+                          //       fit: BoxFit.fitWidth),
+                          // ),
+                          margin: const EdgeInsets.only(bottom: 0),
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Image.asset(
+                              'asset/available_job.png',
+                              height: MediaQuery.of(context).size.height / 3,
+                              // width: double.infinity,
+                              // repeat: ImageRepeat.repeatX,
+                            ),
+                          )),
+                    ],
                   ),
                 )
               : Column(
@@ -550,12 +543,10 @@ class _AvailableServicesState extends State<AvailableServices> {
                     //     ],
                     //   ),
                     // ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.6,
+                    Expanded(
                       child: RefreshIndicator(
                         onRefresh: getinstance,
                         child: ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: listFiltered.length,
                           itemBuilder: (context, index) {
                             return InkWell(

@@ -8,7 +8,7 @@ class ClientServiceRequest {
   static final _userUid = FirebaseAuth.instance.currentUser!.uid;
 
   /// get summary (total number) for requests
-  static Future<List<int>> getRequestorSummary() async {
+  static Future<(int, int, int, int)> getRequestorSummary() async {
     var serviceRequest = await _getAllRequests();
     var pending = serviceRequest
         .where((element) => element.status == ServiceRequestStatus.pending)
@@ -23,28 +23,36 @@ class ClientServiceRequest {
         .where((element) => element.status == ServiceRequestStatus.completed)
         .length;
 
-    // TODO: Change to Records type
-    return [pending, accepted, ongoing, completed];
+    return (pending, accepted, ongoing, completed);
   }
 
   /// get summary (total number) for services
-  static Future<List<int>> getServicesSummary() async {
-    var serviceRequest = await _getAllServices();
-    var pending = serviceRequest
-        .where((element) => element.status == ServiceRequestStatus.pending)
+  /// The number of services you have done to others
+  static Future<(int, int, int, int)> getServicesSummary() async {
+    var data = await _getAllServices();
+
+    var pending = data
+        .where((element) =>
+            element.status == ServiceRequestStatus.pending &&
+            element.applicants.contains(_userUid))
         .length;
-    var accepted = serviceRequest
-        .where((element) => element.status == ServiceRequestStatus.accepted)
+    var accepted = data
+        .where((element) =>
+            element.status == ServiceRequestStatus.accepted &&
+            element.providerId == _userUid)
         .length;
-    var ongoing = serviceRequest
-        .where((element) => element.status == ServiceRequestStatus.ongoing)
+    var ongoing = data
+        .where((element) =>
+            element.status == ServiceRequestStatus.ongoing &&
+            element.providerId == _userUid)
         .length;
-    var completed = serviceRequest
-        .where((element) => element.status == ServiceRequestStatus.completed)
+    var completed = data
+        .where((element) =>
+            element.status == ServiceRequestStatus.completed &&
+            element.providerId == _userUid)
         .length;
 
-    // TODO: Change to Records type
-    return [pending, accepted, ongoing, completed];
+    return (pending, accepted, ongoing, completed);
   }
 
   /// Get all requests by you without any filtering

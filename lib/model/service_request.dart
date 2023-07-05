@@ -41,7 +41,7 @@ class ServiceRequest {
 
   @override
   String toString() {
-    return "ServiceRequest ${id == null ? '($id)' : ""}: $title, $rate, $location, $requestorId, $category, $timeLimit, $date";
+    return "{ServiceRequest ${id == null ? '($id)' : ""}: $title, $rate, $location, $requestorId, $category, $timeLimit, $date}";
   }
 
   Map<String, dynamic> toFirestoreMap() {
@@ -172,7 +172,7 @@ class Location {
 
   @override
   String toString() {
-    return "Location: $address, $city, $state";
+    return "{Location: $address, $city, $state}";
   }
 }
 
