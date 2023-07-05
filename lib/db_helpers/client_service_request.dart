@@ -5,8 +5,8 @@ import '../model/service_request.dart';
 import 'client_user.dart';
 
 class ClientServiceRequest {
-  static final _userUid = FirebaseAuth.instance.currentUser!.uid;
-
+  // we cannot make a vvaraible ti store the user uid here, it may be same if we
+  // sign in with different account
   /// get summary (total number) for requests
   static Future<(int, int, int, int)> getRequestorSummary() async {
     var serviceRequest = await _getAllRequests();
@@ -29,27 +29,29 @@ class ClientServiceRequest {
   /// get summary (total number) for services
   /// The number of services you have done to others
   static Future<(int, int, int, int)> getServicesSummary() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var data = await _getAllServices();
 
     var pending = data
         .where((element) =>
             element.status == ServiceRequestStatus.pending &&
-            element.applicants.contains(_userUid))
+            element.applicants.contains(userUid))
         .length;
     var accepted = data
         .where((element) =>
             element.status == ServiceRequestStatus.accepted &&
-            element.providerId == _userUid)
+            element.providerId == userUid)
         .length;
     var ongoing = data
         .where((element) =>
             element.status == ServiceRequestStatus.ongoing &&
-            element.providerId == _userUid)
+            element.providerId == userUid)
         .length;
     var completed = data
         .where((element) =>
             element.status == ServiceRequestStatus.completed &&
-            element.providerId == _userUid)
+            element.providerId == userUid)
         .length;
 
     return (pending, accepted, ongoing, completed);
@@ -57,9 +59,11 @@ class ClientServiceRequest {
 
   /// Get all requests by you without any filtering
   static Future<List<ServiceRequest>> _getAllRequests() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var snapshot = await FirebaseFirestore.instance
         .collection('serviceRequests')
-        .where('requestorId', isEqualTo: _userUid)
+        .where('requestorId', isEqualTo: userUid)
         .get();
 
     var snapshotData = snapshot.docs;
@@ -81,10 +85,12 @@ class ClientServiceRequest {
 
   /// Get pending requests by you (Need help page, 1st tab)
   static Future<List<ServiceRequest>> getPendingRequests() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var snapshot = await FirebaseFirestore.instance
         .collection('serviceRequests')
         .where('status', isEqualTo: ServiceRequestStatus.pending.name)
-        .where('requestorId', isEqualTo: _userUid)
+        .where('requestorId', isEqualTo: userUid)
         .get();
 
     var snapshotData = snapshot.docs;
@@ -98,9 +104,11 @@ class ClientServiceRequest {
 
   /// Need help page, 2nd tab (Applied Request) - Get applied and ongoing requests
   static Future<List<ServiceRequest>> getAppliedServiceRequest() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var docs = await FirebaseFirestore.instance
         .collection('serviceRequests')
-        .where('requestorId', isEqualTo: _userUid)
+        .where('requestorId', isEqualTo: userUid)
         .where('status', whereIn: [
       ServiceRequestStatus.pending.name,
       ServiceRequestStatus.accepted.name,
@@ -118,9 +126,11 @@ class ClientServiceRequest {
 
   /// Get the completed request (Need help page, 3rd tab)
   static Future<List<ServiceRequest>> getCompletedRequest() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var dataDocs = await FirebaseFirestore.instance
         .collection('serviceRequests')
-        .where('requestorId', isEqualTo: _userUid)
+        .where('requestorId', isEqualTo: userUid)
         .where('status', isEqualTo: ServiceRequestStatus.completed.name)
         .where('applicants', isNotEqualTo: []).get();
 
@@ -197,9 +207,11 @@ class ClientServiceRequest {
 
   /// Get all available services
   static Future<List<ServiceRequest>> _getAllServices() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var snapshot = await FirebaseFirestore.instance
         .collection('serviceRequests')
-        .where('requestorId', isNotEqualTo: _userUid)
+        .where('requestorId', isNotEqualTo: userUid)
         .get();
 
     var snapshotData = snapshot.docs;
@@ -215,6 +227,8 @@ class ClientServiceRequest {
 
   /// Offer help page, first tab (Available request)
   static Future<List<ServiceRequest>> getMyAvailableServices() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var data = await _getAllServices();
 
     // local flitering, only return service request that the applicants is not the current user
@@ -222,21 +236,23 @@ class ClientServiceRequest {
     return data
         .where((element) =>
             element.status == ServiceRequestStatus.pending &&
-            !element.applicants.contains(_userUid))
+            !element.applicants.contains(userUid))
         .toList();
   }
 
   /// Offer help page, tab 2 (Ongoing request)
   static Future<List<ServiceRequest>> getMyOngoingServices() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var snapshot = await FirebaseFirestore.instance
         .collection('serviceRequests')
-        .where('requestorId', isNotEqualTo: _userUid)
+        .where('requestorId', isNotEqualTo: userUid)
         .where('status', whereIn: [
           ServiceRequestStatus.pending.name,
           ServiceRequestStatus.accepted.name,
           ServiceRequestStatus.ongoing.name
         ])
-        .where('applicants', arrayContains: _userUid)
+        .where('applicants', arrayContains: userUid)
         .get();
 
     var snapshotData = snapshot.docs;
@@ -250,10 +266,12 @@ class ClientServiceRequest {
 
   /// Get the completed request (Offer help page, 3rd tab)
   static Future<List<ServiceRequest>> getCompletedServices() async {
+    var userUid = FirebaseAuth.instance.currentUser!.uid;
+
     var dataDocs = await FirebaseFirestore.instance
         .collection('serviceRequests')
-        .where('requestorId', isNotEqualTo: _userUid)
-        .where('providerId', isEqualTo: _userUid)
+        .where('requestorId', isNotEqualTo: userUid)
+        .where('providerId', isEqualTo: userUid)
         .where('status', isEqualTo: ServiceRequestStatus.completed.name)
         .get();
 

@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:csc_picker/csc_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide DatePickerTheme;
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +12,8 @@ import '../components/constants.dart';
 import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../model/service_request.dart' as model;
+import '../model/states_malaysia.dart' as model;
+import '../shared/malaysia_states.dart';
 
 //map API
 //https://levelup.gitconnected.com/how-to-add-google-maps-in-a-flutter-app-and-get-the-current-location-of-the-user-dynamically-2172f0be53f6
@@ -59,18 +63,23 @@ class _RequestFormState extends State<RequestForm> {
   late DateTime? newDate;
   late TimeOfDay? newTime;
 
-  late String countryValue = '';
-  late String stateValue = '';
-  late String cityValue = '';
+  List<String> states = MalaysiaStates.allStates().map((e) => e.name!).toList();
+  List<String>? citiesInSelectedState;
+
+  // late String countryValue = '';
+  String? stateValue;
+  String? cityValue;
 
   late bool isLocationFetched;
   late bool isLoad;
+  bool isDetectingLocation = false;
 
   @override
   void initState() {
     isLoad = false;
     isLocationFetched = false;
     _categoryController.text = listCategories[2];
+
     super.initState();
   }
 
@@ -111,71 +120,34 @@ class _RequestFormState extends State<RequestForm> {
   }
 
   // Method to get full address from latitude & longitude co-ordinates (lat long to address)
-  Future<void> GetAddressFromLatLong(Position position) async {
-    setState(() {
-      isLoad = true;
-    });
+  Future<void> getAddressFromLatLong(Position position) async {
     try {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
       Placemark place = placemarks[0];
-      address =
-          '${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.postalCode}, ${place.country}';
-      // print('State: ${place.administrativeArea}');
-      // print("City: ${place.locality}");
-      // // print(place.country);
-      // print(place);
-      countryValue = place.country.toString();
-      cityValue = place.locality.toString();
-      stateValue = place.administrativeArea.toString();
-      // _stateController.text = place.administrativeArea.toString();
-      // _cityController.text = place.locality.toString();
-      // _locationController.text = address;
+      final locationAddress = [
+        place.name,
+        place.street,
+        place.subLocality,
+        place.locality,
+      ]
+          .where((element) => element != null && element.isNotEmpty)
+          .toSet()
+          .toList();
+
+      _locationController.text = locationAddress.join(', ');
 
       setState(() {
         // countryValue = place.country.toString();
-        // cityValue = place.locality.toString();
-        // stateValue = place.administrativeArea.toString();
-        _stateController.text = stateValue;
-        _cityController.text = cityValue;
-        _locationController.text = address;
-        //print(countryValue);
-        //CSCPicker.onCountryChanged
-
-        //print(isLocationFetched);
-        // print(_stateController.text);
-        // print(_cityController.text);
-        isLocationFetched = true;
-        isLoad = false;
+        // cityValue = place.locality;
+        stateValue = place.administrativeArea.toString();
+        citiesInSelectedState = MalaysiaStates.getCitiesByState(stateValue!);
       });
-      context.showSnackBar(message: 'Location details added!!');
+      if (mounted) context.showSnackBar(message: 'Location details added');
     } catch (e) {
       context.showErrorSnackBar(message: e.toString());
     }
-
-    //print(Address);
   }
-
-  // Future<void> GetLatLongfromAddress(String location) async {
-  //   try {
-  //     List<Location> locations = await locationFromAddress(location);
-  //     setState(() {
-  //       // _stateController.text = locations[0].latitude.toString();
-  //       // _cityController.text = locations[0].longitude.toString();
-  //       //_locationController.text = Address;
-  //     });
-  //     context.showSnackBar(message: 'Location details added!!');
-  //   } catch (e) {
-  //     context.showErrorSnackBar(message: e.toString());
-  //   }
-
-  //   //sprint(locations[0].latitude);
-  //   //print(placemarks);
-  //   // Placemark place = locations[0];
-  //   // Address =
-  //   //     '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
-  //   //print(Address);
-  // }
 
   @override
   void dispose() {
@@ -428,187 +400,76 @@ class _RequestFormState extends State<RequestForm> {
                             return null;
                           },
                         ),
-
                         const SizedBox(height: 10),
-
-                        isLocationFetched
-                            ? CSCPicker(
-                                // showCities: true,
-
-                                defaultCountry: CscCountry.Malaysia,
-                                disableCountry: true,
-                                currentState: stateValue,
-                                currentCity: cityValue,
-                                layout: Layout.vertical,
-                                dropdownDecoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 2,
-                                    )),
-                                cityDropdownLabel: _cityController.text,
-                                stateDropdownLabel: _stateController.text,
-
-                                // dropdownItemStyle: TextStyle,
-                                // stateSearchPlaceholder: ,
-                                // dropdownHeadingStyle: ,
-
-                                onCountryChanged: (value) {
-                                  setState(() {
-                                    countryValue = value;
-                                    //_locationController.text = ''
-                                  });
-                                },
-                                onStateChanged: (value) {
-                                  setState(() {
-                                    stateValue = value.toString();
-                                    //_stateController.text = stateValue;
-                                  });
-                                },
-                                onCityChanged: (value) {
-                                  setState(() {
-                                    cityValue = value.toString();
-                                    //_cityController.text = cityValue;
-                                  });
-                                },
+                        DropdownButtonFormField(
+                          value: stateValue,
+                          decoration: InputDecoration(
+                              // enabledBorder: OutlineInputBorder(
+                              //     borderSide: BorderSide(
+                              //         color: Theme.of(context).primaryColor,
+                              //         width: 2)),
+                              border: const OutlineInputBorder(),
+                              hintText: 'Select state'),
+                          items: [
+                            for (var state in states)
+                              DropdownMenuItem(
+                                value: state,
+                                child: Text(state),
                               )
-                            : CSCPicker(
-                                // showCities: true,
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              stateValue = value.toString();
 
-                                defaultCountry: CscCountry.Malaysia,
-                                disableCountry: true,
-                                currentState: stateValue,
-                                currentCity: cityValue,
-                                layout: Layout.vertical,
-                                dropdownDecoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 2,
-                                    )),
-                                cityDropdownLabel: 'Pick a City',
-                                stateDropdownLabel: 'Pick a State',
+                              citiesInSelectedState =
+                                  MalaysiaStates.getCitiesByState(stateValue!);
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        DropdownButtonFormField(
+                          value: cityValue,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Select City'),
+                          items: citiesInSelectedState == null
+                              ? null
+                              : [
+                                  for (var city in citiesInSelectedState!)
+                                    DropdownMenuItem(
+                                      value: city,
+                                      child: Text(city),
+                                    )
+                                ],
+                          onChanged: (value) {
+                            setState(() {
+                              cityValue = value.toString();
+                            });
+                          },
+                        ),
 
-                                // dropdownItemStyle: TextStyle,
-                                // stateSearchPlaceholder: ,
-                                // dropdownHeadingStyle: ,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    setState(() => isDetectingLocation = true);
 
-                                onCountryChanged: (value) {
-                                  setState(() {
-                                    countryValue = value;
-                                    //_locationController.text = ''
-                                  });
-                                },
-                                onStateChanged: (value) {
-                                  setState(() {
-                                    stateValue = value.toString();
-                                    _stateController.text = stateValue;
-                                  });
-                                },
-                                onCityChanged: (value) {
-                                  setState(() {
-                                    cityValue = value.toString();
-                                    _cityController.text = cityValue;
-                                  });
-                                },
-                              ),
-                        // TODO: Reimplement this feature because rn I prefer it to run
-                        // in the emulator. But, my emulator doesnt have Google Play, hence
-                        // resulting the fetch failed
-                        // Row(
-                        //   children: [
-                        //     // Expanded(
-                        //     //   child: ElevatedButton(
-                        //     //       onPressed: () async {
-                        //     //         Position position =
-                        //     //             await _getGeoLocationPosition();
-                        //     //         GetAddressFromLatLong(position);
-                        //     //       },
-                        //     //       child: isLoad
-                        //     //           ? const Text('Loading...')
-                        //     //           : const Text('Get current location')),
-                        //     // ),
-                        //   ],
-                        // ),
+                                    Position position =
+                                        await _getGeoLocationPosition();
+                                    getAddressFromLatLong(position);
+                                    setState(() {
+                                      isLocationFetched = true;
+                                      isDetectingLocation = false;
+                                    });
+                                  },
+                                  child: isDetectingLocation
+                                      ? const Text('Loading...')
+                                      : const Text('Get my location')),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 8),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: CustomHeadline(heading: 'Country & State & City'),
-                        // ),
-                        // TextFormField(
-                        //   controller: _locationController,
-                        //   enabled: false,
-                        //   decoration: InputDecoration(
-                        //       errorStyle: TextStyle(
-                        //         color: Colors.red, // or any other color
-                        //       ),
-                        //       border: OutlineInputBorder(),
-                        //       labelText: 'Address'),
-                        //   // validator: (value) {
-                        //   //   if (value == null || value.isEmpty) {
-                        //   //     return 'Please enter location...';
-                        //   //   }
-                        //   //   return null;
-                        //   // },
-                        // ),
-                        // SizedBox(height: 15),
-
-                        // // SelectState(
-                        // //   //dropdownColor: themeData1().primaryColor,
-                        // //   // style: ,
-                        // //   onCountryChanged: (value) {
-                        // //     setState(() {
-                        // //       countryValue = value;
-                        // //     });
-                        // //   },
-                        // //   onStateChanged: (value) {
-                        // //     setState(() {
-                        // //       stateValue = value;
-                        // //     });
-                        // //   },
-                        // //   onCityChanged: (value) {
-                        // //     setState(() {
-                        // //       cityValue = value;
-                        // //     });
-                        // //   },
-                        // // ),
-                        // // SizedBox(height: 8),
-                        // TextFormField(
-                        //   controller: _stateController,
-                        //   enabled: false,
-                        //   decoration: InputDecoration(
-                        //     errorStyle: TextStyle(
-                        //       color: Colors.red, // or any other color
-                        //     ),
-                        //     border: OutlineInputBorder(),
-                        //     labelText: 'State',
-                        //     //prefixIcon: Icon(Icons.map)
-                        //   ),
-                        //   validator: (value) {
-                        //     if (value == null || value.isEmpty) {
-                        //       return 'Tap "Enter Address" to obtain latitude';
-                        //     }
-                        //     return null;
-                        //   },
-                        // ),
-                        // SizedBox(height: 15),
-                        // TextFormField(
-                        //   controller: _cityController,
-                        //   enabled: false,
-                        //   decoration: InputDecoration(
-                        //       errorStyle: TextStyle(
-                        //         color: Colors.red, // or any other color
-                        //       ),
-                        //       border: OutlineInputBorder(),
-                        //       labelText: 'City'),
-                        //   validator: (value) {
-                        //     if (value == null || value.isEmpty) {
-                        //       return 'Tap "Enter Address" to obtain longitude';
-                        //     }
-                        //     return null;
-                        //   },
-                        // ),
-                        // SizedBox(height: 8),
 
                         // Padding(
                         //   padding: const EdgeInsets.all(8.0),

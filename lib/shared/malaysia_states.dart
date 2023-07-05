@@ -1,0 +1,320 @@
+import '../model/states_malaysia.dart' as model;
+
+class MalaysiaStates {
+  static final _data = {
+    "id": 132,
+    "name": "Malaysia",
+    "emoji": "\ud83c\uddf2\ud83c\uddfe",
+    "emojiU": "U+1F1F2 U+1F1FE",
+    "state": [
+      {
+        "id": 1935,
+        "name": "Labuan",
+        "country_id": 132,
+        "city": [
+          {"id": 76511, "name": "Labuan", "state_id": 1935}
+        ]
+      },
+      {
+        "id": 1936,
+        "name": "Sabah",
+        "country_id": 132,
+        "city": [
+          {"id": 76417, "name": "Bandar Labuan", "state_id": 1936},
+          {"id": 76425, "name": "Beaufort", "state_id": 1936},
+          {"id": 76446, "name": "Donggongon", "state_id": 1936},
+          {"id": 76481, "name": "Keningau", "state_id": 1936},
+          {"id": 76484, "name": "Kinarut", "state_id": 1936},
+          {"id": 76488, "name": "Kota Belud", "state_id": 1936},
+          {"id": 76490, "name": "Kota Kinabalu", "state_id": 1936},
+          {"id": 76507, "name": "Kudat", "state_id": 1936},
+          {"id": 76513, "name": "Lahad Datu", "state_id": 1936},
+          {"id": 76533, "name": "Papar", "state_id": 1936},
+          {"id": 76547, "name": "Putatan", "state_id": 1936},
+          {"id": 76550, "name": "Ranau", "state_id": 1936},
+          {"id": 76553, "name": "Sandakan", "state_id": 1936},
+          {"id": 76558, "name": "Semporna", "state_id": 1936},
+          {"id": 76572, "name": "Taman Rajawali", "state_id": 1936},
+          {"id": 76581, "name": "Tawau", "state_id": 1936}
+        ]
+      },
+      {
+        "id": 1937,
+        "name": "Sarawak",
+        "country_id": 132,
+        "city": [
+          {"id": 76430, "name": "Bintulu", "state_id": 1937},
+          {"id": 76445, "name": "Data Kakus", "state_id": 1937},
+          {"id": 76479, "name": "Kapit", "state_id": 1937},
+          {"id": 76506, "name": "Kuching", "state_id": 1937},
+          {"id": 76515, "name": "Lawas", "state_id": 1937},
+          {"id": 76516, "name": "Lidung Jelo", "state_id": 1937},
+          {"id": 76517, "name": "Limbang", "state_id": 1937},
+          {"id": 76518, "name": "Long Ampan Aing or Abanang", "state_id": 1937},
+          {"id": 76522, "name": "Marudi", "state_id": 1937},
+          {"id": 76525, "name": "Miri", "state_id": 1937},
+          {"id": 76527, "name": "Mukah", "state_id": 1937},
+          {"id": 76554, "name": "Sarikei", "state_id": 1937},
+          {"id": 76562, "name": "Sibu", "state_id": 1937},
+          {"id": 76563, "name": "Simanggang", "state_id": 1937}
+        ]
+      },
+      {
+        "id": 1938,
+        "name": "Perlis",
+        "country_id": 132,
+        "city": [
+          {"id": 76478, "name": "Kangar", "state_id": 1938},
+          {"id": 76498, "name": "Kuala Perlis", "state_id": 1938},
+          {"id": 76531, "name": "Pantai Cenang", "state_id": 1938}
+        ]
+      },
+      {
+        "id": 1939,
+        "name": "Penang",
+        "country_id": 132,
+        "city": [
+          {"id": 76422, "name": "Batu Feringgi", "state_id": 1939},
+          {"id": 76431, "name": "Bukit Mertajam", "state_id": 1939},
+          {"id": 76434, "name": "Butterworth", "state_id": 1939},
+          {"id": 76447, "name": "George Town", "state_id": 1939},
+          {"id": 76456, "name": "Juru", "state_id": 1939},
+          {"id": 76467, "name": "Kampung Batu Feringgi", "state_id": 1939},
+          {"id": 76475, "name": "Kampung Sungai Ara", "state_id": 1939},
+          {"id": 76482, "name": "Kepala Batas", "state_id": 1939},
+          {"id": 76528, "name": "Nibong Tebal", "state_id": 1939},
+          {"id": 76540, "name": "Perai", "state_id": 1939},
+          {"id": 76542, "name": "Permatang Kuching", "state_id": 1939},
+          {"id": 76555, "name": "Seberang Perai", "state_id": 1939},
+          {"id": 76578, "name": "Tanjung Tokong", "state_id": 1939},
+          {"id": 76580, "name": "Tasek Glugor", "state_id": 1939},
+          {"id": 76582, "name": "Telaga Batu", "state_id": 1939}
+        ]
+      },
+      {
+        "id": 1940,
+        "name": "Pahang",
+        "country_id": 132,
+        "city": [
+          {"id": 76428, "name": "Bentong Town", "state_id": 1940},
+          {"id": 76452, "name": "Jerantut", "state_id": 1940},
+          {
+            "id": 76469,
+            "name": "Kampung Bukit Tinggi, Bentong",
+            "state_id": 1940
+          },
+          {"id": 76477, "name": "Kampung Tekek", "state_id": 1940},
+          {"id": 76496, "name": "Kuala Lipis", "state_id": 1940},
+          {"id": 76505, "name": "Kuantan", "state_id": 1940},
+          {"id": 76523, "name": "Mentekab", "state_id": 1940},
+          {"id": 76537, "name": "Pekan", "state_id": 1940},
+          {"id": 76551, "name": "Raub", "state_id": 1940},
+          {"id": 76575, "name": "Tanah Rata", "state_id": 1940},
+          {"id": 76584, "name": "Temerluh", "state_id": 1940}
+        ]
+      },
+      {
+        "id": 1941,
+        "name": "Melaka",
+        "country_id": 132,
+        "city": [
+          {"id": 76409, "name": "Alor Gajah", "state_id": 1941},
+          {"id": 76421, "name": "Batu Berendam", "state_id": 1941},
+          {"id": 76427, "name": "Bemban", "state_id": 1941},
+          {"id": 76432, "name": "Bukit Rambai", "state_id": 1941},
+          {"id": 76461, "name": "Kampong Masjid Tanah", "state_id": 1941},
+          {"id": 76463, "name": "Kampung Ayer Keroh", "state_id": 1941},
+          {"id": 76464, "name": "Kampung Ayer Molek", "state_id": 1941},
+          {"id": 76468, "name": "Kampung Bukit Baharu", "state_id": 1941},
+          {"id": 76486, "name": "Klebang Besar", "state_id": 1941},
+          {"id": 76501, "name": "Kuala Sungai Baru", "state_id": 1941},
+          {"id": 76520, "name": "Malacca", "state_id": 1941},
+          {"id": 76546, "name": "Pulau Sebang", "state_id": 1941},
+          {"id": 76570, "name": "Sungai Udang", "state_id": 1941}
+        ]
+      },
+      {
+        "id": 1942,
+        "name": "Terengganu",
+        "country_id": 132,
+        "city": [
+          {"id": 76436, "name": "Cukai", "state_id": 1942},
+          {"id": 76453, "name": "Jertih", "state_id": 1942},
+          {"id": 76472, "name": "Kampung Kuala Besut", "state_id": 1942},
+          {"id": 76483, "name": "Kertih", "state_id": 1942},
+          {"id": 76493, "name": "Kuala Besut", "state_id": 1942},
+          {"id": 76502, "name": "Kuala Terengganu", "state_id": 1942},
+          {"id": 76521, "name": "Marang", "state_id": 1942},
+          {"id": 76530, "name": "Paka", "state_id": 1942}
+        ]
+      },
+      {
+        "id": 1943,
+        "name": "Perak",
+        "country_id": 132,
+        "city": [
+          {"id": 76414, "name": "Bagan Serai", "state_id": 1943},
+          {"id": 76423, "name": "Batu Gajah", "state_id": 1943},
+          {"id": 76429, "name": "Bidur", "state_id": 1943},
+          {"id": 76450, "name": "Ipoh", "state_id": 1943},
+          {"id": 76457, "name": "Kampar", "state_id": 1943},
+          {"id": 76459, "name": "Kampong Dungun", "state_id": 1943},
+          {"id": 76494, "name": "Kuala Kangsar", "state_id": 1943},
+          {"id": 76519, "name": "Lumut", "state_id": 1943},
+          {"id": 76532, "name": "Pantai Remis", "state_id": 1943},
+          {"id": 76534, "name": "Parit Buntar", "state_id": 1943},
+          {"id": 76564, "name": "Simpang Empat", "state_id": 1943},
+          {"id": 76571, "name": "Taiping", "state_id": 1943},
+          {"id": 76579, "name": "Tapah Road", "state_id": 1943},
+          {"id": 76583, "name": "Teluk Intan", "state_id": 1943}
+        ]
+      },
+      {
+        "id": 1944,
+        "name": "Selangor",
+        "country_id": 132,
+        "city": [
+          {"id": 76411, "name": "Ampang", "state_id": 1944},
+          {"id": 76413, "name": "Bagan Pulau Ketam", "state_id": 1944},
+          {"id": 76418, "name": "Banting", "state_id": 1944},
+          {"id": 76419, "name": "Batang Berjuntai", "state_id": 1944},
+          {"id": 76420, "name": "Batu Arang", "state_id": 1944},
+          {"id": 76451, "name": "Jenjarum", "state_id": 1944},
+          {"id": 76458, "name": "Kampong Baharu Balakong", "state_id": 1944},
+          {"id": 76466, "name": "Kampung Baru Subang", "state_id": 1944},
+          {"id": 76476, "name": "Kampung Tanjung Karang", "state_id": 1944},
+          {"id": 76485, "name": "Klang", "state_id": 1944},
+          {"id": 76500, "name": "Kuala Selangor", "state_id": 1944},
+          {"id": 76504, "name": "Kuang", "state_id": 1944},
+          {"id": 76512, "name": "Ladang Seri Kundang", "state_id": 1944},
+          {"id": 76539, "name": "Pelabuhan Klang", "state_id": 1944},
+          {"id": 76543, "name": "Petaling Jaya", "state_id": 1944},
+          {"id": 76548, "name": "Putra Heights", "state_id": 1944},
+          {"id": 76552, "name": "Rawang", "state_id": 1944},
+          {"id": 76557, "name": "Semenyih", "state_id": 1944},
+          {"id": 76560, "name": "Serendah", "state_id": 1944},
+          {"id": 76561, "name": "Shah Alam", "state_id": 1944},
+          {"id": 76566, "name": "Subang Jaya", "state_id": 1944},
+          {"id": 76567, "name": "Sungai Besar", "state_id": 1944},
+          {"id": 76568, "name": "Sungai Pelek New Village", "state_id": 1944},
+          {"id": 76577, "name": "Tanjung Sepat", "state_id": 1944}
+        ]
+      },
+      {
+        "id": 1945,
+        "name": "Putrajaya",
+        "country_id": 132,
+        "city": [
+          {"id": 76549, "name": "Putrajaya", "state_id": 1945}
+        ]
+      },
+      {
+        "id": 1946,
+        "name": "Kelantan",
+        "country_id": 132,
+        "city": [
+          {"id": 76448, "name": "Gua Musang", "state_id": 1946},
+          {"id": 76460, "name": "Kampong Kadok", "state_id": 1946},
+          {"id": 76462, "name": "Kampong Pangkal Kalong", "state_id": 1946},
+          {"id": 76489, "name": "Kota Bharu", "state_id": 1946},
+          {"id": 76536, "name": "Pasir Mas", "state_id": 1946},
+          {"id": 76541, "name": "Peringat", "state_id": 1946},
+          {"id": 76585, "name": "Tumpat", "state_id": 1946}
+        ]
+      },
+      {
+        "id": 1947,
+        "name": "Kedah",
+        "country_id": 132,
+        "city": [
+          {"id": 76410, "name": "Alor Setar", "state_id": 1947},
+          {"id": 76412, "name": "Ayer Hangat", "state_id": 1947},
+          {"id": 76426, "name": "Bedong", "state_id": 1947},
+          {"id": 76449, "name": "Gurun", "state_id": 1947},
+          {"id": 76454, "name": "Jitra", "state_id": 1947},
+          {"id": 76470, "name": "Kampung Kilim", "state_id": 1947},
+          {"id": 76471, "name": "Kampung Kok", "state_id": 1947},
+          {"id": 76492, "name": "Kuah", "state_id": 1947},
+          {"id": 76495, "name": "Kuala Kedah", "state_id": 1947},
+          {"id": 76503, "name": "Kuala Teriang", "state_id": 1947},
+          {"id": 76509, "name": "Kulim", "state_id": 1947},
+          {"id": 76514, "name": "Langkawi", "state_id": 1947},
+          {"id": 76529, "name": "Padang Mat Sirat", "state_id": 1947},
+          {"id": 76569, "name": "Sungai Petani", "state_id": 1947}
+        ]
+      },
+      {
+        "id": 1948,
+        "name": "Negeri Sembilan",
+        "country_id": 132,
+        "city": [
+          {"id": 76415, "name": "Bahau", "state_id": 1948},
+          {"id": 76465, "name": "Kampung Baharu Nilai", "state_id": 1948},
+          {"id": 76499, "name": "Kuala Pilah", "state_id": 1948},
+          {"id": 76545, "name": "Port Dickson", "state_id": 1948},
+          {"id": 76559, "name": "Seremban", "state_id": 1948},
+          {"id": 76574, "name": "Tampin", "state_id": 1948}
+        ]
+      },
+      {
+        "id": 1949,
+        "name": "Kuala Lumpur",
+        "country_id": 132,
+        "city": [
+          {"id": 76497, "name": "Kuala Lumpur", "state_id": 1949}
+        ]
+      },
+      {
+        "id": 1950,
+        "name": "Johor",
+        "country_id": 132,
+        "city": [
+          {"id": 76416, "name": "Bakri", "state_id": 1950},
+          {"id": 76424, "name": "Batu Pahat", "state_id": 1950},
+          {"id": 76433, "name": "Buloh Kasap", "state_id": 1950},
+          {"id": 76435, "name": "Chaah", "state_id": 1950},
+          {"id": 76437, "name": "Daerah Batu Pahat", "state_id": 1950},
+          {"id": 76438, "name": "Daerah Johor Baharu", "state_id": 1950},
+          {"id": 76439, "name": "Daerah Keluang", "state_id": 1950},
+          {"id": 76440, "name": "Daerah Kota Tinggi", "state_id": 1950},
+          {"id": 76441, "name": "Daerah Mersing", "state_id": 1950},
+          {"id": 76442, "name": "Daerah Muar", "state_id": 1950},
+          {"id": 76443, "name": "Daerah Pontian", "state_id": 1950},
+          {"id": 76444, "name": "Daerah Segamat", "state_id": 1950},
+          {"id": 76455, "name": "Johor Bahru", "state_id": 1950},
+          {"id": 76473, "name": "Kampung Pasir Gudang Baru", "state_id": 1950},
+          {"id": 76474, "name": "Kampung Simpang Renggam", "state_id": 1950},
+          {"id": 76480, "name": "Kelapa Sawit", "state_id": 1950},
+          {"id": 76487, "name": "Kluang", "state_id": 1950},
+          {"id": 76491, "name": "Kota Tinggi", "state_id": 1950},
+          {"id": 76508, "name": "Kulai", "state_id": 1950},
+          {"id": 76510, "name": "Labis", "state_id": 1950},
+          {"id": 76524, "name": "Mersing", "state_id": 1950},
+          {"id": 76526, "name": "Muar", "state_id": 1950},
+          {"id": 76535, "name": "Parit Raja", "state_id": 1950},
+          {"id": 76538, "name": "Pekan Nenas", "state_id": 1950},
+          {"id": 76544, "name": "Pontian Kechil", "state_id": 1950},
+          {"id": 76556, "name": "Segamat", "state_id": 1950},
+          {"id": 76565, "name": "Skudai", "state_id": 1950},
+          {"id": 76573, "name": "Taman Senai", "state_id": 1950},
+          {"id": 76576, "name": "Tangkak", "state_id": 1950},
+          {"id": 76586, "name": "Ulu Tiram", "state_id": 1950},
+          {"id": 76587, "name": "Yong Peng", "state_id": 1950}
+        ]
+      }
+    ]
+  };
+  static List<model.State> allStates() {
+    return model.StatesMalaysia.fromJson(_data).state!;
+  }
+
+  static List<String>? getCitiesByState(String state) {
+    var cities = allStates()
+        .firstWhere(
+            (element) => element.name!.toLowerCase() == state.toLowerCase())
+        .city;
+
+    if (cities == null) return null;
+    return cities.map((e) => e.name!).toList();
+  }
+}

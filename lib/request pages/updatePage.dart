@@ -1,4 +1,3 @@
-import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -19,7 +18,7 @@ class UpdatePage extends StatefulWidget {
 class _UpdatePageState extends State<UpdatePage> {
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     //print(_dateControllerDisplay.text);
 
     _elementController.text = listElement[0];
@@ -280,46 +279,47 @@ class _UpdatePageState extends State<UpdatePage> {
                       },
                     ),
                     const SizedBox(height: 15),
-                    CSCPicker(
-                      // showCities: true,
+                    // TODO: Betulkan balik
+                    // CSCPicker(
+                    //   // showCities: true,
 
-                      defaultCountry: CscCountry.Malaysia,
-                      disableCountry: true,
-                      currentState: stateValue,
-                      currentCity: cityValue,
-                      layout: Layout.vertical,
-                      dropdownDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: themeData1().primaryColor,
-                            width: 2,
-                          )),
-                      cityDropdownLabel: 'Pick a City',
-                      stateDropdownLabel: 'Pick a State',
+                    //   defaultCountry: CscCountry.Malaysia,
+                    //   disableCountry: true,
+                    //   currentState: stateValue,
+                    //   currentCity: cityValue,
+                    //   layout: Layout.vertical,
+                    //   dropdownDecoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //       border: Border.all(
+                    //         color: themeData1().primaryColor,
+                    //         width: 2,
+                    //       )),
+                    //   cityDropdownLabel: 'Pick a City',
+                    //   stateDropdownLabel: 'Pick a State',
 
-                      // dropdownItemStyle: TextStyle,
-                      // stateSearchPlaceholder: ,
-                      // dropdownHeadingStyle: ,
+                    //   // dropdownItemStyle: TextStyle,
+                    //   // stateSearchPlaceholder: ,
+                    //   // dropdownHeadingStyle: ,
 
-                      onCountryChanged: (value) {
-                        setState(() {
-                          countryValue = value;
-                          //_locationController.text = ''
-                        });
-                      },
-                      onStateChanged: (value) {
-                        setState(() {
-                          stateValue = value.toString();
-                          _stateController.text = stateValue;
-                        });
-                      },
-                      onCityChanged: (value) {
-                        setState(() {
-                          cityValue = value.toString();
-                          _cityController.text = cityValue;
-                        });
-                      },
-                    ),
+                    //   onCountryChanged: (value) {
+                    //     setState(() {
+                    //       countryValue = value;
+                    //       //_locationController.text = ''
+                    //     });
+                    //   },
+                    //   onStateChanged: (value) {
+                    //     setState(() {
+                    //       stateValue = value.toString();
+                    //       _stateController.text = stateValue;
+                    //     });
+                    //   },
+                    //   onCityChanged: (value) {
+                    //     setState(() {
+                    //       cityValue = value.toString();
+                    //       _cityController.text = cityValue;
+                    //     });
+                    //   },
+                    // ),
                     ElevatedButton(
                         style: themeData1().elevatedButtonTheme.style,
                         onPressed: (() {

@@ -12,6 +12,10 @@ Forked from: https://github.com/de-timebank/frontend (grpc-supabase)
 3. (Optional) Start Firebase emulator by running `firebase emulators:start`. The import & export feature is quite helpful during development. Learn more [here](https://firebase.google.com/docs/emulator-suite/install_and_configure#export_and_import_emulator_data).
 4. Run `flutter run` to run the app
 
+## Assets Attributions
+
+- `states-malaysia.json` is taken from https://github.com/altafc22/csc_picker/blob/master/lib/assets/country.json
+
 _Content after the line below is from the original repo. Preserved here for reference._
 
 ---
