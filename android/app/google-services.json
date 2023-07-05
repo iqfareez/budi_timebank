@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "549435465515",
+    "project_id": "budi-timebank",
+    "storage_bucket": "budi-timebank.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549435465515:android:973b598a9c08390ca0ef6e",
+        "android_client_info": {
+          "package_name": "com.iqfareez.budi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG5UGwGtUYfLPnitqmPcgiliXoXK__yDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

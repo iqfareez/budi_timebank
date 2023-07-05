@@ -41,13 +41,7 @@ jobs:
       #   run: echo "${{ secrets.KEY_PROP }}" | base64 --decode > android/key.properties
 
       # - name: Decoding android/key.jks
-      #   run: echo "${{ secrets.KEY_JKS }}" | base64 --decode > android/key.jks
-
-      - name: Create FirebaseOptions file
-        run: |
-          cat > lib/firebase_options.dart <<EOF
-          GH_REPO_PAT=${{ secrets.FIREBASE_OPTIONS_FILE }}
-          EOF
+      #   run: echo "${{ secrets.KEY_JKS }}" | base64 --decode > android/key.jks\
 
       - name: Build splitted apk(s)
         run: |
