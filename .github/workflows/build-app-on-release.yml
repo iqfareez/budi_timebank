@@ -45,6 +45,12 @@ jobs:
       #   run: |
       #     echo :white_check_mark: Build appbundle **todo: Publish to Google Play** >> $GITHUB_STEP_SUMMARY
 
+      - name: Create FirebaseOptions file
+        run: |
+          cat > firebase_options.dart <<EOF
+          GH_REPO_PAT=${{ secrets.FIREBASE_OPTIONS_FILE }}
+          EOF
+
       - name: Build release APK(s) per ABIs
         run: |
           flutter pub get
