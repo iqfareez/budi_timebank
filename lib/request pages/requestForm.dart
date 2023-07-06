@@ -30,8 +30,6 @@ class _RequestFormState extends State<RequestForm> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _categoryController = TextEditingController();
-  final _stateController = TextEditingController();
-  final _cityController = TextEditingController();
   final _locationController = TextEditingController();
   final _rateController = TextEditingController();
   final _mediaController = TextEditingController();
@@ -153,9 +151,6 @@ class _RequestFormState extends State<RequestForm> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
-    // _stateController.dispose();
-    // _cityController.dispose();
-    // _locationController.dispose();
     _rateController.dispose();
     _mediaController.dispose();
 
@@ -403,6 +398,8 @@ class _RequestFormState extends State<RequestForm> {
                         const SizedBox(height: 10),
                         DropdownButtonFormField(
                           value: stateValue,
+                          validator: (value) =>
+                              value == null ? 'Please select a state...' : null,
                           decoration: InputDecoration(
                               // enabledBorder: OutlineInputBorder(
                               //     borderSide: BorderSide(
@@ -429,6 +426,8 @@ class _RequestFormState extends State<RequestForm> {
                         const SizedBox(height: 10),
                         DropdownButtonFormField(
                           value: cityValue,
+                          validator: (value) =>
+                              value == null ? 'Please select a city...' : null,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Select City'),
@@ -447,7 +446,6 @@ class _RequestFormState extends State<RequestForm> {
                             });
                           },
                         ),
-
                         Row(
                           children: [
                             Expanded(
@@ -645,10 +643,7 @@ class _RequestFormState extends State<RequestForm> {
                               //   context.showErrorSnackBar(
                               //       message: 'Pick a city..');
                               // }
-                              if (_stateController.text == 'null') {
-                                context.showErrorSnackBar(
-                                    message: 'Pick a state..');
-                              } else if (_formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 var rate = double.parse(
                                     _rateController.text); //convert to double
                                 var time =
@@ -677,8 +672,8 @@ class _RequestFormState extends State<RequestForm> {
                                   description: _descriptionController.text,
                                   location: model.Location(
                                     address: _locationController.text,
-                                    city: _cityController.text,
-                                    state: _stateController.text,
+                                    city: cityValue!,
+                                    state: stateValue!,
                                   ),
                                   status: model.ServiceRequestStatus.pending,
                                   rate: rate,

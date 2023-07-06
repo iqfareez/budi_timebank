@@ -540,8 +540,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                   const Divider(),
                   Heading2('Location'),
                   Text('Address: ${requestDetails.location.address}'),
-                  Text('State: ${requestDetails.location.state}'),
                   Text('City: ${requestDetails.location.city}'),
+                  Text('State: ${requestDetails.location.state}'),
                   const Divider(),
                   Heading2('Media'),
                   isNull(requestDetails.media)
