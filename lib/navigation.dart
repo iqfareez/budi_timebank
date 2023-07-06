@@ -25,7 +25,7 @@ class _BottomBarNavigationState extends State<BottomBarNavigation> {
   late int _selectedIndex;
 
   final List<Widget> _widgetOptions = [
-    const DashBoard(),
+    const Dashboard(),
     const RequestPage(),
     const ServicePage(),
     const ProfilePage(isMyProfile: true)

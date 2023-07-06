@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         '/passwordReset': (_) => const PasswordPage(),
         '/request': (_) => const RequestPage(),
         '/service': (_) => const ServicePage(),
-        '/dashboard': (_) => const DashBoard(),
+        '/dashboard': (_) => const Dashboard(),
       },
     );
   }
