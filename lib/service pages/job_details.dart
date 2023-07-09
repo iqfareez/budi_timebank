@@ -44,49 +44,15 @@ class _JobDetailsState extends State<JobDetails> {
 
   late bool isLoad = false;
 
-  isNull(dynamic stuff) {
-    if (stuff == '' || stuff.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isComplete() => jobDetail.status == ServiceRequestStatus.completed;
 
-  isComplete() {
-    if (jobDetail.status.name.toUpperCase() == 'COMPLETED') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isAccepted() => jobDetail.status == ServiceRequestStatus.accepted;
 
-  isAccepted() {
-    if (jobDetail.status.name.toUpperCase() == 'ACCEPTED') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isOngoing() => jobDetail.status == ServiceRequestStatus.ongoing;
 
-  isOngoing() {
-    if (jobDetail.status.name.toUpperCase() == 'ONGOING') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isPending() => jobDetail.status == ServiceRequestStatus.pending;
 
-  isPending() {
-    if (jobDetail.status.name.toUpperCase() == 'PENDING') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool isRequested() {
-    return jobDetail.applicants.contains(widget.user);
-  }
+  bool isRequested() => jobDetail.applicants.contains(widget.user);
 
   // isProviderRated() {
   //   if (ratedUser.ratings.length == 1 &&
@@ -155,7 +121,7 @@ class _JobDetailsState extends State<JobDetails> {
     //     : _userProvidor = await ClientUser(Common().channel)
     //         .getUserById(JobDetails.provider);
     // TODO: Check this
-    isNull(jobDetail.applicants)
+    jobDetail.applicants.isEmpty
         ? _userProvidor = 'No Providor'
         : _userProvidor =
             await ClientUser.getUserProfileById(jobDetail.requestorId);
@@ -495,7 +461,7 @@ class _JobDetailsState extends State<JobDetails> {
                   Text('City: ${jobDetail.location.city}'),
                   const Divider(),
                   Heading2('Media'),
-                  isNull(jobDetail.media)
+                  jobDetail.media.isEmpty
                       ? const Text('No Attachment')
                       : SizedBox(
                           child: ListView.builder(

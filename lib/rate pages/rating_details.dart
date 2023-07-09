@@ -59,14 +59,6 @@ class _RatingDetailsState extends State<RatingDetails> {
     });
   }
 
-  isNull(dynamic stuff) {
-    if (stuff == '' || stuff.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   void _deleteRating(String id, String ratingFor) async {
     throw UnimplementedError('delete rating not implemented');
   }

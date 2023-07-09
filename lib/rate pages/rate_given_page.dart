@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../db_helpers/client_rating.dart';
 import '../model/rating.dart';
 import 'custom_card_rating.dart';
-
 import 'rating_details.dart';
 
 class RateGivenPage extends StatefulWidget {

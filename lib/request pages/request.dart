@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'completedRequest.dart';
 import 'requestedJob.dart';
 import 'yourRequest.dart';
@@ -19,16 +20,22 @@ class _RequestPageState extends State<RequestPage> {
         appBar: AppBar(
           //backgroundColor: Color.fromARGB(255, 245, 167, 44),
           bottom: TabBar(
-              indicatorColor: Theme.of(context).secondaryHeaderColor,
-              tabs: const [
-                Tab(text: '\t\t\tYour\nRequest'),
-                Tab(text: 'Applied\nRequest'),
-                Tab(text: 'Completed\n\t\t Request')
-              ]),
+            indicatorColor: Theme.of(context).secondaryHeaderColor,
+            tabs: const [
+              Tab(text: '\t\t\tYour\nRequest'),
+              Tab(text: 'Applied\nRequest'),
+              Tab(text: 'Completed\n\t\t Request')
+            ],
+          ),
           title: const Text('Need help from other people?'),
         ),
         body: const TabBarView(
-            children: [YourRequest(), RequestedJob(), CompletedRequest()]),
+          children: [
+            YourRequest(),
+            RequestedJob(),
+            CompletedRequest(),
+          ],
+        ),
       ),
     );
   }

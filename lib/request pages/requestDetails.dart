@@ -45,45 +45,13 @@ class _RequestDetailsState extends State<RequestDetails> {
 
   double? paymentTransferred;
 
-  isNull(dynamic stuff) {
-    if (stuff == '' || stuff.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isComplete() => requestDetails.status == ServiceRequestStatus.completed;
 
-  isComplete() {
-    if (requestDetails.status.name.toUpperCase() == 'COMPLETED') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isAccepted() => requestDetails.status == ServiceRequestStatus.accepted;
 
-  isAccepted() {
-    if (requestDetails.status.name.toUpperCase() == 'ACCEPTED') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isOngoing() => requestDetails.status == ServiceRequestStatus.ongoing;
 
-  isOngoing() {
-    if (requestDetails.status.name.toUpperCase() == 'ONGOING') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  isPending() {
-    if (requestDetails.status.name.toUpperCase() == 'PENDING') {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isPending() => requestDetails.status == ServiceRequestStatus.pending;
 
   isRequested() {
     for (int i = 0; i < requestDetails.applicants.length; i++) {
@@ -94,13 +62,7 @@ class _RequestDetailsState extends State<RequestDetails> {
     return false;
   }
 
-  isRequestor() {
-    if (requestDetails.requestorId == widget.user) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  isRequestor() => requestDetails.requestorId == widget.user;
 
   @override
   void initState() {
@@ -544,7 +506,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                   Text('State: ${requestDetails.location.state}'),
                   const Divider(),
                   Heading2('Media'),
-                  isNull(requestDetails.media)
+                  requestDetails.media.isEmpty
                       ? const Text('No Attachment')
                       : SizedBox(
                           child: ListView.builder(

@@ -1,10 +1,12 @@
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import '../components/constants.dart';
+import '../custom%20widgets/theme.dart';
 import 'forgotPasword.dart';
 import 'signUpPage.dart';
-import '../custom%20widgets/theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

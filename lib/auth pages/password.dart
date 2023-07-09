@@ -1,11 +1,11 @@
 import 'dart:async';
-// import 'package:flutter/foundation.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import '../components/constants.dart';
 import '../custom%20widgets/heading2.dart';
 import '../custom%20widgets/theme.dart';
-// import 'package:budi_timebank/pages/signUpPage.dart';
 
 class PasswordPage extends StatefulWidget {
   const PasswordPage({super.key});

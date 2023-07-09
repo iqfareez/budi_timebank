@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
 
 import '../custom widgets/theme.dart';
+import '../db_helpers/client_user.dart';
+import '../extension_string.dart';
 import '../model/profile.dart';
 import '../model/rating.dart';
 
@@ -21,7 +21,6 @@ class CustomCardRating extends StatefulWidget {
   State<CustomCardRating> createState() => _CustomCardRatingState();
 }
 
-// ignore: camel_case_types
 class _CustomCardRatingState extends State<CustomCardRating> {
   late Profile _userRequestor;
   late Profile _userProvider;
