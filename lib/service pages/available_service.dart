@@ -68,17 +68,9 @@ class _AvailableServicesState extends State<AvailableServices> {
     _categoryController.text = listCategories[0];
     _stateController.text = listState[0];
     _filterController.text = listFilter[0];
+    super.initState();
 
     getinstance();
-    super.initState();
-  }
-
-  isRequested(list) {
-    if (list.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   Future getinstance() async {
@@ -556,12 +548,7 @@ class _AvailableServicesState extends State<AvailableServices> {
                                         builder: (context) => JobDetails(
                                             requestId: listFiltered[index].id!,
                                             user: user)))
-                                    .then((value) => setState(
-                                          () {
-                                            //_isEmpty = true;
-                                            getinstance();
-                                          },
-                                        ));
+                                    .then((value) => getinstance());
                               },
                               child: CustomCardServiceRequest(
                                 category: listFiltered[index].category,

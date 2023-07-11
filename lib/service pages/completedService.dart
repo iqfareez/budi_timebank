@@ -17,7 +17,6 @@ class _CompletedServicesState extends State<CompletedServices> {
   final String currentUserUid = FirebaseAuth.instance.currentUser!.uid;
   late bool isLoad;
   late List<ServiceRequest> data;
-  late dynamic listRating;
   bool isRequest = true;
 
   @override
@@ -34,36 +33,10 @@ class _CompletedServicesState extends State<CompletedServices> {
 
     var completedServices = await ClientServiceRequest.getCompletedServices();
 
-    // listFiltered.addAll(await supabase
-    //     .from('service_requests')
-    //     .select()
-    //     .eq('provider', user)
-    //     .eq('state', 3)
-    //     .range(from, to));
-    // data = await supabase
-    //     .from('service_requests')
-    //     .select()
-    //     .eq('state', 3)
-    //     .eq('provider', user);
-
-    // listRating.addAll(await supabase
-    //     .from('ratings')
-    //     .select()
-    //     .eq('recipient', user)
-    //     .range(from, to));
-
     setState(() {
       data = completedServices;
       isLoad = false;
     });
-  }
-
-  isRated(jobId) {
-    if (listRating.toString().contains(jobId)) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   @override
@@ -115,9 +88,6 @@ class _CompletedServicesState extends State<CompletedServices> {
                           category: data[index].category,
                           location: data[index].location,
                           date: data[index].date,
-                          // status: isRated(listFiltered[index].id!)
-                          //     ? 'Completed (Rated)'
-                          //     : 'Completed (Unrated)',
                           status: data[index].status,
                           requestorId: data[index].requestorId,
                           title: data[index].title,

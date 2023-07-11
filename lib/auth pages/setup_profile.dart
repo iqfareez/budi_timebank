@@ -100,7 +100,7 @@ class _SetupProfileState extends State<SetupProfile> {
         : _organizationNameController.text;
 
     var newProfile = Profile(
-      name: _usernameController.text,
+      name: _usernameController.text.trim(),
       skills: skills,
       contacts: contacts,
       identification: userIdentification,
