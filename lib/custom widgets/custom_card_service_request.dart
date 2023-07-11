@@ -122,12 +122,12 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                               child: Container(
                                   decoration: BoxDecoration(
                                       color: changeColor(
-                                          widget.status.name.toTitleCase()),
+                                          widget.status.name.titleCase()),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      widget.status.name.toTitleCase(),
+                                      widget.status.name.titleCase(),
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,
@@ -138,7 +138,6 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                           ],
                         ),
                         const Divider(),
-                        //SizedBox(height: 10),
                         Text(_userCurrent.name.toString().titleCase(),
                             style: const TextStyle(fontSize: 12)),
                         const SizedBox(height: 10),
