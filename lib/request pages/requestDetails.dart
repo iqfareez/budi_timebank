@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../components/constants.dart';
@@ -44,6 +45,11 @@ class _RequestDetailsState extends State<RequestDetails> {
   int _starRatingValue = 0;
 
   double? paymentTransferred;
+
+  final mapController = MapController(
+    initMapWithUserPosition: const UserTrackingOption.withoutUserPosition(),
+    areaLimit: const BoundingBox.world(),
+  );
 
   isComplete() => requestDetails.status == ServiceRequestStatus.completed;
 
@@ -122,10 +128,18 @@ class _RequestDetailsState extends State<RequestDetails> {
           await ClientUser.getUserProfileById(requestDetails.applicants[i]);
       _listApplicants.add(name);
     }
+
     // print(_listApplicants);
     setState(() {
       isLoad = false;
     });
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    mapController.changeLocation(GeoPoint(
+        latitude: requestDetails.location.coordinate.latitude,
+        longitude: requestDetails.location.coordinate.longitude));
+    mapController.setZoom(zoomLevel: 15.4);
   }
 
   Future<void> _completeJob(String jobId) async {
@@ -504,6 +518,26 @@ class _RequestDetailsState extends State<RequestDetails> {
                   Text('Address: ${requestDetails.location.address}'),
                   Text('City: ${requestDetails.location.city}'),
                   Text('State: ${requestDetails.location.state}'),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    child: OSMFlutter(
+                      controller: mapController,
+                      initZoom: 16,
+                      minZoomLevel: 8,
+                      maxZoomLevel: 16,
+                      stepZoom: 1.0,
+                      markerOption: MarkerOption(
+                          defaultMarker: const MarkerIcon(
+                        icon: Icon(
+                          Icons.person_pin_circle,
+                          color: Colors.blue,
+                          size: 56,
+                        ),
+                      )),
+                    ),
+                  ),
                   const Divider(),
                   Heading2('Media'),
                   requestDetails.media.isEmpty

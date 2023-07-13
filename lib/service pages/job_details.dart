@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../components/constants.dart';
@@ -41,6 +42,11 @@ class _JobDetailsState extends State<JobDetails> {
   late Profile _userRequestor;
   late dynamic _userProvidor;
   final dynamic _listApplicants = [];
+
+  final mapController = MapController(
+    initMapWithUserPosition: const UserTrackingOption.withoutUserPosition(),
+    areaLimit: const BoundingBox.world(),
+  );
 
   late bool isLoad = false;
 
@@ -141,6 +147,13 @@ class _JobDetailsState extends State<JobDetails> {
       _listApplicants.add(name);
     }
     setState(() => isLoad = false);
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    mapController.changeLocation(GeoPoint(
+        latitude: jobDetail.location.coordinate.latitude,
+        longitude: jobDetail.location.coordinate.longitude));
+    mapController.setZoom(zoomLevel: 15.4);
   }
 
   void applyJob(String reqid, String provider) async {
@@ -459,6 +472,26 @@ class _JobDetailsState extends State<JobDetails> {
                   Text('Address: ${jobDetail.location.address}'),
                   Text('State: ${jobDetail.location.state}'),
                   Text('City: ${jobDetail.location.city}'),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    child: OSMFlutter(
+                      controller: mapController,
+                      initZoom: 16,
+                      minZoomLevel: 8,
+                      maxZoomLevel: 16,
+                      stepZoom: 1.0,
+                      markerOption: MarkerOption(
+                          defaultMarker: const MarkerIcon(
+                        icon: Icon(
+                          Icons.person_pin_circle,
+                          color: Colors.blue,
+                          size: 56,
+                        ),
+                      )),
+                    ),
+                  ),
                   const Divider(),
                   Heading2('Media'),
                   jobDetail.media.isEmpty

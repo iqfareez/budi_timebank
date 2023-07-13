@@ -1,18 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart' hide DatePickerTheme;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../components/constants.dart';
 import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
+import '../db_helpers/client_service_request.dart';
 import '../model/service_request.dart' as model;
 import '../shared/malaysia_states.dart';
-
-//map API
-//https://levelup.gitconnected.com/how-to-add-google-maps-in-a-flutter-app-and-get-the-current-location-of-the-user-dynamically-2172f0be53f6
 
 class RequestForm extends StatefulWidget {
   const RequestForm({Key? key}) : super(key: key);
@@ -64,17 +63,25 @@ class _RequestFormState extends State<RequestForm> {
   String? stateValue;
   String? cityValue;
 
+  // late MapController _mapController;
   late bool isLocationFetched;
   late bool isLoad;
   bool isDetectingLocation = false;
+  Position? _currentPosition;
+  final mapController = MapController(
+    initMapWithUserPosition: const UserTrackingOption.withoutUserPosition(),
+    areaLimit: const BoundingBox.world(),
+  );
 
   @override
   void initState() {
+    super.initState();
     isLoad = false;
     isLocationFetched = false;
     _categoryController.text = listCategories[2];
-
-    super.initState();
+    // _mapController = MapController.withPosition(
+    //   initPosition: GeoPoint(latitude: 47.4358055, longitude: 8.4737324),
+    // );
   }
 
   //get geo location
@@ -149,6 +156,8 @@ class _RequestFormState extends State<RequestForm> {
     _descriptionController.dispose();
     _rateController.dispose();
     _mediaController.dispose();
+
+    mapController.dispose();
 
     super.dispose();
   }
@@ -395,12 +404,12 @@ class _RequestFormState extends State<RequestForm> {
                         value: stateValue,
                         validator: (value) =>
                             value == null ? 'Please select a state...' : null,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             // enabledBorder: OutlineInputBorder(
                             //     borderSide: BorderSide(
                             //         color: Theme.of(context).primaryColor,
                             //         width: 2)),
-                            border: const OutlineInputBorder(),
+                            border: OutlineInputBorder(),
                             hintText: 'Select state'),
                         items: [
                           for (var state in states)
@@ -441,29 +450,67 @@ class _RequestFormState extends State<RequestForm> {
                           });
                         },
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                                onPressed: () async {
-                                  setState(() => isDetectingLocation = true);
+                      const SizedBox(height: 4),
+                      ElevatedButton(
+                        onPressed: () async {
+                          setState(() => isDetectingLocation = true);
 
-                                  Position position =
-                                      await _getGeoLocationPosition();
-                                  getAddressFromLatLong(position);
-                                  setState(() {
-                                    isLocationFetched = true;
-                                    isDetectingLocation = false;
-                                  });
-                                },
-                                child: isDetectingLocation
-                                    ? const Text('Loading...')
-                                    : const Text('Get my location')),
-                          ),
-                        ],
+                          Position position = await _getGeoLocationPosition();
+                          getAddressFromLatLong(position);
+
+                          // mapController.addMarker(GeoPoint(
+                          //     latitude: position.latitude,
+                          //     longitude: position.longitude));
+                          mapController.changeLocation(GeoPoint(
+                              latitude: position.latitude,
+                              longitude: position.longitude));
+                          mapController.setZoom(zoomLevel: 16);
+
+                          setState(() {
+                            _currentPosition = position;
+                            isLocationFetched = true;
+                            isDetectingLocation = false;
+                          });
+                        },
+                        child: isDetectingLocation
+                            ? const Text('Loading...')
+                            : const Text('Detect my location'),
                       ),
-                      const SizedBox(height: 8),
-
+                      // if (isLocationFetched)
+                      SizedBox(
+                        height: 120,
+                        width: double.infinity,
+                        child: OSMFlutter(
+                          controller: mapController,
+                          initZoom: 13,
+                          minZoomLevel: 8,
+                          maxZoomLevel: 16,
+                          stepZoom: 1.0,
+                          userLocationMarker: UserLocationMaker(
+                            personMarker: const MarkerIcon(
+                              icon: Icon(
+                                Icons.location_history_rounded,
+                                color: Colors.red,
+                                size: 48,
+                              ),
+                            ),
+                            directionArrowMarker: const MarkerIcon(
+                              icon: Icon(
+                                Icons.double_arrow,
+                                size: 48,
+                              ),
+                            ),
+                          ),
+                          markerOption: MarkerOption(
+                              defaultMarker: const MarkerIcon(
+                            icon: Icon(
+                              Icons.person_pin_circle,
+                              color: Colors.blue,
+                              size: 56,
+                            ),
+                          )),
+                        ),
+                      ),
                       // Padding(
                       //   padding: const EdgeInsets.all(8.0),
                       //   child: CustomHeadline(heading: 'Attachment'),
@@ -622,6 +669,9 @@ class _RequestFormState extends State<RequestForm> {
                               title: _titleController.text,
                               description: _descriptionController.text,
                               location: model.Location(
+                                coordinate: firestore.GeoPoint(
+                                    _currentPosition!.latitude,
+                                    _currentPosition!.longitude),
                                 address: _locationController.text,
                                 city: cityValue!,
                                 state: stateValue!,
@@ -652,12 +702,8 @@ class _RequestFormState extends State<RequestForm> {
 
   Future<void> _submitJobForm(model.ServiceRequest serviceRequest) async {
     try {
-      final CollectionReference serviceRequestCollection =
-          FirebaseFirestore.instance.collection('serviceRequests');
-      var docRef =
-          await serviceRequestCollection.add(serviceRequest.toFirestoreMap());
-
-      context.showSnackBar(message: 'Job Created ${docRef.id}');
+      ClientServiceRequest.submitJob(serviceRequest);
+      context.showSnackBar(message: 'Job Created');
       Navigator.of(context).pop();
     } on FirebaseException catch (e) {
       context.showErrorSnackBar(message: '${e.message}');

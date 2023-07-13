@@ -26,6 +26,13 @@ class ClientServiceRequest {
     return (pending, accepted, ongoing, completed);
   }
 
+  /// Submits a service request
+  static Future<void> submitJob(ServiceRequest serviceRequest) async {
+    final CollectionReference serviceRequestCollection =
+        FirebaseFirestore.instance.collection('serviceRequests');
+    await serviceRequestCollection.add(serviceRequest.toFirestoreMap());
+  }
+
   /// get summary (total number) for services
   /// The number of services you have done to others
   static Future<(int, int, int, int)> getServicesSummary() async {
