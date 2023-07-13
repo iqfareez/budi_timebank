@@ -51,13 +51,13 @@ class _RequestDetailsState extends State<RequestDetails> {
     areaLimit: const BoundingBox.world(),
   );
 
-  isComplete() => requestDetails.status == ServiceRequestStatus.completed;
-
-  isAccepted() => requestDetails.status == ServiceRequestStatus.accepted;
-
-  isOngoing() => requestDetails.status == ServiceRequestStatus.ongoing;
-
   isPending() => requestDetails.status == ServiceRequestStatus.pending;
+  isAccepted() => requestDetails.status == ServiceRequestStatus.accepted;
+  isOngoing() => requestDetails.status == ServiceRequestStatus.ongoing;
+  isCompletedVerified() =>
+      requestDetails.status == ServiceRequestStatus.completedVerified;
+  // pending completion verification
+  isCompleted() => requestDetails.status == ServiceRequestStatus.completed;
 
   isRequested() {
     for (int i = 0; i < requestDetails.applicants.length; i++) {
@@ -108,14 +108,14 @@ class _RequestDetailsState extends State<RequestDetails> {
     dateUpdatedOn = requestDetails.updatedAt;
     dateJob = requestDetails.date;
 
-    if (requestDetails.status == ServiceRequestStatus.completed) {
+    if (requestDetails.status == ServiceRequestStatus.completedVerified) {
       paymentTransferred =
           await ClientServiceRequest.getServiceIncome(widget.requestId);
       // remove negative value (just in  case)
       paymentTransferred = paymentTransferred?.abs();
     }
 
-    if (requestDetails.status == ServiceRequestStatus.completed) {
+    if (requestDetails.status == ServiceRequestStatus.completedVerified) {
       var rating = await ClientRating.getRatingByJobId(jobId: widget.requestId);
       if (rating != null) {
         isRated = true;
@@ -142,8 +142,8 @@ class _RequestDetailsState extends State<RequestDetails> {
     mapController.setZoom(zoomLevel: 15.4);
   }
 
-  Future<void> _completeJob(String jobId) async {
-    await ClientServiceRequest.completeService(jobId);
+  Future<void> _verifyTaskComplete(String jobId) async {
+    await ClientServiceRequest.verifyServiceCompleted(jobId);
   }
 
   void _deleteRequest(String id) async {
@@ -282,7 +282,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                 ),
                           //CustomDivider(color: themeData2().primaryColor),
                           //SizedBox(height: 8),
-                          if (isComplete())
+                          if (isCompletedVerified())
                             Column(
                               children: [
                                 Heading2('The request is completed'),
@@ -292,7 +292,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                     'Time: ${requestDetails.completedAt?.hour}:${requestDetails.completedAt?.minute}:${requestDetails.completedAt?.second}'), //completed on 2
                               ],
                             ),
-                          if (isComplete() && isRated)
+                          if (isCompletedVerified() && isRated)
                             Column(
                               children: [
                                 const Text('You have rated the provider.'),
@@ -321,7 +321,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                     child: const Text('Go to rating page'))
                               ],
                             ),
-                          if (isComplete() && !isRated)
+                          if (isCompletedVerified() && !isRated)
                             Column(children: [
                               const Text(
                                 'Rate the provider',
@@ -383,11 +383,20 @@ class _RequestDetailsState extends State<RequestDetails> {
                                       ),
                                   child: const Text('Rate Provider'))
                             ]),
-                          if (!isComplete() && isOngoing())
+                          if (isOngoing() && !isCompleted())
                             Column(
                               children: [
                                 const Text(
-                                  'The request has started, make sure to tap \n"Complete Request" when the provider has finished the request.',
+                                  'The request has started',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          if (isCompleted())
+                            Column(
+                              children: [
+                                const Text(
+                                  'The provider has marked the request as completed.',
                                   textAlign: TextAlign.center,
                                 ),
                                 const Divider(),
@@ -401,7 +410,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                             title:
                                                 const Text('Complete Request?'),
                                             content: const Text(
-                                                'Once the request is complete, transaction of Time/hour will be made.'),
+                                                'Once the request completion is verified, transaction of Time/hour will be made.'),
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () => Navigator.pop(
@@ -410,24 +419,20 @@ class _RequestDetailsState extends State<RequestDetails> {
                                               ),
                                               TextButton(
                                                 onPressed: () async {
-                                                  await _completeJob(
+                                                  await _verifyTaskComplete(
                                                       requestDetails.id!);
                                                   Navigator.pop(context);
-                                                  setState(() {
-                                                    _getAllinstance();
-                                                  });
+                                                  _getAllinstance();
                                                 },
                                                 child: const Text('Complete'),
                                               ),
                                             ],
                                           ),
                                         ),
-                                    child: const Text('Complete Request')),
+                                    child: const Text('Verify Completion')),
                               ],
                             ),
-                          if (_userProvidor != null &&
-                              !isComplete() &&
-                              !isOngoing())
+                          if (_userProvidor != null && isPending())
                             Column(
                               children: [
                                 const Text(
@@ -455,9 +460,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                                       .startService(
                                                           requestDetails.id!);
                                                   Navigator.pop(context);
-                                                  setState(() {
-                                                    _getAllinstance();
-                                                  });
+                                                  _getAllinstance();
                                                 },
                                                 child: const Text('Start'),
                                               ),

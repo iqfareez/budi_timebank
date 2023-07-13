@@ -50,13 +50,13 @@ class _JobDetailsState extends State<JobDetails> {
 
   late bool isLoad = false;
 
-  isComplete() => jobDetail.status == ServiceRequestStatus.completed;
-
-  isAccepted() => jobDetail.status == ServiceRequestStatus.accepted;
-
-  isOngoing() => jobDetail.status == ServiceRequestStatus.ongoing;
-
   isPending() => jobDetail.status == ServiceRequestStatus.pending;
+  isAccepted() => jobDetail.status == ServiceRequestStatus.accepted;
+  isOngoing() => jobDetail.status == ServiceRequestStatus.ongoing;
+  isCompletedVerified() =>
+      jobDetail.status == ServiceRequestStatus.completedVerified;
+  // pending completion verification
+  isCompleted() => jobDetail.status == ServiceRequestStatus.completed;
 
   bool isRequested() => jobDetail.applicants.contains(widget.user);
 
@@ -109,12 +109,12 @@ class _JobDetailsState extends State<JobDetails> {
 
     _userRequestor = await ClientUser.getUserProfileById(jobDetail.requestorId);
 
-    if (jobDetail.status == ServiceRequestStatus.completed) {
+    if (jobDetail.status == ServiceRequestStatus.completedVerified) {
       _earnedIncome =
           await ClientServiceRequest.getServiceIncome(widget.requestId);
     }
 
-    if (jobDetail.status == ServiceRequestStatus.completed) {
+    if (jobDetail.status == ServiceRequestStatus.completedVerified) {
       var rating = await ClientRating.getRatingByJobId(jobId: widget.requestId);
       if (rating != null) {
         _ratingStar = rating.rating;
@@ -281,177 +281,190 @@ class _JobDetailsState extends State<JobDetails> {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  isComplete() //isRequestcomplete?
-                      ? Card(
-                          elevation: 5,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
+                  if (isCompletedVerified())
+                    Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Heading2('Completed On'),
+                            Text(
+                                'Date: ${jobDetail.updatedAt?.day}-${jobDetail.updatedAt?.month}-${jobDetail.updatedAt?.year}\n'),
+                            Text(
+                                'Time: ${jobDetail.updatedAt?.hour}:${jobDetail.updatedAt?.minute}:${jobDetail.updatedAt?.second}\n'),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Heading2('Completed On'),
+                                const Text('Payment received: '),
                                 Text(
-                                    'Date: ${jobDetail.updatedAt?.day}-${jobDetail.updatedAt?.month}-${jobDetail.updatedAt?.year}\n'),
-                                Text(
-                                    'Time: ${jobDetail.updatedAt?.hour}:${jobDetail.updatedAt?.minute}:${jobDetail.updatedAt?.second}\n'),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text('Payment received: '),
-                                    Text(
-                                      '${_earnedIncome!.toStringAsFixed(2)} Time/hour',
-                                      style: const TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
+                                  '${_earnedIncome!.toStringAsFixed(2)} Time/hour',
+                                  style: const TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                if (_ratingStar != null) // has received rating
-                                  ...[
-                                  const SizedBox(height: 10),
-                                  RatingBarIndicator(
-                                    rating: _ratingStar!.toDouble(),
-                                    itemBuilder: (context, index) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    ),
-                                    itemCount: 5,
-                                    itemSize: 20.0,
-                                    direction: Axis.horizontal,
-                                  ),
-                                  Text(
-                                    _ratingComment ?? 'No comment was given',
-                                    style: const TextStyle(
-                                        fontStyle: FontStyle.italic),
-                                  ),
-                                  TextButton(
-                                      style: themeData2().textButtonTheme.style,
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              const RateReceivedPage(),
-                                        ));
-                                      },
-                                      child: const Text('Go to rating page'))
-                                ] else ...[
-                                  const SizedBox(height: 10),
-                                  const Text('No rating has been given yet'),
-                                  const SizedBox(height: 10),
-                                ]
                               ],
                             ),
-                          ),
-                        )
-                      : isAccepted()
-                          ? const Card(
-                              shape: RoundedRectangleBorder(
-                                // side: BorderSide(
-                                //   color: themeData1().secondaryHeaderColor,
-                                //   width: 3,
-                                // ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(15.0),
-                                child: Column(
-                                  children: [
-                                    CustomHeadline(
-                                        heading:
-                                            'You have been accepted as the provider'),
-                                    Text(
-                                        'Contact your requestor to start the request when you are ready')
-                                  ],
+                            if (_ratingStar != null) // has received rating
+                              ...[
+                              const SizedBox(height: 10),
+                              RatingBarIndicator(
+                                rating: _ratingStar!.toDouble(),
+                                itemBuilder: (context, index) => const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
                                 ),
+                                itemCount: 5,
+                                itemSize: 20.0,
+                                direction: Axis.horizontal,
                               ),
-                            )
-                          : isOngoing()
-                              ? const Card(
-                                  shape: RoundedRectangleBorder(
-                                    // side: BorderSide(
-                                    //   color: themeData1().secondaryHeaderColor,
-                                    //   width: 3,
-                                    // ),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Center(
-                                        child: CustomHeadline(
-                                            heading:
-                                                'You are currently doing this request')),
-                                  ),
-                                )
-                              : Card(
-                                  shape: const RoundedRectangleBorder(
-                                    // side: BorderSide(
-                                    //   //color: themeData1().secondaryHeaderColor,
-                                    //   width: 3,
-                                    // ),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  //sini oi the service
-                                  elevation: 5,
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: !isRequested()
-                                          ? Column(
-                                              children: [
-                                                Heading2('Want to help?'),
-                                                ElevatedButton(
-                                                    style: themeData2()
-                                                        .elevatedButtonTheme
-                                                        .style,
-                                                    onPressed: () =>
-                                                        showDialog<String>(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              AlertDialog(
-                                                            title: const Text(
-                                                                'Apply request?'),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        context,
-                                                                        'Cancel'),
-                                                                child: const Text(
-                                                                    'Cancel'),
-                                                              ),
-                                                              TextButton(
-                                                                onPressed: () {
-                                                                  applyJob(
-                                                                      jobDetail
-                                                                          .id!,
-                                                                      widget
-                                                                          .user);
-                                                                },
-                                                                child:
-                                                                    const Text(
-                                                                        'Apply'),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                    // onPressed: () {
+                              Text(
+                                _ratingComment ?? 'No comment was given',
+                                style: const TextStyle(
+                                    fontStyle: FontStyle.italic),
+                              ),
+                              TextButton(
+                                  style: themeData2().textButtonTheme.style,
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RateReceivedPage(),
+                                    ));
+                                  },
+                                  child: const Text('Go to rating page'))
+                            ] else ...[
+                              const SizedBox(height: 10),
+                              const Text('No rating has been given yet'),
+                              const SizedBox(height: 10),
+                            ]
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (isCompleted())
+                    const Card(
+                      shape: RoundedRectangleBorder(),
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          children: [
+                            CustomHeadline(heading: 'Job has been completed'),
+                            Text('Pending verification from requestor')
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (isAccepted())
+                    const Card(
+                      shape: RoundedRectangleBorder(
+                        // side: BorderSide(
+                        //   color: themeData1().secondaryHeaderColor,
+                        //   width: 3,
+                        // ),
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Column(
+                          children: [
+                            CustomHeadline(
+                                heading:
+                                    'You have been accepted as the provider'),
+                            Text(
+                                'Contact your requestor to start the request when you are ready')
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (isOngoing())
+                    Card(
+                      shape: const RoundedRectangleBorder(
+                        // side: BorderSide(
+                        //   color: themeData1().secondaryHeaderColor,
+                        //   width: 3,
+                        // ),
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            const CustomHeadline(
+                                heading:
+                                    'You are currently doing this request'),
+                            ElevatedButton(
+                                onPressed: () async {
+                                  await ClientServiceRequest.markTaskComplete(
+                                      widget.requestId);
+                                  _getAllinstance();
+                                },
+                                child: const Text('Task completed'))
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (!isAccepted() &&
+                      !isOngoing() &&
+                      !isCompleted() &&
+                      !isCompletedVerified())
+                    Card(
+                      shape: const RoundedRectangleBorder(
+                        // side: BorderSide(
+                        //   //color: themeData1().secondary1HeaderColor,
+                        //   width: 3,
+                        // ),
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      //sini oi the service
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: !isRequested()
+                            ? Column(
+                                children: [
+                                  Heading2('Want to help?'),
+                                  ElevatedButton(
+                                    style:
+                                        themeData2().elevatedButtonTheme.style,
+                                    onPressed: () => showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: const Text('Apply request?'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancel'),
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              applyJob(
+                                                  jobDetail.id!, widget.user);
+                                            },
+                                            child: const Text('Apply'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // onPressed: () {
 
-                                                    //   // print(widget.id);
-                                                    //   // print(widget.user);
+                                    //   // print(widget.id);
+                                    //   // print(widget.user);
 
-                                                    // },
-                                                    child: const Text(
-                                                        'Apply Request')),
-                                              ],
-                                            )
-                                          : const Center(
-                                              child: Text(
-                                                  'You have applied the request.\nContact the Requestor to accept you as Provider'),
-                                            )),
-                                ),
+                                    // },
+                                    child: const Text('Apply Request'),
+                                  ),
+                                ],
+                              )
+                            : const Center(
+                                child: Text(
+                                    'You have applied the request.\nContact the Requestor to accept you as Provider'),
+                              ),
+                      ),
+                    ),
                   const SizedBox(height: 15),
                   Container(
                       alignment: Alignment.center,

@@ -138,8 +138,13 @@ class ClientServiceRequest {
     var dataDocs = await FirebaseFirestore.instance
         .collection('serviceRequests')
         .where('requestorId', isEqualTo: userUid)
-        .where('status', isEqualTo: ServiceRequestStatus.completed.name)
-        .where('applicants', isNotEqualTo: []).get();
+        .where(
+      'status',
+      whereIn: [
+        ServiceRequestStatus.completed.name,
+        ServiceRequestStatus.completedVerified.name
+      ],
+    ).where('applicants', isNotEqualTo: []).get();
 
     return dataDocs.docs.map((e) {
       var serviceRequest = ServiceRequest.fromJson(e.data());
@@ -160,14 +165,27 @@ class ClientServiceRequest {
     });
   }
 
-  /// Complete a service request (triggered from the need help page)
-  static Future<void> completeService(String serviceRequestId) async {
+  /// Mark task as complete (triggered from the offer help > job details page)
+  static Future<void> markTaskComplete(String serviceRequestId) async {
     var finishTime = DateTime.now();
     await FirebaseFirestore.instance
         .collection('serviceRequests')
         .doc(serviceRequestId)
         .update({
       'status': ServiceRequestStatus.completed.name,
+      'updatedAt': finishTime,
+      'completedAt': finishTime
+    });
+  }
+
+  /// Verifies a service has been completed by the provider (triggered from the need help page)
+  static Future<void> verifyServiceCompleted(String serviceRequestId) async {
+    var finishTime = DateTime.now();
+    await FirebaseFirestore.instance
+        .collection('serviceRequests')
+        .doc(serviceRequestId)
+        .update({
+      'status': ServiceRequestStatus.completedVerified.name,
       'updatedAt': DateTime.now(),
       'completedAt': finishTime
     });
@@ -279,8 +297,13 @@ class ClientServiceRequest {
         .collection('serviceRequests')
         .where('requestorId', isNotEqualTo: userUid)
         .where('providerId', isEqualTo: userUid)
-        .where('status', isEqualTo: ServiceRequestStatus.completed.name)
-        .get();
+        .where(
+      'status',
+      whereIn: [
+        ServiceRequestStatus.completed.name,
+        ServiceRequestStatus.completedVerified.name
+      ],
+    ).get();
 
     return dataDocs.docs.map((e) {
       var serviceRequest = ServiceRequest.fromJson(e.data());

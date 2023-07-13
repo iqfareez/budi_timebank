@@ -185,6 +185,7 @@ enum ServiceRequestStatus {
   accepted,
   ongoing,
   completed,
+  completedVerified,
   cancelled,
   rejected,
 }
