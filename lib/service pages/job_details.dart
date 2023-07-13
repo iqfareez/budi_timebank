@@ -396,9 +396,34 @@ class _JobDetailsState extends State<JobDetails> {
                                     'You are currently doing this request'),
                             ElevatedButton(
                                 onPressed: () async {
-                                  await ClientServiceRequest.markTaskComplete(
-                                      widget.requestId);
-                                  _getAllinstance();
+                                  var res = await showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                              'Mark task as completed?'),
+                                          content: const Text(
+                                              'Mark task as completed if you have successfully completed the task. Requestor will verify the completion before payment is released'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Cancel')),
+                                            TextButton(
+                                                onPressed: () async {
+                                                  Navigator.of(context)
+                                                      .pop(true);
+                                                },
+                                                child: const Text('Confirm'))
+                                          ],
+                                        );
+                                      });
+                                  if (res ?? false) {
+                                    await ClientServiceRequest.markTaskComplete(
+                                        widget.requestId);
+                                    _getAllinstance();
+                                  }
                                 },
                                 child: const Text('Task completed'))
                           ],

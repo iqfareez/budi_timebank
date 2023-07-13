@@ -186,7 +186,7 @@ class ClientServiceRequest {
         .doc(serviceRequestId)
         .update({
       'status': ServiceRequestStatus.completedVerified.name,
-      'updatedAt': DateTime.now(),
+      'updatedAt': finishTime,
       'completedAt': finishTime
     });
 

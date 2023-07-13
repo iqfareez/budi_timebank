@@ -432,7 +432,7 @@ class _RequestDetailsState extends State<RequestDetails> {
                                     child: const Text('Verify Completion')),
                               ],
                             ),
-                          if (_userProvidor != null && isPending())
+                          if (_userProvidor != null && isAccepted())
                             Column(
                               children: [
                                 const Text(
