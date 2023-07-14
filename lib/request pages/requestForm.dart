@@ -140,7 +140,6 @@ class _RequestFormState extends State<RequestForm> {
 
       setState(() {
         // countryValue = place.country.toString();
-        // cityValue = place.locality;
         stateValue = place.administrativeArea.toString();
         citiesInSelectedState = MalaysiaStates.getCitiesByState(stateValue!);
       });
@@ -422,6 +421,7 @@ class _RequestFormState extends State<RequestForm> {
                           setState(() {
                             stateValue = value.toString();
 
+                            cityValue = null;
                             citiesInSelectedState =
                                 MalaysiaStates.getCitiesByState(stateValue!);
                           });
