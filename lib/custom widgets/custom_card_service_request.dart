@@ -43,23 +43,31 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
     super.initState();
   }
 
-  changeColor(state) {
-    switch (state) {
-      case 'Available':
-        return const Color.fromARGB(255, 163, 223, 66);
-      case 'Pending':
+  changeColor(ServiceRequestStatus status) {
+    switch (status) {
+      // case 'Available':
+      //   return const Color.fromARGB(255, 163, 223, 66);
+      case ServiceRequestStatus.pending:
         return const Color.fromARGB(255, 0, 146, 143);
-      case 'Accepted':
+      case ServiceRequestStatus.accepted:
         return const Color.fromARGB(255, 199, 202, 11);
-      case 'Ongoing':
+      case ServiceRequestStatus.ongoing:
         return const Color.fromARGB(255, 213, 159, 15);
-      case 'Completed (Rated)':
+      case ServiceRequestStatus.completedVerified:
         return const Color.fromARGB(255, 89, 175, 89);
-      case 'Completed (Unrated)':
+      case ServiceRequestStatus.completed:
         return themeData2().secondaryHeaderColor;
       default:
         return const Color.fromARGB(255, 127, 124, 139);
     }
+  }
+
+  String changeStatus(ServiceRequestStatus status) {
+    return switch (status) {
+      ServiceRequestStatus.completedVerified => 'Completed',
+      ServiceRequestStatus.completed => 'Completed (Pending Verification)',
+      _ => status.name.titleCase()
+    };
   }
 
   getRequestorName() async {
@@ -122,13 +130,12 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                               flex: 2,
                               child: Container(
                                   decoration: BoxDecoration(
-                                      color: changeColor(
-                                          widget.status.name.titleCase()),
+                                      color: changeColor(widget.status),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      widget.status.name.titleCase(),
+                                      changeStatus(widget.status),
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,
