@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_datetime.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/profile.dart';
 import '../model/service_request.dart';
 import 'theme.dart';
@@ -153,8 +154,7 @@ class _CustomCardServiceRequestState extends State<CustomCardServiceRequest> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                            '${widget.date.day}-${widget.date.month}-${widget.date.year}',
+                        Text(widget.date.formatDate(),
                             style: const TextStyle(fontSize: 12)),
                       ],
                     ),

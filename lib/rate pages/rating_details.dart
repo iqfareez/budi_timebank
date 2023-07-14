@@ -7,7 +7,8 @@ import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_service_request.dart';
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_datetime.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/profile.dart';
 import '../model/rating.dart';
 import '../model/service_request.dart';
@@ -177,13 +178,9 @@ class _RatingDetailsState extends State<RatingDetails> {
                   ),
                   const SizedBox(height: 15),
                   Heading2(' Created On'),
-                  Text(
-                      ' Date: ${widget.ratingDetails.createdAt.day}-${widget.ratingDetails.createdAt.month}-${widget.ratingDetails.createdAt.year}\n\tTime: ${widget.ratingDetails.createdAt.hour}:${widget.ratingDetails.createdAt.minute}'),
+                  Text(' Date: ${widget.ratingDetails.createdAt.formatDate()}'),
+                  Text(' Time: ${widget.ratingDetails.createdAt.formatTime()}'),
                   const SizedBox(height: 15),
-                  // Heading2(' Updated On'),
-                  // Text(
-                  //     ' Date: ${dateUpdatedOn.day}-${dateUpdatedOn.month}-${dateUpdatedOn.year}\n\tTime: ${dateUpdatedOn.hour}:${dateUpdatedOn.minute}'),
-                  // SizedBox(height: 15),
                   Heading2(' Request Title'),
                   ElevatedButton(
                     onPressed: (() {
@@ -194,7 +191,6 @@ class _RatingDetailsState extends State<RatingDetails> {
                     }),
                     child: Text(' ${requestDetails.title}'),
                   ),
-
                   const SizedBox(height: 15),
                   widget.isProvider
                       ? TextButton(

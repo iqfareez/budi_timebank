@@ -5,7 +5,7 @@ import '../components/constants.dart';
 import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/heading2.dart';
 import '../custom%20widgets/theme.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_string.dart';
 
 class UpdatePage extends StatefulWidget {
   final String id;
@@ -359,7 +359,6 @@ class _UpdatePageState extends State<UpdatePage> {
                             //print('change $date');
                           }, onConfirm: (date) {
                             _dateController.text = date.toString();
-                            print(_dateController.text);
                             _dateControllerDisplay.text =
                                 'Date: ${date.day}-${date.month}-${date.year} Time: ${date.hour.toString().padLeft(2, '0')} : ${date.minute.toString().padLeft(2, '0')}';
                           },

@@ -6,7 +6,7 @@ import '../components/constants.dart';
 import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/contact.dart';
 import '../model/identification.dart';
 import '../model/profile.dart';

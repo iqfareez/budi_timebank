@@ -5,7 +5,7 @@ import '../custom widgets/custom_divider.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_service_request.dart';
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/earnings_history.dart';
 import '../model/profile.dart';
 import '../request pages/requestDetails.dart';

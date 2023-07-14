@@ -4,7 +4,7 @@ import '../custom widgets/custom_headline.dart';
 import '../custom%20widgets/ratingCardDetails1.dart';
 import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_string.dart';
 
 import '../model/contact.dart';
 import '../model/profile.dart';

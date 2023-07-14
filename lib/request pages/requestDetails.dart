@@ -9,7 +9,8 @@ import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_rating.dart';
 import '../db_helpers/client_service_request.dart';
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_datetime.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/profile.dart';
 import '../model/service_request.dart';
 import '../other%20profile/viewProfile.dart';
@@ -171,7 +172,6 @@ class _RequestDetailsState extends State<RequestDetails> {
                       requestDetails.id.toString(),
                       style: const TextStyle(color: Colors.red),
                     ),
-
                   Center(child: Heading2('Title')),
                   Center(
                       child:
@@ -287,9 +287,9 @@ class _RequestDetailsState extends State<RequestDetails> {
                               children: [
                                 Heading2('The request is completed'),
                                 Text(
-                                    'Completed On: ${requestDetails.completedAt?.day}-${requestDetails.completedAt?.month}-${requestDetails.completedAt?.year}'),
+                                    'Completed On: ${requestDetails.completedAt?.formatDate()}'),
                                 Text(
-                                    'Time: ${requestDetails.completedAt?.hour}:${requestDetails.completedAt?.minute}:${requestDetails.completedAt?.second}'), //completed on 2
+                                    'Time: ${requestDetails.completedAt?.formatTime()}'),
                               ],
                             ),
                           if (isCompletedVerified() && isRated)
@@ -500,16 +500,14 @@ class _RequestDetailsState extends State<RequestDetails> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 15),
                   Container(
                       alignment: Alignment.center,
                       child: Heading2('Other Information')),
                   const Divider(),
                   Heading2('Date of the request'),
-                  Text(
-                      'Date: ${dateJob.day}-${dateJob.month}-${dateJob.year}\nTime: ${dateJob.hour.toString().padLeft(2, '0')}:${dateJob.minute.toString().padLeft(2, '0')}'),
-                  //const SizedBox(height: 15),
+                  Text('Date: ${dateJob.formatDate()}'),
+                  Text('Time: ${dateJob.formatTime()}'),
                   const Divider(),
                   Heading2('Category'),
                   Text(requestDetails.category),
@@ -568,8 +566,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Heading2('Created On'),
-                          Text(
-                              'Date: ${dateCreatedOn.day}-${dateCreatedOn.month}-${dateCreatedOn.year}\nTime: ${dateCreatedOn.hour}:${dateCreatedOn.minute}'),
+                          Text('Date: ${dateCreatedOn.formatDate()}'),
+                          Text('Time: ${dateCreatedOn.formatTime()}'),
                         ],
                       ),
                       if (dateUpdatedOn != null)
@@ -577,8 +575,8 @@ class _RequestDetailsState extends State<RequestDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Heading2('Updated On'),
-                            Text(
-                                'Date: ${dateUpdatedOn!.day}-${dateUpdatedOn!.month}-${dateUpdatedOn!.year}\nTime: ${dateUpdatedOn!.hour}:${dateUpdatedOn!.minute}'),
+                            Text('Date: ${dateUpdatedOn?.formatDate()}'),
+                            Text('Time: ${dateUpdatedOn?.formatTime()}'),
                           ],
                         ),
                     ],

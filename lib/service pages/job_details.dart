@@ -10,7 +10,8 @@ import '../custom%20widgets/theme.dart';
 import '../db_helpers/client_rating.dart';
 import '../db_helpers/client_service_request.dart';
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_datetime.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/profile.dart';
 import '../model/service_request.dart';
 import '../rate pages/rate_received_page.dart';
@@ -289,10 +290,9 @@ class _JobDetailsState extends State<JobDetails> {
                         child: Column(
                           children: [
                             Heading2('Completed On'),
+                            Text('Date: ${jobDetail.updatedAt?.formatDate()}'),
                             Text(
-                                'Date: ${jobDetail.updatedAt?.day}-${jobDetail.updatedAt?.month}-${jobDetail.updatedAt?.year}\n'),
-                            Text(
-                                'Time: ${jobDetail.updatedAt?.hour}:${jobDetail.updatedAt?.minute}:${jobDetail.updatedAt?.second}\n'),
+                                'Time: ${jobDetail.updatedAt?.formatTime()}\n'),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -496,8 +496,8 @@ class _JobDetailsState extends State<JobDetails> {
                       child: Heading2('Other Information')),
                   const Divider(),
                   Heading2('Date of the request'),
-                  Text(
-                      'Date: ${dateJob.day}-${dateJob.month}-${dateJob.year}\nTime: ${dateJob.hour.toString().padLeft(2, '0')}:${dateJob.minute.toString().padLeft(2, '0')}'),
+                  Text('Date: ${dateJob.formatDate()}'),
+                  Text('Time: ${dateJob.formatTime()}'),
                   //const SizedBox(height: 15),
                   const Divider(),
                   Heading2('Category'),
@@ -557,8 +557,8 @@ class _JobDetailsState extends State<JobDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Heading2('Created On'),
-                          Text(
-                              'Date: ${dateCreatedOn.day}-${dateCreatedOn.month}-${dateCreatedOn.year}\nTime: ${dateCreatedOn.hour}:${dateCreatedOn.minute}'),
+                          Text('Date: ${dateCreatedOn.formatDate()}'),
+                          Text('Time: ${dateCreatedOn.formatTime()}'),
                         ],
                       ),
                       if (dateUpdatedOn != null)
@@ -566,8 +566,8 @@ class _JobDetailsState extends State<JobDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Heading2('Updated On'),
-                            Text(
-                                'Date: ${dateUpdatedOn!.day}-${dateUpdatedOn!.month}-${dateUpdatedOn!.year}\nTime: ${dateUpdatedOn!.hour}:${dateUpdatedOn!.minute}'),
+                            Text('Date: ${dateUpdatedOn?.formatDate()}'),
+                            Text('Time: ${dateUpdatedOn?.formatTime()}'),
                           ],
                         ),
                     ],

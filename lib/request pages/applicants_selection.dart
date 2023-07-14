@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../custom widgets/heading2.dart';
 import '../custom widgets/theme.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/profile.dart';
 
 class ApplicantsSelectionList extends StatelessWidget {

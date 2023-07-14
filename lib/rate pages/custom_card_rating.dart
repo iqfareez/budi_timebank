@@ -3,7 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../custom widgets/theme.dart';
 import '../db_helpers/client_user.dart';
-import '../extension_string.dart';
+import '../my_extensions/extension_string.dart';
 import '../model/profile.dart';
 import '../model/rating.dart';
 
